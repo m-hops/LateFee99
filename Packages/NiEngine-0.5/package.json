@@ -1,0 +1,17 @@
+{
+  "name": "niengine",
+  "displayName": "NiEngine",
+  "version": "0.5.0",
+  "unity": "2021.3",
+  "unityRelease": "15f1",
+  "dependencies": {
+    "com.unity.inputsystem": "1.4.4",
+    "com.unity.mathematics": "1.2.6"
+  },
+  "description": "NiEngine",
+  "keywords": [
+    "niengine",
+    "dots",
+    "entities"
+  ]
+}
