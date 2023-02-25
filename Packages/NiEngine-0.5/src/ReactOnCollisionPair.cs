@@ -54,12 +54,13 @@ namespace Nie
         [Header("Debug:")]
         [Tooltip("Print to console events caused by this ReactOnCollisionPair")]
         public bool DebugLog = false;
+        public bool DebugLogTouching = false;
 
-#if NIE_EXTRAEVENT
         [Header("Events:")]
         [SerializeField]
         [Tooltip("Event called when the reaction happens")]
         UnityEvent<ReactOnCollisionPair, ReactOnCollisionPair> OnReact;
+#if NIE_EXTRAEVENT
 
         [SerializeField]
         [Tooltip("Event called when this ReactiveItem starts touching another ReactiveItem with matching respective names. Parameters are (ReactiveItem this, ReactiveItem other)")]
@@ -123,25 +124,46 @@ namespace Nie
                 delayedReaction.TimerCountdown = ReactionCooldown;
                 m_CooldownWith.Add(delayedReaction);
             }
-#if NIE_EXTRAEVENT
             OnReact?.Invoke(this, delayedReaction.Other);
-#endif
         }
-
-        public bool RequestReaction(ReactOnCollisionPair other, Vector3 position)
+        public bool CanReact(ReactOnCollisionPair other, Vector3 position)
         {
+
             if (!enabled) return false;
-            if (!other.enabled) return false;
             if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
-            if (other.SingleAtOnce && other.m_CurrentSingleReaction != null && other.m_CurrentSingleReaction != this) return false;
-            if (Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position))) 
+            if (Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position)))
                 return false;
-            if (other.ThisReactionName != OtherReactionName || other.OtherReactionName != ThisReactionName) return false;
             if (MustBeInAnimatorState.Animator != null)
                 if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
                     return false;
             if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
+            return true;
+        }
+        public bool RequestReaction(ReactOnCollisionPair other, Vector3 position)
+        {
+            if (!CanReact(other, position)) return false;
+            if (!other.CanReact(this, position)) return false;
+            if (other.ThisReactionName != OtherReactionName || other.OtherReactionName != ThisReactionName) return false;
+
+            //if (!enabled) return false;
+            //if (!other.enabled) return false;
+            //if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
+            //if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
+            //if (other.SingleAtOnce && other.m_CurrentSingleReaction != null && other.m_CurrentSingleReaction != this) return false;
+            //if (Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position))) 
+            //    return false;
+            //if (other.ThisReactionName != OtherReactionName || other.OtherReactionName != ThisReactionName) return false;
+            //
+            //if (MustBeInAnimatorState.Animator != null)
+            //    if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
+            //        return false;
+            //if (MustBeInAnimatorState.Animator != null)
+            //    if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
+            //        return false;
+            //
+            //if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
+
             if (SingleAtOnce) m_CurrentSingleReaction = other;
             return true;
         }
@@ -201,7 +223,7 @@ namespace Nie
 #region Touching state
         void BeginTouch(ReactOnCollisionPair other, Vector3 position)
         {
-            if (DebugLog)
+            if (DebugLogTouching)
                 Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'");
             m_TouchingWith.Add(other);
 
@@ -229,7 +251,7 @@ namespace Nie
 
         void EndTouch(ReactOnCollisionPair other)
         {
-            if (DebugLog)
+            if (DebugLogTouching)
                 Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' stopped touching '{other.ThisReactionName}'");
 
 #if NIE_EXTRAEVENT
@@ -259,7 +281,7 @@ namespace Nie
             if (!enabled) return;
             if (!ReactToCollision) return;
             var position = collision.GetContact(0).point;
-            foreach (var other in collision.gameObject.GetComponents<ReactOnCollisionPair>().Where(other => RequestReaction(other, position)))
+            foreach (var other in collision.gameObject.GetComponentsInChildren<ReactOnCollisionPair>().Where(other => RequestReaction(other, position)))
                 BeginTouch(other, position);
         }
 
@@ -273,14 +295,20 @@ namespace Nie
         private void OnTriggerEnter(Collider otherCollider)
         {
             if (!ReactToTrigger) return;
-            foreach (var other in otherCollider.GetComponents<ReactOnCollisionPair>())
+            foreach (var other in otherCollider.GetComponentsInChildren<ReactOnCollisionPair>().Where(other => other.ReactToTrigger && RequestReaction(other, transform.position)))
+            {
                 BeginTouch(other, transform.position);
+                other.BeginTouch(this, transform.position);
+            }
         }
         private void OnTriggerEnterExit(Collider otherCollider)
         {
             if (!ReactToTrigger) return;
-            foreach (var other in otherCollider.GetComponents<ReactOnCollisionPair>())
+            foreach (var other in otherCollider.GetComponentsInChildren<ReactOnCollisionPair>().Where(other => other.ReactToTrigger))
+            {
                 EndTouchIfTouching(other);
+                other.EndTouchIfTouching(this);
+            }
 
         }
 #endregion

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,29 @@ using UnityEngine.Events;
 
 namespace Nie
 {
+    public static class GameObjectExt
+    {
+        public static bool TryGetReactionState(this GameObject @this, string name, out ReactionState state)
+        {
+            foreach(var rs in @this.GetComponents<ReactionState>().Where(x=>x.StateName == name))
+            {
+                state = rs;
+                return true;
+            }
+            state = null;
+            return false;
+        }
+        public static bool TryGetReactionState(this GameObject @this, string name, string group, out ReactionState state)
+        {
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
+            {
+                state = rs;
+                return true;
+            }
+            state = null;
+            return false;
+        }
+    }
     [System.Serializable]
     public struct ReactionStateReference
     {
@@ -80,22 +104,38 @@ namespace Nie
         [Tooltip("Once this Reaction reacts, it cannot react again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;
 
+
+        [Header("Reaction:")]
         [Tooltip("If set, instantiate the provided GameObject at the reaction position")]
         public GameObject Spawn;
 
         [Tooltip("Default Reaction position, used when spawning the GameObject from the property 'Spawn'")]
         public Transform DefaultReactionPosition;
 
-        [Tooltip("If set, move the GameObject that triggered this reaction. The GameObject may be null")]
-        public Transform MoveTriggeringObjectAt;
+        public AnimatorStateReference PlayAnimatorState;
+
+        [Header("Reaction on this object:")]
+        public bool SetKinematic;
+        public bool SetNonKinematic;
+        bool m_PreviousKinematic;
 
         [Tooltip("Will release this object if it has a Grabbable component and is currently grabbed")]
         public bool ReleaseGrabbed;
 
-        public AnimatorStateReference PlayAnimatorState;
 
+        [Header("Reaction on Triggering Object:")]
+        [Tooltip("If set, move the GameObject that triggered this reaction. The GameObject may be null")]
+        public Transform MoveTriggeringObjectAt;
+        [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
+        public string ForceReactionStateOnTriggeringObjectOnBegin;
+        [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
+        public string ForceReactionStateOnTriggeringObjectOnEnd;
+
+
+        [Header("Debug:")]
         [Tooltip("Print to console events caused by this Reaction")]
         public bool DebugLog = false;
+        public bool IsActiveState;// { get; private set; }
 
         [SerializeField]
         [Tooltip("Event called when the reaction state begin. Parameters are (ReactionState this, GameObject triggeringObject)")]
@@ -105,7 +145,7 @@ namespace Nie
         [Tooltip("Event called when the reaction state ends. Parameters are (ReactionState this, GameObject triggeringObject)")]
         UnityEvent<ReactionState, GameObject> OnReactEnd;
 
-        public bool IsActiveState { get; private set; }
+
 
         GameObject m_TriggeringObject;
         Vector3 m_TriggeredPosition;
@@ -143,8 +183,9 @@ namespace Nie
             ReactBegin(triggeringObject, position);
             return true;
         }
+        public void ForceActivate() => ReactBegin(m_TriggeringObject, m_TriggeredPosition);
         public void React(GameObject triggeringObject, Vector3 position) => ReactBegin(triggeringObject, position);
-
+        
         void ReactBegin(GameObject triggeringObject, Vector3 position)
         {
             foreach (var state in gameObject.GetComponents<ReactionState>())
@@ -175,6 +216,21 @@ namespace Nie
             if (PlayAnimatorState.Animator != null)
                 PlayAnimatorState.Animator.Play(PlayAnimatorState.StateHash);
 
+            if (SetKinematic && TryGetComponent<Rigidbody>(out var rigidBody))
+            {
+                m_PreviousKinematic = rigidBody.isKinematic;
+                rigidBody.isKinematic = true;
+            }
+            else if (SetNonKinematic && TryGetComponent<Rigidbody>(out var rigidBody2))
+            {
+                m_PreviousKinematic = rigidBody2.isKinematic;
+                rigidBody2.isKinematic = false;
+            }
+
+            if (!string.IsNullOrEmpty(ForceReactionStateOnTriggeringObjectOnBegin) && m_TriggeringObject != null)
+                if (m_TriggeringObject.TryGetReactionState(ForceReactionStateOnTriggeringObjectOnBegin, out var state))
+                    state.ForceActivate();
+
             OnReactBegin?.Invoke(this, m_TriggeringObject);
 
             if (ReactionCooldown > 0)
@@ -187,6 +243,16 @@ namespace Nie
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggeringObject: '{m_TriggeringObject.name}', position: {m_TriggeredPosition}");
+
+            if ((SetKinematic || SetNonKinematic) && TryGetComponent<Rigidbody>(out var rigidBody))
+            {
+                rigidBody.isKinematic = m_PreviousKinematic;
+            }
+
+            if (!string.IsNullOrEmpty(ForceReactionStateOnTriggeringObjectOnEnd) && m_TriggeringObject != null)
+                if (m_TriggeringObject.TryGetReactionState(ForceReactionStateOnTriggeringObjectOnEnd, out var state))
+                    state.ForceActivate();
+
             OnReactEnd?.Invoke(this, m_TriggeringObject);
 
             IsActiveState = false;
