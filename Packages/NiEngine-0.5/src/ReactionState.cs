@@ -124,12 +124,16 @@ namespace Nie
 
 
         [Header("Reaction on Triggering Object:")]
-        [Tooltip("If set, move the GameObject that triggered this reaction. The GameObject may be null")]
-        public Transform MoveTriggeringObjectAt;
+        [Tooltip("If set, Set the parent of the GameObject that triggered this reaction to this transform.")]
+        public Transform AttachTriggeringObjectAt;
+        [Tooltip("If checked and AttachTriggeringObjectAt is set, will set the new local position and rotation to 0 from the new parent the triggering object is being attached to.")]
+        public bool MoveToParentOrigin;
+        Transform m_PreviousAttachedObject;
+
         [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
-        public string ForceReactionStateOnTriggeringObjectOnBegin;
+        public string OnBeginForceState;
         [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
-        public string ForceReactionStateOnTriggeringObjectOnEnd;
+        public string OnEndForceState;
 
 
         [Header("Debug:")]
@@ -183,7 +187,11 @@ namespace Nie
             ReactBegin(triggeringObject, position);
             return true;
         }
-        public void ForceActivate() => ReactBegin(m_TriggeringObject, m_TriggeredPosition);
+        public void ForceActivate()
+        {
+            if (IsActiveState) return;
+            ReactBegin(m_TriggeringObject, m_TriggeredPosition);
+        }
         public void React(GameObject triggeringObject, Vector3 position) => ReactBegin(triggeringObject, position);
         
         void ReactBegin(GameObject triggeringObject, Vector3 position)
@@ -193,18 +201,23 @@ namespace Nie
                     state.ReactEnd();
             
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggeringObject: '{triggeringObject.name}', position: {position}");
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggeringObject: '{(triggeringObject == null ? "<null>" : triggeringObject.name)}', position: {position}");
             
             IsActiveState = true;
             m_TriggeringObject = triggeringObject;
             m_TriggeredPosition = position;
 
-            if (MoveTriggeringObjectAt != null && triggeringObject != null)
+            if (AttachTriggeringObjectAt != null && triggeringObject != null)
             {
-                triggeringObject.transform.position = MoveTriggeringObjectAt.transform.position;
-                triggeringObject.transform.rotation = MoveTriggeringObjectAt.transform.rotation;
                 if (triggeringObject.TryGetComponent<Grabbable>(out var grabbable))
                     grabbable.ReleaseIfGrabbed();
+                m_PreviousAttachedObject = triggeringObject.transform.parent;
+                triggeringObject.transform.parent = AttachTriggeringObjectAt.transform;
+                if (MoveToParentOrigin)
+                {
+                    triggeringObject.transform.localRotation = Quaternion.identity;
+                    triggeringObject.transform.localPosition = Vector3.zero;
+                }
             }
 
             if (Spawn != null)
@@ -227,9 +240,11 @@ namespace Nie
                 rigidBody2.isKinematic = false;
             }
 
-            if (!string.IsNullOrEmpty(ForceReactionStateOnTriggeringObjectOnBegin) && m_TriggeringObject != null)
-                if (m_TriggeringObject.TryGetReactionState(ForceReactionStateOnTriggeringObjectOnBegin, out var state))
+            if (!string.IsNullOrEmpty(OnBeginForceState) && m_TriggeringObject != null)
+                if (m_TriggeringObject.TryGetReactionState(OnBeginForceState, out var state))
                     state.ForceActivate();
+                else
+                    Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
 
             OnReactBegin?.Invoke(this, m_TriggeringObject);
 
@@ -242,16 +257,22 @@ namespace Nie
         void ReactEnd()
         {
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggeringObject: '{m_TriggeringObject.name}', position: {m_TriggeredPosition}");
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggeringObject: '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}', position: {m_TriggeredPosition}");
 
             if ((SetKinematic || SetNonKinematic) && TryGetComponent<Rigidbody>(out var rigidBody))
             {
                 rigidBody.isKinematic = m_PreviousKinematic;
             }
 
-            if (!string.IsNullOrEmpty(ForceReactionStateOnTriggeringObjectOnEnd) && m_TriggeringObject != null)
-                if (m_TriggeringObject.TryGetReactionState(ForceReactionStateOnTriggeringObjectOnEnd, out var state))
+            if (AttachTriggeringObjectAt != null && m_TriggeringObject != null)
+                m_TriggeringObject.transform.parent = m_PreviousAttachedObject;
+
+
+            if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggeringObject != null)
+                if (m_TriggeringObject.TryGetReactionState(OnEndForceState, out var state))
                     state.ForceActivate();
+                else //if(DebugLog)
+                    Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
 
             OnReactEnd?.Invoke(this, m_TriggeringObject);
 

@@ -37,7 +37,7 @@ namespace Nie
         public bool CanTouch(ToucherController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (Reactions.All(x => !x.CanReact(by.gameObject, position)) && ReactionStates.All(x => !x.CanReact(by.gameObject, position)))
+            if (Reactions.Count > 0 && Reactions.All(x => !x.CanReact(by.gameObject, position)) && ReactionStates.All(x => !x.CanReact(by.gameObject, position)))
                 return false;
             if (MustBeInAnimatorState.Animator != null)
                 if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)

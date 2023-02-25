@@ -122,7 +122,7 @@ namespace Nie
             if (m_CooldownTimer > 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
             if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
-            if (Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position)))
+            if (Reactions.Count > 0 && Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position)))
                 return false;
             if (MustBeInAnimatorState.Animator != null)
                 if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)

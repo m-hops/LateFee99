@@ -137,12 +137,12 @@ GameObject:
   - component: {fileID: 11268314}
   - component: {fileID: 11268317}
   m_Layer: 0
-  m_Name: Slot
+  m_Name: Slotold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &11268312
 Transform:
   m_ObjectHideFlags: 0
@@ -155,10 +155,9 @@ Transform:
   m_LocalScale: {x: 0.564896, y: 0.217, z: 0.366}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 533924188}
   - {fileID: 853831407}
   m_Father: {fileID: 1144512346}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11268313
 MonoBehaviour:
@@ -185,9 +184,10 @@ MonoBehaviour:
   SetKinematic: 0
   SetNonKinematic: 0
   ReleaseGrabbed: 0
-  MoveTriggeringObjectAt: {fileID: 0}
-  ForceReactionStateOnTriggeringObjectOnBegin: 
-  ForceReactionStateOnTriggeringObjectOnEnd: 
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  OnBeginForceState: 
+  OnEndForceState: 
   DebugLog: 0
   IsActiveState: 0
   OnReactBegin:
@@ -221,9 +221,10 @@ MonoBehaviour:
   SetKinematic: 0
   SetNonKinematic: 0
   ReleaseGrabbed: 0
-  MoveTriggeringObjectAt: {fileID: 533924188}
-  ForceReactionStateOnTriggeringObjectOnBegin: 
-  ForceReactionStateOnTriggeringObjectOnEnd: 
+  AttachTriggeringObjectAt: {fileID: 533924188}
+  MoveToParentOrigin: 1
+  OnBeginForceState: Inserted
+  OnEndForceState: Free
   DebugLog: 0
   IsActiveState: 0
   OnReactBegin:
@@ -311,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 16315120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1739322721}
@@ -337,7 +338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6f7ed1d96bd6fd043b07f9639a385d19, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -440,6 +441,7 @@ GameObject:
   - component: {fileID: 176796126}
   - component: {fileID: 176796130}
   - component: {fileID: 176796129}
+  - component: {fileID: 176796131}
   - component: {fileID: 176796128}
   - component: {fileID: 176796127}
   m_Layer: 0
@@ -457,12 +459,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176796125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.218, y: 0, z: -0.177}
+  m_LocalPosition: {x: 17.126001, y: 1.45, z: 8.589}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1144512346}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &176796127
 MonoBehaviour:
@@ -476,16 +478,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3faebc3aeb60d3f4eb9f7106745f745d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugLog: 0
+  DebugLog: 1
   MustBeInAnimatorState:
     Animator: {fileID: 0}
     State: 
     StateHash: 0
   MustBeInReactionState:
-    Object: {fileID: 11268313}
+    Object: {fileID: 421306558}
     StateName: Inserted
   Reactions: []
-  ReactionStates: []
+  ReactionStates:
+  - Object: {fileID: 421306558}
+    StateName: Empty
   OnTouch:
     m_PersistentCalls:
       m_Calls: []
@@ -561,6 +565,184 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176796125}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &176796131
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176796125}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &421306554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 421306555}
+  - component: {fileID: 421306559}
+  - component: {fileID: 421306558}
+  - component: {fileID: 421306557}
+  - component: {fileID: 421306556}
+  m_Layer: 0
+  m_Name: Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &421306555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421306554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0721, y: 0.0169, z: -0.1879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1535647439}
+  m_Father: {fileID: 1144512346}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &421306556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421306554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: VHR
+  OtherReactionName: VHS
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 1
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  MustBeInAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  MustBeInReactionState:
+    Object: {fileID: 421306558}
+    StateName: Empty
+  Reactions: []
+  ReactionStates:
+  - Object: {fileID: 421306557}
+    StateName: Inserted
+  DebugLog: 1
+  DebugLogTouching: 0
+  OnReact:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &421306557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421306554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Inserted
+  StateGroup: 
+  IsInitialState: 0
+  ReactionCooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 533924188}
+  MoveToParentOrigin: 1
+  OnBeginForceState: Inserted
+  OnEndForceState: Free
+  DebugLog: 0
+  IsActiveState: 0
+  OnReactBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReactEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &421306558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421306554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Empty
+  StateGroup: 
+  IsInitialState: 1
+  ReactionCooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  OnBeginForceState: Free
+  OnEndForceState: 
+  DebugLog: 0
+  IsActiveState: 0
+  OnReactBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReactEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &421306559
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421306554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21920395, y: 0.052521706, z: 0.042809486}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &533924187
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,12 +767,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533924187}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12923063, y: 0.09216581, z: -0.4207632}
+  m_LocalPosition: {x: -0.072099686, y: 0.016899943, z: -0.17160034}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 11268312}
-  m_RootOrder: 0
+  m_Father: {fileID: 1144512346}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &544880445
 Mesh:
@@ -598,7 +780,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-7192
+  m_Name: pb_Mesh43406
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -905,7 +1087,7 @@ GameObject:
   - component: {fileID: 724065523}
   - component: {fileID: 724065522}
   m_Layer: 0
-  m_Name: VHR
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1003,7 +1185,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1144512346}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &804731113
 GameObject:
@@ -1148,7 +1330,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 11268312}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1031261848
 GameObject:
@@ -1339,8 +1521,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 176796126}
   - {fileID: 724065526}
+  - {fileID: 533924188}
+  - {fileID: 421306555}
   - {fileID: 11268312}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -1358,6 +1541,7 @@ GameObject:
   - component: {fileID: 1148456506}
   - component: {fileID: 1148456505}
   - component: {fileID: 1148456509}
+  - component: {fileID: 1148456510}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1486,6 +1670,21 @@ MonoBehaviour:
   ChangedGrabbedObjectLayer: 1
   GrabbedObjectLayer:
     m_LayerIndex: 8
+  DebugLog: 0
+--- !u!114 &1148456510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148456504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e50532f32ce52994a813d1bac256a1af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TouchPositionObject: {fileID: 16315121}
+  Hand: {fileID: 804731113}
   DebugLog: 0
 --- !u!1 &1408628121
 GameObject:
@@ -1663,9 +1862,10 @@ MonoBehaviour:
   SetKinematic: 1
   SetNonKinematic: 0
   ReleaseGrabbed: 1
-  MoveTriggeringObjectAt: {fileID: 0}
-  ForceReactionStateOnTriggeringObjectOnBegin: 
-  ForceReactionStateOnTriggeringObjectOnEnd: 
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  OnBeginForceState: 
+  OnEndForceState: 
   DebugLog: 1
   IsActiveState: 0
   OnReactBegin:
@@ -1699,9 +1899,10 @@ MonoBehaviour:
   SetKinematic: 0
   SetNonKinematic: 0
   ReleaseGrabbed: 0
-  MoveTriggeringObjectAt: {fileID: 0}
-  ForceReactionStateOnTriggeringObjectOnBegin: 
-  ForceReactionStateOnTriggeringObjectOnEnd: 
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  OnBeginForceState: 
+  OnEndForceState: 
   DebugLog: 0
   IsActiveState: 0
   OnReactBegin:
@@ -1749,6 +1950,37 @@ MonoBehaviour:
   OnReact:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1535647438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535647439}
+  m_Layer: 0
+  m_Name: ReactInsertVHS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535647439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535647438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 421306555}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600377105
 GameObject:
   m_ObjectHideFlags: 0
@@ -20776,7 +21008,7 @@ GameObject:
   - component: {fileID: 1986841517}
   - component: {fileID: 1986841518}
   m_Layer: 7
-  m_Name: GameObject
+  m_Name: ScrollablePlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20790,7 +21022,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986841516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20810,5 +21042,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a6cb4a91e361746aa7f34076126b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Distance: 1
+  Distance: 0.5
   ScrollSpeed: 0.3
