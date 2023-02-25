@@ -18,7 +18,7 @@ namespace Nie
 
         Touchable m_Touching;
         Touchable m_Focus;
-
+        public Vector3 TouchingPosition;
         public Vector3 TouchPosition => TouchPositionObject != null ? TouchPositionObject.position : transform.position + transform.forward;
         void Update()
         {
@@ -30,7 +30,7 @@ namespace Nie
                 {
                     ShowHand(hit.point);
                     if (m_Focus != touchable)
-                        Focus(touchable);
+                        Focus(touchable, hit.point);
                 }
                 else
                 {
@@ -77,6 +77,7 @@ namespace Nie
         public void Touch(Touchable touchable, Vector3 position)
         {
             Unfocus();
+            TouchingPosition = position;
             if (m_Touching == touchable) return;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ToucherController '{name}' touches '{touchable.name}'");
@@ -89,23 +90,23 @@ namespace Nie
             if (m_Touching == null) return;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ToucherController '{name}' Release Touchable '{m_Focus.name}'");
-            m_Touching.Release(this);
+            m_Touching.Release(this, TouchingPosition);
             m_Touching = null;
         }
-        public void Focus(Touchable touchable)
+        public void Focus(Touchable touchable, Vector3 position)
         {
             Unfocus();
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ToucherController '{name}' Focus Touchable '{touchable.name}'");
             m_Focus = touchable;
-            m_Focus.Focus(this);
+            m_Focus.Focus(this, position);
         }
         public void Unfocus()
         {
             if (m_Focus == null) return;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ToucherController '{name}' Unfocus Touchable '{m_Focus.name}'");
-            m_Focus.Unfocus(this);
+            m_Focus.Unfocus(this, TouchingPosition);
             m_Focus = null;
             HideHand();
         }
