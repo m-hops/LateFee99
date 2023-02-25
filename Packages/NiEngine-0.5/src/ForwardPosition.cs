@@ -15,6 +15,12 @@ namespace Nie
         [Tooltip("Distance to move to from the parent's transform position on the forward axis")]
         public float Distance;
 
+        [Tooltip("Minimum distance to limit to")]
+        public float MinDistance = 0.1f;
+
+        [Tooltip("Maximum distance to limit to")]
+        public float MaxDistance = 0.75f;
+
         [Tooltip("The speed coefficient applied to the scrolling input to move on the parent's transform forward axis")]
         public float ScrollSpeed = 0.3f;
 
@@ -35,6 +41,7 @@ namespace Nie
             if (Input.mouseScrollDelta.y != 0)
             {
                 Distance += Input.mouseScrollDelta.y * ScrollSpeed;
+                Distance = Mathf.Clamp(Distance, MinDistance, MaxDistance);
                 Move();
             }
         }
