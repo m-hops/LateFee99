@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GrabPosition: {fileID: 1739322721}
   Hand: {fileID: 804731113}
-  HoldForce: 350
+  HoldForce: 35000
   HoldDrag: 30
   HoldAngularDrag: 45
   ChangedGrabbedObjectLayer: 1
@@ -1765,22 +1765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3faebc3aeb60d3f4eb9f7106745f745d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugLog: 0
-  StateConditions:
-    MustBeInAnimatorState: {Animator: {fileID: 0}, State: , StateHash: 0}
-    MustBeInReactionState: {Object: {fileID: 0}, StateName: }
-  OnTouch:
-    ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-      m_CallsDirty: 1
-  OnRelease:
-    ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-      m_CallsDirty: 1
 --- !u!65 &1269674550
 BoxCollider:
   m_ObjectHideFlags: 0

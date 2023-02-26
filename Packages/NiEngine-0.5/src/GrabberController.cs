@@ -23,11 +23,11 @@ namespace Nie
         public GameObject Hand;
 
         [Tooltip("Force applied to the grabbed object")]
-        public float HoldForce = 100;
+        public float HoldForce = 35000;
         [Tooltip("Physics velocity drag to apply on the held object")]
-        public float HoldDrag = 5;
+        public float HoldDrag = 30;
         [Tooltip("Physics angular velocity drag to apply on the held object")]
-        public float HoldAngularDrag = 5;
+        public float HoldAngularDrag = 45;
 
         [Tooltip("If true, set the grabbed object and all its children to a different layer")]
         public bool ChangedGrabbedObjectLayer = false;
@@ -91,7 +91,7 @@ namespace Nie
                 var diff = GrabPosition.position - grabPoint;
                 GrabbedRigidbody.drag = HoldDrag >= 0 ? HoldDrag : m_GrabbedOldDrag;
                 GrabbedRigidbody.angularDrag = HoldAngularDrag >= 0 ? HoldAngularDrag : m_GrabbedOldAngularDrag;
-                GrabbedRigidbody.AddForceAtPosition(diff * HoldForce * GrabbedRigidbody.mass, grabPoint);
+                GrabbedRigidbody.AddForceAtPosition(diff * HoldForce * Time.deltaTime * GrabbedRigidbody.mass, grabPoint);
             }
             else if (m_IsGrabbing)
             {

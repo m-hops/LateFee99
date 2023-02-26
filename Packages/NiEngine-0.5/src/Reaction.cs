@@ -67,6 +67,7 @@ namespace Nie
         float m_ReactionCooldown = 0;
 
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
+        Vector3 GetReactionPosition(Vector3 receivedPosition) => DefaultReactionPosition != null ? DefaultReactionPosition.position : receivedPosition;
 
         public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
         public GameObject GetTargetTriggeringObject(GameObject triggeringObject) => TriggeringObject != null ? TriggeringObject : triggeringObject;
@@ -110,7 +111,7 @@ namespace Nie
             }
 
             if (Spawn != null)
-                Instantiate(Spawn, position, Quaternion.identity);
+                Instantiate(Spawn, GetReactionPosition(position), Quaternion.identity);
 
             if (ReleaseGrabbed && thisObject.TryGetComponent<Grabbable>(out var grabbable2))
                 grabbable2.ReleaseIfGrabbed();

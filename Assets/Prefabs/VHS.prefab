@@ -15,8 +15,10 @@ GameObject:
   - component: {fileID: 5902234813290394099}
   - component: {fileID: 8298005246431152625}
   - component: {fileID: 384556577753805405}
+  - component: {fileID: 3057017681130613382}
   - component: {fileID: 6739955818404033182}
   - component: {fileID: 3884472521742301344}
+  - component: {fileID: 753943625}
   m_Layer: 0
   m_Name: VHS
   m_TagString: Untagged
@@ -33,8 +35,8 @@ Transform:
   m_GameObject: {fileID: 4443191306362880650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.916, y: 1.47, z: 8.639}
-  m_LocalScale: {x: 0.187, y: 0.025, z: 0.102}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2431, y: 0.0325, z: 0.1326}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -153,7 +155,19 @@ MonoBehaviour:
   TriggeringObject: {fileID: 0}
   OnReactBegin:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3485716650752964306}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
@@ -169,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateName: Inserted
+  StateName: InVCR
   StateGroup: 
   IsInitialState: 0
   DebugLog: 0
@@ -192,7 +206,70 @@ MonoBehaviour:
   TriggeringObject: {fileID: 0}
   OnReactBegin:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3485716650752964306}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnReactEnd:
+    m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3057017681130613382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4443191306362880650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: InSleeve
+  StateGroup: 
+  IsInitialState: 0
+  DebugLog: 0
+  IsActiveState: 0
+  ReactionCooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  SetKinematic: 1
+  SetNonKinematic: 0
+  ReleaseGrabbed: 1
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  OnBeginForceState: 
+  OnEndForceState: 
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  OnReactBegin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3485716650752964306}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
@@ -263,7 +340,48 @@ MonoBehaviour:
   OnReact:
     ReactionReferences:
     - TargetObject: {fileID: 4443191306362880650}
-      ReactionName: Inserted
+      ReactionName: InVCR
+    Events:
+      m_PersistentCalls:
+        m_Calls: []
+    ReactionOnTriggeringObject: 
+  DebugLog: 0
+  DebugLogTouching: 0
+--- !u!114 &753943625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4443191306362880650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: VHS
+  OtherReactionName: Sleeve
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  StateConditions:
+    MustBeInAnimatorState:
+      Animator: {fileID: 0}
+      State: 
+      StateHash: 0
+    MustBeInReactionState:
+      Object: {fileID: 8298005246431152625}
+      StateName: Free
+  OnReact:
+    ReactionReferences:
+    - TargetObject: {fileID: 4443191306362880650}
+      ReactionName: InSleeve
     Events:
       m_PersistentCalls:
         m_Calls: []
