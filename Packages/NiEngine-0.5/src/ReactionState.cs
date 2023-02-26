@@ -99,7 +99,14 @@ namespace Nie
 
         [Tooltip("Is currently activate and all other state of the same group are deactivated")]
         public bool IsActiveState;
-
+#if UNITY_EDITOR
+        [EditorCools.Button]
+        public void SetActiveState()
+        {
+            if(UnityEditor.EditorApplication.isPlaying)
+                ForceActivate();
+        }
+#endif
         [Header("Conditions:")]
         [Tooltip("Once this Reaction state activates, it cannot re-active again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;

@@ -14,6 +14,15 @@ namespace Nie
         [Tooltip("Print to console events caused by this Reaction")]
         public bool DebugLog = false;
 
+#if UNITY_EDITOR
+        [EditorCools.Button]
+        public void Trigger()
+        {
+            if (UnityEditor.EditorApplication.isPlaying)
+                React();
+        }
+#endif
+
         [Header("Conditions:")]
         [Tooltip("Once this Reaction reacts, it cannot react again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;

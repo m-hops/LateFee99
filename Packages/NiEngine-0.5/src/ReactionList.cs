@@ -10,7 +10,6 @@ namespace Nie
     public struct ReactionList
     {
         public List<ReactionReference> ReactionReferences;
-        //public List<ReactionStateReference> SetReactionStates;
         public UnityEvent Events;
         public string ReactionOnTriggeringObject;
         public void React(GameObject targetObject, GameObject triggeringObject, Vector3 position)
@@ -34,9 +33,8 @@ namespace Nie
         public bool CanReact(GameObject targetObject, GameObject triggeringObject, Vector3 position)
         {
             if (!string.IsNullOrEmpty(ReactionOnTriggeringObject) && !ReactionReference.CanReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position)) return false;
-            return ReactionReferences.Count == 0//+ SetReactionStates.Count == 0
+            return ReactionReferences.Count == 0
                 || ReactionReferences.Any(x => x.CanReact(triggeringObject, position));
-                //|| SetReactionStates.Any(x => x.CanReact(triggeringObject, position));
         }
     }
 }
