@@ -84,28 +84,28 @@ namespace Nie
             return false;
         }
     }
-    public interface IReaction
-    {
-        bool CanReact(GameObject from, Vector3 position);
-        bool TryReact(GameObject triggeringObject, Vector3 position);
-        void React(GameObject triggeringObject, Vector3 position);
-    }
     [AddComponentMenu("Nie/Object/ReactionState")]
-    public class ReactionState : MonoBehaviour, IReaction
+    public class ReactionState : MonoBehaviour
     {
         [Tooltip("Name of this state. Used when activating state.")]
         public string StateName;
-
         [Tooltip("This state is mutually exclusive will all ReactionState of the same group on this GameObject")]
         public string StateGroup;
-
+        [Tooltip("Will be in active state when the game object starts. Will not execute the reaction")]
         public bool IsInitialState;
 
-        [Tooltip("Once this Reaction reacts, it cannot react again within the cooldown period, in seconds.")]
+        [Tooltip("Print to console events caused by this Reaction")]
+        public bool DebugLog = false;
+
+        [Tooltip("Is currently activate and all other state of the same group are deactivated")]
+        public bool IsActiveState;
+
+        [Header("Conditions:")]
+        [Tooltip("Once this Reaction state activates, it cannot re-active again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;
 
 
-        [Header("Reaction:")]
+        [Header("Actions:")]
         [Tooltip("If set, instantiate the provided GameObject at the reaction position")]
         public GameObject Spawn;
 
@@ -114,7 +114,7 @@ namespace Nie
 
         public AnimatorStateReference PlayAnimatorState;
 
-        [Header("Reaction on this object:")]
+        [Header("Actions on this object:")]
         public bool SetKinematic;
         public bool SetNonKinematic;
         bool m_PreviousKinematic;
@@ -123,7 +123,7 @@ namespace Nie
         public bool ReleaseGrabbed;
 
 
-        [Header("Reaction on Triggering Object:")]
+        [Header("Actions on Triggering Object:")]
         [Tooltip("If set, Set the parent of the GameObject that triggered this reaction to this transform.")]
         public Transform AttachTriggeringObjectAt;
         [Tooltip("If checked and AttachTriggeringObjectAt is set, will set the new local position and rotation to 0 from the new parent the triggering object is being attached to.")]
@@ -136,10 +136,12 @@ namespace Nie
         public string OnEndForceState;
 
 
-        [Header("Debug:")]
-        [Tooltip("Print to console events caused by this Reaction")]
-        public bool DebugLog = false;
-        public bool IsActiveState;// { get; private set; }
+        [Header("Overrides:")]
+        [Tooltip("If set, will execute the reaction on provided object instead of the object with this ReactionState.")]
+        public GameObject ThisObject;
+        [Tooltip("If set, will execute the reaction using provided object as the triggering object.")]
+        public GameObject TriggeringObject;
+
 
         [SerializeField]
         [Tooltip("Event called when the reaction state begin. Parameters are (ReactionState this, GameObject triggeringObject)")]
@@ -157,6 +159,9 @@ namespace Nie
         float m_ReactionCooldown = 0;
 
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
+
+        public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
+        public GameObject GetTargetTriggeringObject(GameObject triggeringObject) => TriggeringObject != null ? TriggeringObject : triggeringObject;
         void Start()
         {
             IsActiveState = IsInitialState;
@@ -182,6 +187,7 @@ namespace Nie
         
         public bool TryReact(GameObject triggeringObject, Vector3 position)
         {
+            triggeringObject = GetTargetTriggeringObject(triggeringObject);
             if (!CanReact(triggeringObject, position))
                 return false;
             ReactBegin(triggeringObject, position);
@@ -192,14 +198,32 @@ namespace Nie
             if (IsActiveState) return;
             ReactBegin(m_TriggeringObject, m_TriggeredPosition);
         }
-        public void React(GameObject triggeringObject, Vector3 position) => ReactBegin(triggeringObject, position);
+        public void ForceActivateState(string stateName)
+        {
+            foreach (var state in gameObject.GetComponents<ReactionState>())
+                if (state.StateName == stateName)
+                {
+                    state.React(null, state.gameObject.transform.position);
+                    //return true;
+                }
+            //return false;
+        }
+        public void React(GameObject triggeringObject, Vector3 position)
+        {
+            if (IsActiveState) return;
+            ReactBegin(triggeringObject, position);
+        }
         
         void ReactBegin(GameObject triggeringObject, Vector3 position)
         {
+
             foreach (var state in gameObject.GetComponents<ReactionState>())
                 if (state.IsActiveState && state.StateGroup == StateGroup)
                     state.ReactEnd();
             
+            triggeringObject = GetTargetTriggeringObject(triggeringObject);
+            var thisObject = TargetObject;
+
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggeringObject: '{(triggeringObject == null ? "<null>" : triggeringObject.name)}', position: {position}");
             
@@ -223,18 +247,18 @@ namespace Nie
             if (Spawn != null)
                 Instantiate(Spawn, position, Quaternion.identity);
 
-            if (ReleaseGrabbed && TryGetComponent<Grabbable>(out var grabbable2))
+            if (ReleaseGrabbed && thisObject.TryGetComponent<Grabbable>(out var grabbable2))
                 grabbable2.ReleaseIfGrabbed();
 
             if (PlayAnimatorState.Animator != null)
                 PlayAnimatorState.Animator.Play(PlayAnimatorState.StateHash);
 
-            if (SetKinematic && TryGetComponent<Rigidbody>(out var rigidBody))
+            if (SetKinematic && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
                 m_PreviousKinematic = rigidBody.isKinematic;
                 rigidBody.isKinematic = true;
             }
-            else if (SetNonKinematic && TryGetComponent<Rigidbody>(out var rigidBody2))
+            else if (SetNonKinematic && thisObject.TryGetComponent<Rigidbody>(out var rigidBody2))
             {
                 m_PreviousKinematic = rigidBody2.isKinematic;
                 rigidBody2.isKinematic = false;
@@ -256,10 +280,12 @@ namespace Nie
 
         void ReactEnd()
         {
+            var thisObject = TargetObject;
+
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggeringObject: '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}', position: {m_TriggeredPosition}");
 
-            if ((SetKinematic || SetNonKinematic) && TryGetComponent<Rigidbody>(out var rigidBody))
+            if ((SetKinematic || SetNonKinematic) && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
                 rigidBody.isKinematic = m_PreviousKinematic;
             }

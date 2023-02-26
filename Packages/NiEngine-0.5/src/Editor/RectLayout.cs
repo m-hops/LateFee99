@@ -70,11 +70,27 @@ namespace Nie.Editor
                 return Acquire(FreeRect.width, MinHeight);
             }
         }
+        public Rect AcquireHeight(float height)
+        {
+            if (IsHorizontal)
+            {
+                return Acquire(FreeRect.width, FreeRect.height);
+            }
+            else
+            {
+                return Acquire(FreeRect.width, height);
+            }
+        }
+        public bool Foldout(bool isExpanded, GUIContent content)
+        {
+            var size = GUI.skin.box.CalcSize(content);
+            return EditorGUI.Foldout(AcquireHeight(size.y), isExpanded, content, true);
+        }
         public void Label(string text)
         {
             var content = new GUIContent(text);
             var size = GUI.skin.box.CalcSize(content);
-            EditorGUI.LabelField(Acquire(size.x), content, new GUIContent(text));
+            EditorGUI.LabelField(Acquire(size.x), content);//, new GUIContent(text));
         }
         public void Box(string text)
         {
@@ -90,10 +106,10 @@ namespace Nie.Editor
             EditorGUI.PropertyField(Acquire(width), property, GUIContent.none);
 
         }
-        public void PropertyField(SerializedProperty property)
+        public void PropertyField(SerializedProperty property)=> PropertyField(property, GUIContent.none);
+        public void PropertyField(SerializedProperty property, GUIContent content)
         {
-            EditorGUI.PropertyField(Acquire(), property, GUIContent.none);
-
+            EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content);
         }
         public bool Button(string caption)
         {

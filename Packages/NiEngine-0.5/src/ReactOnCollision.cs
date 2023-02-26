@@ -30,34 +30,43 @@ namespace Nie
         public bool ReactToCollision = true;
         public bool ReactToTrigger = true;
 
-        public AnimatorStateReference MustBeInAnimatorState;
-        public ReactionStateReference MustBeInReactionState;
 
-        public List<Reaction> Reactions;
-        public List<ReactionStateReference> ReactionStates;
+        [Tooltip("Conditions to touch this touchable")]
+        public ReactionConditions Conditions;
+
+        [Tooltip("Reaction executed when this object starts colliding with another object.")]
+        public ReactionList ReactionOnCollisionEnter;
+
+        [Tooltip("Reaction executed when this object ends colliding with another object.")]
+        public ReactionList ReactionOnCollisionExit;
+
+        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
+        public bool CanReact(ReactOnCollision by, Vector3 position)
+        {
+            if (!enabled) return false;
+            if (!Conditions.CanReact(by.gameObject, position)) return false;
+            if (!ReactionOnCollisionEnter.CanReact(TargetObject, by.gameObject, position)) return false;
+            return true;
+        }
+
+        public void Touch(TouchController by, Vector3 position)
+        {
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Touched By '{by.name}'");
+            ReactionOnCollisionEnter.TryReact(TargetObject, by.gameObject, position);
+        }
+
+        public void Release(TouchController by, Vector3 position)
+        {
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Released By '{by.name}'");
+            ReactionOnCollisionExit.TryReact(TargetObject, by.gameObject, position);
+        }
+
+
 
         [Tooltip("Print to console events caused by this ReactOnCollision")]
         public bool DebugLog = false;
-
-#if NIE_EXTRAEVENT
-        [Header("Events:")]
-
-        [SerializeField]
-        [Tooltip("Event called when the reaction happens. (ReactOnCollision this, GameObject other)")]
-        UnityEvent<ReactOnCollision, GameObject> OnReact;
-
-        [SerializeField]
-        [Tooltip("Event called when this GameObject starts touching another GameObject. Parameters are (ReactOnCollision this, GameObject other)")]
-        UnityEvent<ReactOnCollision, GameObject> OnTouchBegin;
-
-        [SerializeField]
-        [Tooltip("Event called when this GameObject stops touching another GameObject. Parameters are (ReactOnCollision this, GameObject other)")]
-        UnityEvent<ReactOnCollision, GameObject> OnTouchEnd;
-
-        [SerializeField]
-        [Tooltip("Event called when this GameObject is touching another GameObject. Parameters are (ReactOnCollision this, GameObject other)")]
-        UnityEvent<ReactOnCollision, GameObject> OnTouching;
-#endif
 
         // Keep track of what ReactiveObject are currently touching
         List<GameObject> m_TouchingWith = new();
@@ -103,14 +112,7 @@ namespace Nie
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'");
 
-            foreach(var reaction in Reactions)
-                reaction.TryReact(delayedReaction.Other.gameObject, delayedReaction.Position);
-            foreach (var reaction in ReactionStates)
-                reaction.TryReact(delayedReaction.Other.gameObject, delayedReaction.Position);
-
-#if NIE_EXTRAEVENT
-            OnReact?.Invoke(this, delayedReaction.Other);
-#endif
+            ReactionOnCollisionEnter.React(TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
 
             if (ReactionCooldown > 0)
                 m_CooldownTimer = ReactionCooldown;
@@ -122,12 +124,8 @@ namespace Nie
             if (m_CooldownTimer > 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
             if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
-            if (Reactions.Count > 0 && Reactions.All(x => !x.CanReact(other.gameObject, position)) && ReactionStates.All(x => !x.CanReact(other.gameObject, position)))
-                return false;
-            if (MustBeInAnimatorState.Animator != null)
-                if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
-                    return false;
-            if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
+            if (!Conditions.CanReact(other, position)) return false;
+            if (!ReactionOnCollisionEnter.CanReact(TargetObject, other, position)) return false;
             if (SingleAtOnce) m_CurrentSingleReaction = other;
             return true;
         }
@@ -183,16 +181,10 @@ namespace Nie
             else
                 m_DelayedReactions.Add(reaction);
 
-#if NIE_EXTRAEVENT
-            OnTouchBegin?.Invoke(this, other);
-#endif
         }
 
         void Touching(GameObject other)
         {
-#if NIE_EXTRAEVENT
-            OnTouching?.Invoke(this, other);
-#endif
         }
 
         void EndTouch(GameObject other)
@@ -200,9 +192,6 @@ namespace Nie
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' stopped touching '{other.name}'");
 
-#if NIE_EXTRAEVENT
-            OnTouchEnd?.Invoke(this, other);
-#endif
         }
 
         bool EndTouchIfTouching(GameObject other)

@@ -12,24 +12,18 @@ namespace Nie
     {
         public bool DebugLog;
 
-        public AnimatorStateReference MustBeInAnimatorState;
-        public ReactionStateReference MustBeInReactionState;
+        [Tooltip("Conditions to be able to grab this object")]
+        public ReactionConditions Conditions;
 
         [SerializeField]
-        [Tooltip("Event called when this grabbable is grabbed by a GrabberController")]
-        UnityEvent<Grabbable, GrabberController> OnGrab;
+        [Tooltip("Reaction executed when this grabbable is grabbed by a GrabberController")]
+        ReactionList OnGrab;
 
         [SerializeField]
-        [Tooltip("Event called when this grabbable is release by a GrabberController")]
-        UnityEvent<Grabbable, GrabberController> OnRelease;
+        [Tooltip("Reaction executed when this grabbable is release by a GrabberController")]
+        ReactionList OnRelease;
 
-        [SerializeField]
-        [Tooltip("Event called when a GrabberController looks at this grabbable before grabbing it.")]
-        UnityEvent<Grabbable, GrabberController> OnFocus;
-
-        [SerializeField]
-        [Tooltip("Event called when a GrabberController either stops looking at this grabbable or has grabbed it after focusing on it.")]
-        UnityEvent<Grabbable, GrabberController> OnUnfocus;
+        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
 
         public bool IsGrabbed => GrabbedBy != null;
         public GrabberController GrabbedBy { get; private set; }
@@ -42,22 +36,20 @@ namespace Nie
         public bool CanGrab(GrabberController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
-            if (MustBeInAnimatorState.Animator != null)
-                if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
-                    return false;
+            if (!Conditions.CanReact(by.gameObject, position)) return false;
+            if (!OnGrab.CanReact(TargetObject, by.gameObject, position)) return false;
             return true;
         }
         /// <summary>
         /// Call when a GrabberController grabs this grabbable
         /// </summary>
         /// <param name="by"></param>
-        public void GrabBy(GrabberController by)
+        public void GrabBy(GrabberController by, Vector3 grabPosition)
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Grab By '{by.name}'");
             GrabbedBy = by;
-            OnGrab?.Invoke(this, by);
+            OnGrab.React(TargetObject, by.gameObject, grabPosition);
         }
 
         /// <summary>
@@ -68,21 +60,8 @@ namespace Nie
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Release By '{by.name}'");
-            OnRelease?.Invoke(this, by);
+            OnRelease.React(TargetObject, by.gameObject, transform.position);
             GrabbedBy = null;
-        }
-
-        public void Focus(GrabberController by)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Focus By '{by.name}'");
-            OnFocus?.Invoke(this, by);
-        }
-        public void Unfocus(GrabberController by)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Unfocus By '{by.name}'");
-            OnUnfocus?.Invoke(this, by);
         }
 
     }

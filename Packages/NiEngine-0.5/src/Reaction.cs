@@ -6,11 +6,19 @@ using UnityEngine.Events;
 namespace Nie
 {
     [AddComponentMenu("Nie/Object/Reaction")]
-    public class Reaction : MonoBehaviour, IReaction
+    public class Reaction : MonoBehaviour
     {
+
+        [Tooltip("Name of this reaction. If left empty, will react for every react call of this object")]
+        public string ReactionName;
+        [Tooltip("Print to console events caused by this Reaction")]
+        public bool DebugLog = false;
+
+        [Header("Conditions:")]
         [Tooltip("Once this Reaction reacts, it cannot react again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;
 
+        [Header("Actions:")]
         [Tooltip("When reaction is activated, destroy this GameObject")]
         public bool DestroyGameObject;
 
@@ -31,9 +39,14 @@ namespace Nie
 
         public AnimatorStateReference PlayAnimatorState;
 
-        [Tooltip("Print to console events caused by this Reaction")]
-        public bool DebugLog = false;
+        [Header("Overrides:")]
+        [Tooltip("If set, will execute the reaction on provided object instead of the object with this ReactionState.")]
+        public GameObject ThisObject;
+        [Tooltip("If set, will execute the reaction using provided object as the triggering object.")]
+        public GameObject TriggeringObject;
 
+
+        [Header("Events:")]
         [SerializeField]
         [Tooltip("Event called when the reaction happens. Parameters are (Reaction this, GameObject triggeringObject)")]
         UnityEvent<Reaction, GameObject> OnReact;
@@ -46,6 +59,8 @@ namespace Nie
 
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
 
+        public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
+        public GameObject GetTargetTriggeringObject(GameObject triggeringObject) => TriggeringObject != null ? TriggeringObject : triggeringObject;
         private void Update()
         {
             if (m_ReactionCooldown > 0)
@@ -63,6 +78,7 @@ namespace Nie
         public void React() => React(null, ReactionPosition);
         public bool TryReact(GameObject triggeringObject, Vector3 position)
         {
+            triggeringObject = GetTargetTriggeringObject(triggeringObject);
             if (!CanReact(triggeringObject, position)) 
                 return false;
             React(triggeringObject, position);
@@ -71,6 +87,8 @@ namespace Nie
         public void React(GameObject triggeringObject, Vector3 position)
         {
 
+            triggeringObject = GetTargetTriggeringObject(triggeringObject);
+            var thisObject = TargetObject;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Reaction '{name}' reacts (triggeringObject: '{triggeringObject.name}', position: {position}");
 
@@ -85,7 +103,7 @@ namespace Nie
             if (Spawn != null)
                 Instantiate(Spawn, position, Quaternion.identity);
 
-            if (ReleaseGrabbed && TryGetComponent<Grabbable>(out var grabbable2))
+            if (ReleaseGrabbed && thisObject.TryGetComponent<Grabbable>(out var grabbable2))
                 grabbable2.ReleaseIfGrabbed();
 
             if (PlayAnimatorState.Animator != null)
@@ -98,7 +116,7 @@ namespace Nie
             {
                 var pos = transform.position;
                 var rot = transform.rotation;
-                Destroy(gameObject);
+                Destroy(thisObject);
                 if (ReplaceWith != null)
                     Instantiate(ReplaceWith, pos, rot);
             }

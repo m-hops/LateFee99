@@ -166,7 +166,7 @@ namespace Nie
                 SetGameObjectLayer(grabbable.gameObject, GrabbedObjectLayer.LayerIndex);
             }
             m_GrabbedPosition = grabbable.transform.InverseTransformPoint(grabPosition);
-            grabbable.GrabBy(this);
+            grabbable.GrabBy(this, grabPosition);
 
         }
 
@@ -199,14 +199,14 @@ namespace Nie
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] GrabberController '{name}' Focus Grabbable '{grabbable.name}'");
             m_Focus = grabbable;
-            m_Focus.Focus(this);
+            //m_Focus.Focus(this);
         }
         public void Unfocus()
         {
             if (m_Focus == null) return;
             if(DebugLog)
                 Debug.Log($"[{Time.frameCount}] GrabberController '{name}' Unfocus Grabbable '{m_Focus.name}'");
-            m_Focus.Unfocus(this);
+            //m_Focus.Unfocus(this);
             m_Focus = null;
             HideHand();
         }
