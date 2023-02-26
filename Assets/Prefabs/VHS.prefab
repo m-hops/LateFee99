@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 294652597192830184}
   - component: {fileID: 3485716650752964306}
   - component: {fileID: 5902234813290394099}
-  - component: {fileID: 6739955818404033182}
   - component: {fileID: 8298005246431152625}
   - component: {fileID: 384556577753805405}
+  - component: {fileID: 6739955818404033182}
   - component: {fileID: 3884472521742301344}
   m_Layer: 0
   m_Name: VHS
@@ -118,38 +118,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &6739955818404033182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4443191306362880650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd8295884aae8074287418bd28efe243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DebugLog: 0
-  MustBeInAnimatorState:
-    Animator: {fileID: 0}
-    State: 
-    StateHash: 0
-  MustBeInReactionState:
-    Object: {fileID: 8298005246431152625}
-    StateName: Free
-  OnGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  OnRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFocus:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUnfocus:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &8298005246431152625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +133,8 @@ MonoBehaviour:
   StateName: Free
   StateGroup: 
   IsInitialState: 1
+  DebugLog: 0
+  IsActiveState: 0
   ReactionCooldown: 0
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
@@ -179,8 +149,8 @@ MonoBehaviour:
   MoveToParentOrigin: 0
   OnBeginForceState: 
   OnEndForceState: 
-  DebugLog: 0
-  IsActiveState: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
   OnReactBegin:
     m_PersistentCalls:
       m_Calls: []
@@ -202,6 +172,8 @@ MonoBehaviour:
   StateName: Inserted
   StateGroup: 
   IsInitialState: 0
+  DebugLog: 0
+  IsActiveState: 0
   ReactionCooldown: 0
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
@@ -216,14 +188,47 @@ MonoBehaviour:
   MoveToParentOrigin: 0
   OnBeginForceState: 
   OnEndForceState: 
-  DebugLog: 1
-  IsActiveState: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
   OnReactBegin:
     m_PersistentCalls:
       m_Calls: []
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6739955818404033182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4443191306362880650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd8295884aae8074287418bd28efe243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugLog: 0
+  Conditions:
+    MustBeInAnimatorState:
+      Animator: {fileID: 0}
+      State: 
+      StateHash: 0
+    MustBeInReactionState:
+      Object: {fileID: 8298005246431152625}
+      StateName: Free
+  OnGrab:
+    ReactionReferences: []
+    Events:
+      m_PersistentCalls:
+        m_Calls: []
+    ReactionOnTriggeringObject: 
+  OnRelease:
+    ReactionReferences: []
+    Events:
+      m_PersistentCalls:
+        m_Calls: []
+    ReactionOnTriggeringObject: 
 --- !u!114 &3884472521742301344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,19 +252,21 @@ MonoBehaviour:
     m_Bits: 4294967295
   ReactToCollision: 0
   ReactToTrigger: 1
-  MustBeInAnimatorState:
-    Animator: {fileID: 0}
-    State: 
-    StateHash: 0
-  MustBeInReactionState:
-    Object: {fileID: 8298005246431152625}
-    StateName: Free
-  Reactions: []
-  ReactionStates:
-  - Object: {fileID: 8298005246431152625}
-    StateName: Inserted
-  DebugLog: 1
-  DebugLogTouching: 1
+  StateConditions:
+    MustBeInAnimatorState:
+      Animator: {fileID: 0}
+      State: 
+      StateHash: 0
+    MustBeInReactionState:
+      Object: {fileID: 8298005246431152625}
+      StateName: Free
   OnReact:
-    m_PersistentCalls:
-      m_Calls: []
+    ReactionReferences:
+    - TargetObject: {fileID: 4443191306362880650}
+      ReactionName: Inserted
+    Events:
+      m_PersistentCalls:
+        m_Calls: []
+    ReactionOnTriggeringObject: 
+  DebugLog: 0
+  DebugLogTouching: 0

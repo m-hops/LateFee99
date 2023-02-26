@@ -19,16 +19,35 @@ namespace Nie
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+		bool m_LockControls = true;
+        public void LockControls()
+        {
+			cursorLocked = true;
+            cursorInputForLook = true;
+			m_LockControls = true;
 
+			SetCursorState(cursorLocked);
+
+        }
+        public void UnlockControls()
+        {
+            cursorLocked = false;
+            cursorInputForLook = false;
+            m_LockControls = false;
+            SetCursorState(cursorLocked);
+
+        }
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
-		{
-			MoveInput(value.Get<Vector2>());
+        public void OnMove(InputValue value)
+        {
+            if (!m_LockControls) return;
+            MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
-		{
-			if(cursorInputForLook)
+        {
+            if (!m_LockControls) return;
+            if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -36,12 +55,14 @@ namespace Nie
 
 		public void OnJump(InputValue value)
 		{
+			if (!m_LockControls) return;
 			JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
-		{
-			SprintInput(value.isPressed);
+        {
+            if (!m_LockControls) return;
+            SprintInput(value.isPressed);
 		}
 #endif
 
