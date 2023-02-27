@@ -7,6 +7,11 @@ namespace Nie
     [AddComponentMenu("Nie/Player/TouchController")]
     public class TouchController : MonoBehaviour
     {
+        [Tooltip("touch only objects of these layers")]
+        public LayerMask LayerMask;
+
+        [Tooltip("touch only objects closer to this distance")]
+        public float MaxDistance = 10;
         [Tooltip("Where the ray cast to detect any touchable will be directer toward. If left null, will ray cast in the middle of the screen")]
         public Transform TouchPositionObject;
 
@@ -30,7 +35,7 @@ namespace Nie
         public void TryTouchInFront()
         {
             var ray = new Ray(transform.position, (RayCastTarget - transform.position).normalized);
-            if (Physics.Raycast(ray, out var hit))
+            if (Physics.Raycast(ray, out var hit, MaxDistance, LayerMask.value))
             {
                 if (DebugLog)
                     Debug.Log($"[{Time.frameCount}] ToucherController TryTouchInFront '{name}' ray hits '{hit.transform.name}'");

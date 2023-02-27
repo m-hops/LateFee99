@@ -49,14 +49,11 @@ namespace Nie
         [FormerlySerializedAs("Conditions")]
         public ReactionConditions StateConditions;
 
-        [Tooltip("Reaction executed when a valid pair of ReactOnConllisionPair collide.")]
-        public ReactionList OnReact;
-
-        //public AnimatorStateReference MustBeInAnimatorState;
-        //public ReactionStateReference MustBeInReactionState;
-
-        //public List<Reaction> Reactions;
-        //public List<ReactionStateReference> ReactionStates;
+        [Tooltip("Reaction executed when a valid pair of ReactOnConllisionPair begins to collide.")]
+        [FormerlySerializedAs("OnReact")]
+        public ReactionList OnReactBegin;
+        [Tooltip("Reaction executed when a valid pair of ReactOnConllisionPair stop colliding.")]
+        public ReactionList OnReactEnd;
 
 
         [Header("Debug:")]
@@ -64,40 +61,22 @@ namespace Nie
         public bool DebugLog = false;
         public bool DebugLogTouching = false;
 
-        //[Header("Events:")]
-        //[SerializeField]
-        //[Tooltip("Event called when the reaction happens")]
-        //UnityEvent<ReactOnCollisionPair, ReactOnCollisionPair> OnReact;
-#if NIE_EXTRAEVENT
-
-        [SerializeField]
-        [Tooltip("Event called when this ReactiveItem starts touching another ReactiveItem with matching respective names. Parameters are (ReactiveItem this, ReactiveItem other)")]
-        UnityEvent<ReactOnCollisionPair, ReactOnCollisionPair> OnTouchBegin;
-
-        [SerializeField]
-        [Tooltip("Event called when this ReactiveItem stops touching another ReactiveItem with matching respective names. Parameters are (ReactiveItem this, ReactiveItem other)")]
-        UnityEvent<ReactOnCollisionPair, ReactOnCollisionPair> OnTouchEnd;
-
-        [SerializeField]
-        [Tooltip("Event called when this ReactiveItem is touching another ReactiveItem with matching respective names. Parameters are (ReactiveItem this, ReactiveItem other)")]
-        UnityEvent<ReactOnCollisionPair, ReactOnCollisionPair> OnTouching;
-#endif
-
         public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
 
         // Keep track of what ReactOnCollisionPair are currently touching
-        List<ReactOnCollisionPair> m_TouchingWith = new();
+        List<ReactionTrigger> m_TouchingWith = new();
 
         // Keep track of what Reaction is currently on cooldown
-        List<DelayedReaction> m_CooldownWith = new();
+        List<ReactionTrigger> m_CooldownWith = new();
 
         [System.Serializable]
-        public class DelayedReaction
+        public class ReactionTrigger
         {
             public ReactOnCollisionPair Other;
             public Vector3 Position;
             public float TimerCountdown;
-            public DelayedReaction(ReactOnCollisionPair other, Vector3 position, float delay)
+            public bool HasBegun;
+            public ReactionTrigger(ReactOnCollisionPair other, Vector3 position, float delay)
             {
                 Other = other;
                 Position = position;
@@ -112,25 +91,33 @@ namespace Nie
                 }
                 return false;
             }
-        }
-        // Keep track of all Reaction currently on a delay
-        List<DelayedReaction> m_DelayReactions = new();
-#endregion
-
-        public void React(DelayedReaction delayedReaction)
-        {
-            
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' reacts to '{delayedReaction.Other.ThisReactionName}'. Triggering Object:'{(delayedReaction.Other == null ? "<null>" : delayedReaction.Other.gameObject.name)}' at:'{delayedReaction.Position}'", this);
-
-            OnReact.React(TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
-
-            if (ReactionCooldown > 0)
+            public void Begin(ReactOnCollisionPair from)
             {
-                delayedReaction.TimerCountdown = ReactionCooldown;
-                m_CooldownWith.Add(delayedReaction);
+
+                if (from.DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{from.name}.{from.ThisReactionName}' collision begin with '{Other.name}.{Other.ThisReactionName}'.", from);
+
+                from.OnReactBegin.React(from.TargetObject, Other.gameObject, Position);
+
+                if (from.ReactionCooldown > 0)
+                {
+                    TimerCountdown = from.ReactionCooldown;
+                    from.m_CooldownWith.Add(this);
+                }
+                HasBegun = true;
+            }
+            public void End(ReactOnCollisionPair from)
+            {
+                if (from.DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{from.name}.{from.ThisReactionName}' collision end with '{Other.name}.{Other.ThisReactionName}'.", from);
+
+                from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position);
             }
         }
+        // Keep track of all Reaction currently on a delay
+        List<ReactionTrigger> m_DelayReactions = new();
+#endregion
+
         public bool CanReact(ReactOnCollisionPair other, Vector3 position)
         {
 
@@ -138,7 +125,7 @@ namespace Nie
             if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
             if (!StateConditions.CanReact(other.gameObject, position)) return false;
-            if (!OnReact.CanReact(TargetObject, other.gameObject, position)) return false;
+            if (!OnReactBegin.CanReact(TargetObject, other.gameObject, position)) return false;
             return true;
         }
         public bool RequestReaction(ReactOnCollisionPair other, Vector3 position)
@@ -162,7 +149,7 @@ namespace Nie
 
                 if (reaction.Tick())
                 {
-                    React(reaction);
+                    reaction.Begin(this);
                     return true;
                 }
                 return false;
@@ -190,35 +177,29 @@ namespace Nie
         {
             // all ReactOnCollisionPair in TouchingWith are still touching this frame
             foreach (var other in m_TouchingWith)
-                Touching(other);
+                Touching(other.Other);
         }
 
         void OnDestroy()
         {
             foreach (var other in m_TouchingWith)
             {
-                EndTouch(other);
-                other.EndTouchIfTouching(this);
+                other.End(this);
+                other.Other.EndTouchIfTouching(this);
             }
         }
 
 #region Touching state
         void BeginTouch(ReactOnCollisionPair other, Vector3 position)
         {
-            if (DebugLogTouching)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}' at:'{position}'", this);
-            m_TouchingWith.Add(other);
-
-#if NIE_EXTRAEVENT
-            OnTouchBegin?.Invoke(this, other);
-#endif
+            var reaction = new ReactionTrigger(other, position, ReactionDelay);
+            m_TouchingWith.Add(reaction);
 
             // React if not currently on cooldown
             if (m_CooldownWith.All(x => x.Other != other))
             {
-                var reaction = new DelayedReaction(other, position, ReactionDelay);
                 if (ReactionDelay == 0)
-                    React(reaction);
+                    reaction.Begin(this);//ReactBegin(reaction);
                 else
                     m_DelayReactions.Add(reaction);
             }
@@ -231,26 +212,16 @@ namespace Nie
 #endif
         }
 
-        void EndTouch(ReactOnCollisionPair other)
-        {
-            if (DebugLogTouching)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}'", this);
-
-#if NIE_EXTRAEVENT
-            OnTouchEnd?.Invoke(this, other);
-#endif
-
-        }
-
         bool EndTouchIfTouching(ReactOnCollisionPair other)
         {
             // if reactions require the objects to always touch during the delay, remove all current reaction with the other object.
             if (MustTouchDuringDelay)
                 m_DelayReactions.RemoveAll(reaction => reaction.Other == other);
-
-            if (m_TouchingWith.Remove(other))
+            
+            var reaction = m_TouchingWith.FirstOrDefault(reaction => reaction.Other == other);
+            if (reaction != null && m_TouchingWith.Remove(reaction))
             {
-                EndTouch(other);
+                reaction.End(this);
                 return true;
             }
             return false;
@@ -283,7 +254,7 @@ namespace Nie
                 other.BeginTouch(this, transform.position);
             }
         }
-        private void OnTriggerEnterExit(Collider otherCollider)
+        private void OnTriggerExit(Collider otherCollider)
         {
             if (!ReactToTrigger) return;
             foreach (var other in otherCollider.GetComponentsInChildren<ReactOnCollisionPair>().Where(other => other.ReactToTrigger))

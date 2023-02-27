@@ -9,6 +9,12 @@ namespace Nie
     {
         [Tooltip("Where the ray cast to detect any object with a 'ReactOnFocus' component will be directed toward. If left null, will ray cast in the middle of the screen")]
         public Transform FocusTarget;
+        
+        [Tooltip("Focus only on object of these layers")]
+        public LayerMask LayerMask;
+
+        [Tooltip("Focus only on object closer to this distance")]
+        public float MaxDistance = 10;
 
         [Tooltip("Object to move to the currently focused 'ReactOnFocus' object.")]
         public GameObject Hand;
@@ -21,11 +27,11 @@ namespace Nie
         public Vector3 FocusPosition;
         public Vector3 RayCastTarget => FocusTarget != null ? FocusTarget.position : transform.position + transform.forward;
         public ReactOnFocus CurrentFocus => m_Focus;
-
+        
         void Update()
         {
             var ray = new Ray(transform.position, (RayCastTarget - transform.position).normalized);
-            if (Physics.Raycast(ray, out var hit) && hit.collider.gameObject.TryGetComponent<ReactOnFocus>(out var focusable) && focusable.CanFocus(this, hit.point))
+            if (Physics.Raycast(ray, out var hit, MaxDistance, LayerMask.value) && hit.collider.gameObject.TryGetComponent<ReactOnFocus>(out var focusable) && focusable.CanFocus(this, hit.point))
             {
                 ShowHand(hit.point);
                 if (m_Focus != focusable)

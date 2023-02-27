@@ -16,6 +16,12 @@ namespace Nie
         [Tooltip("The currently grabbed Rigidbody")]
         public Rigidbody GrabbedRigidbody { get; private set; }
 
+        [Tooltip("Grab only objects of these layers")]
+        public LayerMask LayerMask;
+
+        [Tooltip("Grab only objects closer to this distance")]
+        public float MaxDistance = 10;
+
         [Tooltip("Where the grabbed object will be move toward.")]
         public Transform GrabPosition;
 
@@ -69,7 +75,7 @@ namespace Nie
             if (!m_IsGrabbing)
             {
                 var ray = new Ray(transform.position, (GrabPosition.position - transform.position).normalized);
-                if (Physics.Raycast(ray, out var hit) && hit.rigidbody != null && !hit.rigidbody.isKinematic && hit.rigidbody.gameObject.TryGetComponent<Grabbable>(out var grabbable) && grabbable.CanGrab(this, hit.point))
+                if (Physics.Raycast(ray, out var hit, MaxDistance, LayerMask.value) && hit.rigidbody != null && !hit.rigidbody.isKinematic && hit.rigidbody.gameObject.TryGetComponent<Grabbable>(out var grabbable) && grabbable.CanGrab(this, hit.point))
                 {
                     ShowHand(hit.point);
                     if (m_Focus != grabbable)

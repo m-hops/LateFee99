@@ -41,6 +41,8 @@ namespace Nie
         public string StateGroup;
         [Tooltip("Will be in active state when the game object starts. Will not execute the reaction")]
         public bool IsInitialState;
+        [Tooltip("Is currently activate and all other state of the same group are deactivated")]
+        public bool IsActiveState;
 
         [Tooltip("Print to console events caused by this Reaction")]
         public bool DebugLog = false;
@@ -50,8 +52,6 @@ namespace Nie
         public Transform DebugDrawState;
 #endif
 
-        [Tooltip("Is currently activate and all other state of the same group are deactivated")]
-        public bool IsActiveState;
 #if UNITY_EDITOR
         [EditorCools.Button]
         public void SetActiveState()
@@ -142,8 +142,9 @@ namespace Nie
             
             if(EditorMenu.DrawStatesLabel && IsActiveState && DebugDrawState != null && DebugLabel == null)
             {
-                DebugLabel = GameObject.Instantiate(EditorMenu.DebugLabelAsset, DebugDrawState).GetComponent<TextMesh>();
-                DebugLabel.hideFlags = HideFlags.HideAndDontSave;
+                var obj = GameObject.Instantiate(EditorMenu.DebugLabelAsset, DebugDrawState);
+                DebugLabel = obj.GetComponent<TextMesh>();
+                obj.hideFlags = HideFlags.HideAndDontSave;
                 DebugLabel.transform.localPosition = Vector3.zero;
                 DebugLabel.transform.localRotation = Quaternion.identity;
                 var parentScale = DebugDrawState.lossyScale;
