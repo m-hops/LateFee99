@@ -110,7 +110,7 @@ namespace Nie
         {
 
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'", this);
 
             ReactionOnCollisionEnter.React(TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
 
@@ -171,7 +171,7 @@ namespace Nie
         void BeginTouch(GameObject other, Vector3 position)
         {
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' begins touching '{other.name}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' begins touching '{other.name}'", this);
 
             m_TouchingWith.Add(other);
 
@@ -190,7 +190,7 @@ namespace Nie
         void EndTouch(GameObject other)
         {
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' stopped touching '{other.name}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' stopped touching '{other.name}'", this);
 
         }
 

@@ -412,7 +412,7 @@ MonoBehaviour:
   ReleaseGrabbed: 0
   AttachTriggeringObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
-  OnBeginForceState: Free
+  OnBeginForceState: 
   OnEndForceState: 
   ThisObject: {fileID: 0}
   TriggeringObject: {fileID: 0}
@@ -422,6 +422,10 @@ MonoBehaviour:
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
 --- !u!114 &9026650709244245405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,8 +455,8 @@ MonoBehaviour:
   ReleaseGrabbed: 0
   AttachTriggeringObjectAt: {fileID: 9026650708946880071}
   MoveToParentOrigin: 1
-  OnBeginForceState: Inserted
-  OnEndForceState: Free
+  OnBeginForceState: 
+  OnEndForceState: 
   ThisObject: {fileID: 0}
   TriggeringObject: {fileID: 0}
   OnReactBegin:
@@ -461,6 +465,24 @@ MonoBehaviour:
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 2
+      TargetObject: {fileID: 0}
+      ReactionName: InVCR
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 3
+      TargetObject: {fileID: 0}
+      ReactionName: Free
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!114 &9026650709244245406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisReactionName: VHR
+  ThisReactionName: VCR
   OtherReactionName: VHS
   ReactionDelay: 0
   MustTouchDuringDelay: 0
@@ -485,21 +507,21 @@ MonoBehaviour:
   ReactToCollision: 0
   ReactToTrigger: 1
   StateConditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 9026650709244245404}
+      State: Empty
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 9026650709244245404}
-      StateName: Empty
   OnReact:
     ReactionReferences:
-    - TargetObject: {fileID: 9026650709244245400}
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 9026650709244245400}
       ReactionName: Inserted
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
   DebugLog: 0
   DebugLogTouching: 0
 --- !u!1 &9026650709399673909
@@ -513,7 +535,7 @@ GameObject:
   - component: {fileID: 9026650709399673908}
   - component: {fileID: 9026650709399673899}
   m_Layer: 0
-  m_Name: COllider
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -677,25 +699,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugLog: 0
   Conditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 9026650709244245404}
+      State: Inserted
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 9026650709244245404}
-      StateName: Inserted
   OnFocusReaction:
     ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
   OnUnfocusReaction:
     ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
 --- !u!114 &9026650710326955645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,24 +723,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugLog: 0
   Conditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 9026650709244245404}
+      State: Inserted
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 9026650709244245404}
-      StateName: Inserted
   OnTouch:
     ReactionReferences:
-    - TargetObject: {fileID: 9026650709244245400}
+    - ReactionType: 0
+      ObjectTargetType: 1
+      TargetObject: {fileID: 9026650709244245400}
       ReactionName: Empty
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
   OnRelease:
     ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 

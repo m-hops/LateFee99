@@ -9,21 +9,122 @@ namespace Nie
     [System.Serializable]
     public struct ReactionReference
     {
+        public enum Type
+        {
+            Reaction,
+            Event,
+        }
+        public enum TargetType
+        {
+            Self,
+            Other,
+            TriggeringObject,
+            PreviousTriggeringObject,
+        }
+        public Type ReactionType;
+        public TargetType ObjectTargetType;
+
+
+        #region /////////////////////////// Type Reaction
         public GameObject TargetObject;
         public string ReactionName;
-        public void React(GameObject triggeringObject, Vector3 position)
-            => React(TargetObject, ReactionName, triggeringObject, position);
-        public bool TryReact(GameObject triggeringObject, Vector3 position)
-            => TryReact(TargetObject, ReactionName, triggeringObject, position);
-        public bool CanReact(GameObject triggeringObject, Vector3 position)
-            => CanReact(TargetObject, ReactionName, triggeringObject, position);
+        #endregion
+
+        #region /////////////////////////// Type Event
+
+        public UnityEvent Event;
+        #endregion
+
+
+
+        public void React(GameObject from, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        {
+            switch(ReactionType)
+            {
+                case Type.Reaction:
+                    switch (ObjectTargetType)
+                    {
+                        case TargetType.Self:
+                            React(from, ReactionName, triggeringObject, position);
+                            return;
+                        case TargetType.Other:
+                            React(TargetObject, ReactionName, triggeringObject, position);
+                            return;
+                        case TargetType.TriggeringObject:
+                            if (triggeringObject == null) return;
+#if UNITY_EDITOR
+                            if (!HasReaction(triggeringObject, ReactionName))
+                                Debug.LogWarning($"[{Time.frameCount}] Could not find reaction '{ReactionName}' on triggering object '{triggeringObject.GetNameOrNull()}'. Triggered from '{from.GetNameOrNull()}' at position: {position}", from);
+#endif
+                            React(triggeringObject, ReactionName, from, position);
+                            return;
+                        case TargetType.PreviousTriggeringObject:
+                            if (previousTriggeringObject == null) return;
+#if UNITY_EDITOR
+                            if (!HasReaction(previousTriggeringObject, ReactionName))
+                                Debug.LogWarning($"[{Time.frameCount}] Could not find reaction '{ReactionName}' on previous triggering object '{previousTriggeringObject.GetNameOrNull()}'. Triggered from '{from.GetNameOrNull()}' at position: {position}", from);
+#endif
+                            React(previousTriggeringObject, ReactionName, from, position);
+                            return;
+                    }
+                    return;
+                case Type.Event:
+                    Event?.Invoke();
+                    return;
+            }
+        }
+            
+        public bool TryReact(GameObject from, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        {
+            if (CanReact(from, triggeringObject, position, previousTriggeringObject))
+            {
+                React(from, triggeringObject, position, previousTriggeringObject);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CanReact(GameObject from, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        {
+            switch (ReactionType)
+            {
+                case Type.Reaction:
+                    switch (ObjectTargetType)
+                    {
+                        case TargetType.Self:
+                            return CanReact(from, ReactionName, triggeringObject, position);
+                        case TargetType.Other:
+                            return CanReact(TargetObject, ReactionName, triggeringObject, position);
+                        case TargetType.TriggeringObject:
+                            if (triggeringObject == null) return true;
+#if UNITY_EDITOR
+                            if (!HasReaction(triggeringObject, ReactionName))
+                                Debug.LogWarning($"[{Time.frameCount}] Could not find reaction '{ReactionName}' on triggering object '{triggeringObject.GetNameOrNull()}'. Triggered from '{from.GetNameOrNull()}' at position: {position}", from);
+#endif
+                            return CanReact(triggeringObject, ReactionName, from, position);
+                        case TargetType.PreviousTriggeringObject:
+                            if (previousTriggeringObject == null) return true;
+#if UNITY_EDITOR
+                            if (!HasReaction(previousTriggeringObject, ReactionName))
+                                Debug.LogWarning($"[{Time.frameCount}] Could not find reaction '{ReactionName}' on previous triggering object '{previousTriggeringObject.GetNameOrNull()}'. Triggered from '{from.GetNameOrNull()}' at position: {position}", from);
+#endif
+                            return CanReact(previousTriggeringObject, ReactionName, from, position);
+                    }
+                    break;
+                case Type.Event:
+                    return true;
+            }
+            return true;
+        }
+
+
 
         public static bool HasReaction(GameObject obj, string reactionOrStateName)
         {
             return obj.GetComponents<Reaction>().Any(x => x.ReactionName == reactionOrStateName)
                 || obj.GetComponents<ReactionState>().Any(x => x.StateName == reactionOrStateName);
         }
-        public static bool CanReact(GameObject targetObject, string reactionOrStateName, GameObject triggeringObject, Vector3 position)
+        public static bool CanReact(GameObject targetObject, string reactionOrStateName, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
         {
             int potentialReactCount = 0;
             foreach (var reaction in targetObject.GetComponents<Reaction>())
@@ -44,7 +145,7 @@ namespace Nie
             if (potentialReactCount == 0) return true;
             return false;
         }
-        public static bool TryReact(GameObject targetObject, string reactionOrStateName, GameObject triggeringObject, Vector3 position)
+        public static bool TryReact(GameObject targetObject, string reactionOrStateName, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
         {
             if (CanReact(targetObject, reactionOrStateName, triggeringObject, position))
             {

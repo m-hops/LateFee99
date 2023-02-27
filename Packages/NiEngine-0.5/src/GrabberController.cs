@@ -31,7 +31,7 @@ namespace Nie
 
         [Tooltip("If true, set the grabbed object and all its children to a different layer")]
         public bool ChangedGrabbedObjectLayer = false;
-        
+
         [Tooltip("The layer to set on the grabbed object if ChangedGrabbedObjectLayer is checked")]
         public GameObjectLayer GrabbedObjectLayer;
 

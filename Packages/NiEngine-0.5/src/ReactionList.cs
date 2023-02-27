@@ -9,32 +9,37 @@ namespace Nie
     [System.Serializable]
     public struct ReactionList
     {
+        [SerializeField]
         public List<ReactionReference> ReactionReferences;
-        public UnityEvent Events;
-        public string ReactionOnTriggeringObject;
-        public void React(GameObject targetObject, GameObject triggeringObject, Vector3 position)
+        //[SerializeField]
+        //public UnityEvent Events;
+        //[SerializeField]
+        //public string ReactionOnTriggeringObject;
+        public void React(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
         {
-            foreach (var reaction in ReactionReferences)
-                reaction.TryReact(triggeringObject, position);
+            if(ReactionReferences != null)
+                foreach (var reaction in ReactionReferences)
+                    reaction.TryReact(targetObject, triggeringObject, position, previousTriggeringObject);
 
-            if (!string.IsNullOrEmpty(ReactionOnTriggeringObject))
-                ReactionReference.TryReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position);
-            Events?.Invoke();
+            //if (!string.IsNullOrEmpty(ReactionOnTriggeringObject))
+            //    ReactionReference.TryReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position, previousTriggeringObject);
+            //Events?.Invoke();
         }
-        public bool TryReact(GameObject targetObject, GameObject triggeringObject, Vector3 position)
+        public bool TryReact(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
         {
             if (CanReact(targetObject, triggeringObject, position))
             {
-                React(targetObject, triggeringObject, position);
+                React(targetObject, triggeringObject, position, previousTriggeringObject);
                 return true;
             }
             return false;
         }
-        public bool CanReact(GameObject targetObject, GameObject triggeringObject, Vector3 position)
+        public bool CanReact(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
         {
-            if (!string.IsNullOrEmpty(ReactionOnTriggeringObject) && !ReactionReference.CanReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position)) return false;
-            return ReactionReferences.Count == 0
-                || ReactionReferences.Any(x => x.CanReact(triggeringObject, position));
+            //if (!string.IsNullOrEmpty(ReactionOnTriggeringObject) && !ReactionReference.CanReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position, previousTriggeringObject)) return false;
+            return ReactionReferences == null 
+                || ReactionReferences.Count == 0
+                || ReactionReferences.Any(x => x.CanReact(targetObject, triggeringObject, position, previousTriggeringObject));
         }
     }
 }

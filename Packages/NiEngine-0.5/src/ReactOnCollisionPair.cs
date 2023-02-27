@@ -121,7 +121,7 @@ namespace Nie
         {
             
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' reacts to '{delayedReaction.Other.ThisReactionName}'. Triggering Object:'{(delayedReaction.Other == null ? "<null>" : delayedReaction.Other.gameObject.name)}' at:'{delayedReaction.Position}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' reacts to '{delayedReaction.Other.ThisReactionName}'. Triggering Object:'{(delayedReaction.Other == null ? "<null>" : delayedReaction.Other.gameObject.name)}' at:'{delayedReaction.Position}'", this);
 
             OnReact.React(TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
 
@@ -206,7 +206,7 @@ namespace Nie
         void BeginTouch(ReactOnCollisionPair other, Vector3 position)
         {
             if (DebugLogTouching)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}' at:'{position}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}' at:'{position}'", this);
             m_TouchingWith.Add(other);
 
 #if NIE_EXTRAEVENT
@@ -234,7 +234,7 @@ namespace Nie
         void EndTouch(ReactOnCollisionPair other)
         {
             if (DebugLogTouching)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}'");
+                Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{ThisReactionName}' begins touching '{other.ThisReactionName}'. Triggering Object:'{(other == null ? "<null>" : other.gameObject.name)}'", this);
 
 #if NIE_EXTRAEVENT
             OnTouchEnd?.Invoke(this, other);

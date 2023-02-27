@@ -136,7 +136,7 @@ MonoBehaviour:
   StateGroup: 
   IsInitialState: 1
   DebugLog: 0
-  IsActiveState: 0
+  IsActiveState: 1
   ReactionCooldown: 0
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
@@ -171,6 +171,10 @@ MonoBehaviour:
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
 --- !u!114 &384556577753805405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +226,10 @@ MonoBehaviour:
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
 --- !u!114 &3057017681130613382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +281,10 @@ MonoBehaviour:
   OnReactEnd:
     m_PersistentCalls:
       m_Calls: []
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
 --- !u!114 &6739955818404033182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,26 +298,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
+  DetachWhenGrabbed: 1
+  ReattachWhenRelease: 0
   Conditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 8298005246431152625}
+      State: Free
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 8298005246431152625}
-      StateName: Free
   OnGrab:
     ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
   OnRelease:
     ReactionReferences: []
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
 --- !u!114 &3884472521742301344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisReactionName: VHS
-  OtherReactionName: VHR
+  OtherReactionName: VCR
   ReactionDelay: 0
   MustTouchDuringDelay: 0
   ReactionCooldown: 0
@@ -330,21 +335,21 @@ MonoBehaviour:
   ReactToCollision: 0
   ReactToTrigger: 1
   StateConditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 8298005246431152625}
+      State: Free
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 8298005246431152625}
-      StateName: Free
   OnReact:
     ReactionReferences:
-    - TargetObject: {fileID: 4443191306362880650}
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 4443191306362880650}
       ReactionName: InVCR
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
   DebugLog: 0
   DebugLogTouching: 0
 --- !u!114 &753943625
@@ -371,20 +376,20 @@ MonoBehaviour:
   ReactToCollision: 0
   ReactToTrigger: 1
   StateConditions:
-    MustBeInAnimatorState:
+    States:
+    - Type: 0
       Animator: {fileID: 0}
-      State: 
+      ReactionState: {fileID: 8298005246431152625}
+      State: Free
       StateHash: 0
-    MustBeInReactionState:
-      Object: {fileID: 8298005246431152625}
-      StateName: Free
   OnReact:
     ReactionReferences:
-    - TargetObject: {fileID: 4443191306362880650}
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 4443191306362880650}
       ReactionName: InSleeve
-    Events:
-      m_PersistentCalls:
-        m_Calls: []
-    ReactionOnTriggeringObject: 
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
   DebugLog: 0
   DebugLogTouching: 0

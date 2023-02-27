@@ -12,6 +12,11 @@ namespace Nie
     {
         public bool DebugLog;
 
+        [Tooltip("If true, will remove the grabbed object from its parent GameObject.")]
+        public bool DetachWhenGrabbed = false;
+        [Tooltip("If true, will remove the grabbed object from its parent GameObject.")]
+        public bool ReattachWhenRelease = false;
+
         [Tooltip("Conditions to be able to grab this object")]
         public ReactionConditions Conditions;
 
@@ -28,6 +33,7 @@ namespace Nie
         public bool IsGrabbed => GrabbedBy != null;
         public GrabberController GrabbedBy { get; private set; }
 
+        Transform m_PreviousParent;
         public void ReleaseIfGrabbed()
         {
             GrabbedBy?.ReleaseGrabbed();
@@ -49,6 +55,10 @@ namespace Nie
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Grab By '{by.name}'");
             GrabbedBy = by;
+            if(ReattachWhenRelease)
+                m_PreviousParent = transform.parent;
+            if (DetachWhenGrabbed)
+                transform.parent = null;
             OnGrab.React(TargetObject, by.gameObject, grabPosition);
         }
 
@@ -58,6 +68,8 @@ namespace Nie
         /// <param name="by"></param>
         public void ReleaseBy(GrabberController by)
         {
+            if (ReattachWhenRelease)
+                transform.parent = m_PreviousParent;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Release By '{by.name}'");
             OnRelease.React(TargetObject, by.gameObject, transform.position);

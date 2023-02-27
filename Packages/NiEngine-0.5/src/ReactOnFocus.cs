@@ -32,13 +32,13 @@ namespace Nie
         public void Focus(FocusController by, Vector3 position)
         {
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Focused By '{by.name}'");
+                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Focused By '{by.name}'", this);
             OnFocusReaction.TryReact(TargetObject, by.gameObject, position);
         }
         public void Unfocus(FocusController by, Vector3 position)
         {
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Unfocused By '{by.name}'");
+                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Unfocused By '{by.name}'", this);
             OnUnfocusReaction.TryReact(TargetObject, by.gameObject, position);
         }
     }

@@ -29,15 +29,15 @@ namespace Nie.Editor
                 layout.Label("State:");
                 var propStateName = property.FindPropertyRelative("StateName");
                 layout.PropertyField(propStateName, -RectLayout.WidthOf("Missing"));
-
-                if (obj.gameObject.GetComponents<ReactionState>().Any(x => x.StateName == propStateName.stringValue))
+                bool found = false;
+                foreach(var rs in obj.gameObject.GetComponents<ReactionState>().Where(x=> x.StateName == propStateName.stringValue))
                 {
+                    propObject.objectReferenceValue = rs;
                     layout.Label("Found");
+                    found = true;
                 }
-                else
-                {
+                if (!found)
                     layout.Label("Missing");
-                }
             }
 
             EditorGUI.EndProperty();

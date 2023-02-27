@@ -12,8 +12,9 @@ namespace Nie.Editor
             float h = EditorGUIUtility.singleLineHeight;
             if (property.isExpanded)
             {
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("MustBeInAnimatorState"));
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("MustBeInReactionState"));
+                //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("MustBeInAnimatorState"));
+                //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("MustBeInReactionState"));
+                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("States"));
             }
             return h;
         }
@@ -27,10 +28,11 @@ namespace Nie.Editor
             if (property.isExpanded)
             {
                 layout = layout.SubHorizontal();
-                layout.Acquire(16);
+                layout.AcquireWidth(16);
                 layout = layout.SubVertical();
-                layout.PropertyField(property.FindPropertyRelative("MustBeInAnimatorState"), new GUIContent("Must Be In Animator State"));
-                layout.PropertyField(property.FindPropertyRelative("MustBeInReactionState"), new GUIContent("Must Be In Reaction State"));
+                //layout.PropertyField(property.FindPropertyRelative("MustBeInAnimatorState"), new GUIContent("Must Be In Animator State"));
+                //layout.PropertyField(property.FindPropertyRelative("MustBeInReactionState"), new GUIContent("Must Be In Reaction State"));
+                layout.PropertyField(property.FindPropertyRelative("States"), new GUIContent("Must Be In State"));
 
             }
             EditorGUI.EndProperty();

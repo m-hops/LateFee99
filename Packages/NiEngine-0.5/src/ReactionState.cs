@@ -28,61 +28,8 @@ namespace Nie
             state = null;
             return false;
         }
-    }
-    [System.Serializable]
-    public struct ReactionStateReference
-    {
-        public ReactionState Object;
-        public string StateName;
-        public bool IsActiveState
-        {
-            get
-            {
-                if (TryGetState(out var state))
-                    return state.IsActiveState;
-                return false;
-            }
-        }
-        public string ActiveStateName
-        {
-            get
-            {
-                if(TryGetState(out var state))
-                {
-                    foreach (var reactionState in Object.GetComponents<ReactionState>())
-                    {
-                        if (reactionState.StateGroup == state.StateGroup && reactionState.IsActiveState)
-                            return reactionState.StateName;
-                    }
-                }
-                return null;
-            }
-        }
-        public bool CanReact(GameObject triggeringObject, Vector3 position)
-        {
-            if (TryGetState(out var state))
-                return state.CanReact(triggeringObject, position);
-            return false;
-        }
-        public bool TryReact(GameObject triggeringObject, Vector3 position)
-        {
-            if(TryGetState(out var state))
-                return state.TryReact(triggeringObject, position);
-            return false;
-        }
-        public bool TryGetState(out ReactionState state)
-        {
-            foreach(var reactionState in Object.GetComponents<ReactionState>())
-            {
-                if(reactionState.StateName == StateName)
-                {
-                    state = reactionState;
-                    return true;
-                }
-            }
-            state = null;
-            return false;
-        }
+        public static string GetNameOrNull(this GameObject @this)
+            => @this == null ? "<null>" : @this.name;
     }
     [AddComponentMenu("Nie/Object/ReactionState")]
     public class ReactionState : MonoBehaviour
@@ -159,12 +106,22 @@ namespace Nie
         UnityEvent<ReactionState, GameObject> OnReactEnd;
 
 
+        [SerializeField]
+        [Tooltip("Reaction executed when this ReactionState gets activated")]
+        ReactionList TriggerOnBegin;
+
+        [SerializeField]
+        [Tooltip("Reaction executed when this ReactionState gets deactivated")]
+        ReactionList TriggerOnEnd;
+
+
 
         GameObject m_TriggeringObject;
         Vector3 m_TriggeredPosition;
 
         float m_ReactionCooldown = 0;
-
+        bool m_IsReactingBegin = false;
+        bool m_IsReactingEnd = false;
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
 
         Vector3 GetReactionPosition(Vector3 receivedPosition) => DefaultReactionPosition != null ? DefaultReactionPosition.position : receivedPosition;
@@ -180,6 +137,13 @@ namespace Nie
                         Debug.LogError($"Only one ReactionState of the same group can set as initial state. ReactionState on GameObject '{name}' : '{StateName}' and '{state.StateName}'");
 #endif
         }
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            if (IsActiveState)
+                UnityEditor.Handles.Label(transform.position, StateName);
+        }
+#endif
         private void Update()
         {
             if (m_ReactionCooldown > 0)
@@ -224,10 +188,15 @@ namespace Nie
         
         void ReactBegin(GameObject triggeringObject, Vector3 position)
         {
-
+            if (m_IsReactingBegin)
+            {
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' begin on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggeringObject.GetNameOrNull()}' at position: {position}", gameObject);
+                return;
+            }
+            m_IsReactingBegin = true;
             foreach (var state in gameObject.GetComponents<ReactionState>())
                 if (state.IsActiveState && state.StateGroup == StateGroup)
-                    state.ReactEnd();
+                    state.ReactEnd(triggeringObject, position);
             
             triggeringObject = GetTargetTriggeringObject(triggeringObject);
             var thisObject = TargetObject;
@@ -280,14 +249,23 @@ namespace Nie
 
             OnReactBegin?.Invoke(this, m_TriggeringObject);
 
+            TriggerOnBegin.TryReact(gameObject, triggeringObject, position);
+
             if (ReactionCooldown > 0)
             {
                 m_ReactionCooldown = ReactionCooldown;
             }
+            m_IsReactingBegin = false;
         }
 
-        void ReactEnd()
+        void ReactEnd(GameObject triggeringObject, Vector3 position)
         {
+            if (m_IsReactingEnd)
+            {
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' end on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggeringObject.GetNameOrNull()}' at position: {position}", gameObject);
+                return;
+            }
+            m_IsReactingEnd = true;
             var thisObject = TargetObject;
 
             if (DebugLog)
@@ -310,9 +288,11 @@ namespace Nie
 
             OnReactEnd?.Invoke(this, m_TriggeringObject);
 
+            TriggerOnEnd.TryReact(gameObject, triggeringObject, position, m_TriggeringObject);
             IsActiveState = false;
             m_TriggeringObject = null;
             m_TriggeredPosition = Vector3.zero;
+            m_IsReactingEnd = false;
         }
 
     }

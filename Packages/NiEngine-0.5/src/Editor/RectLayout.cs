@@ -22,14 +22,22 @@ namespace Nie.Editor
         static public RectLayout Horizontal(Rect rect) => new RectLayout(rect);
         static public RectLayout Vertical(Rect rect) => new RectLayout(rect, false);
 
-        public RectLayout SubHorizontal(float size) => new RectLayout(Acquire(size), true);
-        public RectLayout SubVertical(float size) => new RectLayout(Acquire(size), false);
+        public RectLayout SubHorizontal(float size) => new RectLayout(AcquireSize(size), true);
+        public RectLayout SubVertical(float size) => new RectLayout(AcquireSize(size), false);
 
         public RectLayout SubHorizontal() => new RectLayout(Acquire(FreeRect.width, FreeRect.height), true);
         public RectLayout SubVertical() => new RectLayout(Acquire(FreeRect.width, FreeRect.height), false);
         //public Rect Acquire(float size) => IsHorizontal ? Acquire(size, OriginalRect.height) : Acquire(OriginalRect.width, size);
         public static float WidthOf(string text) => GUI.skin.box.CalcSize(new GUIContent(text)).x;
         public static float MinHeight => GUI.skin.box.CalcSize(new GUIContent("Fj")).y;
+        public float FreeWidth => FreeRect.width;
+        public float FreeHeight => FreeRect.width;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width">if negative, will compute FreeWidth + with, which make the width right aligned</param>
+        /// <param name="height">if negative, will compute FreeHeight + height, which make the height bottom aligned</param>
+        /// <returns></returns>
         public Rect Acquire(float width, float height)
         {
             if (IsHorizontal)
@@ -42,13 +50,32 @@ namespace Nie.Editor
             }
             else
             {
+                if (height < 0)
+                    height = FreeRect.height + height;
                 height = math.max(height, MinHeight);
                 Rect r = new Rect(OriginalRect.xMin, FreeRect.yMin, width, height);
                 FreeRect.yMin += r.height;
                 return r;
             }
         }
-        public Rect Acquire(float width)
+        public Rect AcquireSize(float size)
+        {
+            if (IsHorizontal)
+            {
+                return Acquire(size, FreeRect.height);
+            }
+            else
+            {
+                
+                return Acquire(FreeRect.width, size);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width">if negative, will compute FreeWidth + with, which make the width right aligned</param>
+        /// <returns></returns>
+        public Rect AcquireWidth(float width)
         {
             if (IsHorizontal)
             {
@@ -86,11 +113,16 @@ namespace Nie.Editor
             var size = GUI.skin.box.CalcSize(content);
             return EditorGUI.Foldout(AcquireHeight(size.y), isExpanded, content, true);
         }
+        public bool Foldout(float width, bool isExpanded, GUIContent content)
+        {
+            var size = GUI.skin.box.CalcSize(content);
+            return EditorGUI.Foldout(Acquire(width, size.y), isExpanded, content, true);
+        }
         public void Label(string text)
         {
             var content = new GUIContent(text);
             var size = GUI.skin.box.CalcSize(content);
-            EditorGUI.LabelField(Acquire(size.x), content);//, new GUIContent(text));
+            EditorGUI.LabelField(AcquireWidth(size.x), content);//, new GUIContent(text));
         }
         public void Box(string text)
         {
@@ -98,12 +130,12 @@ namespace Nie.Editor
         }
         public void Box(string text, float width)
         {
-            GUI.Box(Acquire(width), text);
+            GUI.Box(AcquireWidth(width), text);
         }
 
         public void PropertyField(SerializedProperty property, float width = 100)
         {
-            EditorGUI.PropertyField(Acquire(width), property, GUIContent.none);
+            EditorGUI.PropertyField(AcquireWidth(width), property, GUIContent.none);
 
         }
         public void PropertyField(SerializedProperty property)=> PropertyField(property, GUIContent.none);
@@ -123,6 +155,11 @@ namespace Nie.Editor
             var r = EditorGUI.PrefixLabel(Acquire(size.x, size.y), label);
             FreeRect.xMin = r.xMin;
             OriginalRect = FreeRect;
+        }
+        public TEnum EnumPopup<TEnum>(float minWidth, TEnum value)
+            where TEnum : System.Enum
+        {
+            return (TEnum)EditorGUI.EnumPopup(AcquireWidth(minWidth), value);
         }
     }
 
