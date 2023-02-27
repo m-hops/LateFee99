@@ -225,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8830481352941090868}
   m_Layer: 0
-  m_Name: VHR
+  m_Name: VHR-Old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

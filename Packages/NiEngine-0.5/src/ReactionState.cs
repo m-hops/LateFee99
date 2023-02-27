@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 namespace Nie
 {
     public static class GameObjectExt
@@ -44,6 +45,11 @@ namespace Nie
         [Tooltip("Print to console events caused by this Reaction")]
         public bool DebugLog = false;
 
+#if UNITY_EDITOR
+        [Tooltip("If set, will draw at this location in the editor this state name when active.")]
+        public Transform DebugDrawState;
+#endif
+
         [Tooltip("Is currently activate and all other state of the same group are deactivated")]
         public bool IsActiveState;
 #if UNITY_EDITOR
@@ -56,7 +62,7 @@ namespace Nie
 #endif
         [Header("Conditions:")]
         [Tooltip("Once this Reaction state activates, it cannot re-active again within the cooldown period, in seconds.")]
-        public float ReactionCooldown = 0;
+        public float Cooldown = 0;
 
 
         [Header("Actions:")]
@@ -66,7 +72,7 @@ namespace Nie
         [Tooltip("Default Reaction position, used when spawning the GameObject from the property 'Spawn'")]
         public Transform DefaultReactionPosition;
 
-        public AnimatorStateReference PlayAnimatorState;
+        //public AnimatorStateReference PlayAnimatorState;
 
         [Header("Actions on this object:")]
         public bool SetKinematic;
@@ -84,10 +90,10 @@ namespace Nie
         public bool MoveToParentOrigin;
         Transform m_PreviousAttachedObject;
 
-        [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
-        public string OnBeginForceState;
-        [Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
-        public string OnEndForceState;
+        //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
+        //public string OnBeginForceState;
+        //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
+        //public string OnEndForceState;
 
 
         [Header("Overrides:")]
@@ -95,15 +101,6 @@ namespace Nie
         public GameObject ThisObject;
         [Tooltip("If set, will execute the reaction using provided object as the triggering object.")]
         public GameObject TriggeringObject;
-
-
-        [SerializeField]
-        [Tooltip("Event called when the reaction state begin. Parameters are (ReactionState this, GameObject triggeringObject)")]
-        UnityEvent<ReactionState, GameObject> OnReactBegin;
-
-        [SerializeField]
-        [Tooltip("Event called when the reaction state ends. Parameters are (ReactionState this, GameObject triggeringObject)")]
-        UnityEvent<ReactionState, GameObject> OnReactEnd;
 
 
         [SerializeField]
@@ -138,14 +135,44 @@ namespace Nie
 #endif
         }
 #if UNITY_EDITOR
+        
+        TextMesh DebugLabel = null;
+        void CheckDebugLabel()
+        {
+            
+            if(EditorMenu.DrawStatesLabel && IsActiveState && DebugDrawState != null && DebugLabel == null)
+            {
+                DebugLabel = GameObject.Instantiate(EditorMenu.DebugLabelAsset, DebugDrawState).GetComponent<TextMesh>();
+                DebugLabel.hideFlags = HideFlags.HideAndDontSave;
+                DebugLabel.transform.localPosition = Vector3.zero;
+                DebugLabel.transform.localRotation = Quaternion.identity;
+                var parentScale = DebugDrawState.lossyScale;
+                var scale = EditorMenu.DebugLabelAsset.transform.localScale;
+                DebugLabel.transform.localScale = new Vector3(scale.x / parentScale.x, scale.y / parentScale.y, scale.z / parentScale.z);
+                DebugLabel.text = StateName;
+            }
+            if ((!EditorMenu.DrawStatesLabel || !IsActiveState) && DebugLabel != null)
+            {
+                if(UnityEditor.EditorApplication.isPlaying)
+                    Destroy(DebugLabel.gameObject);
+                else
+                    DestroyImmediate(DebugLabel.gameObject);
+                DebugLabel = null;
+            }
+        }
         void OnDrawGizmos()
         {
-            if (IsActiveState)
-                UnityEditor.Handles.Label(transform.position, StateName);
+            CheckDebugLabel();
+            if (UnityEditor.EditorApplication.isPlaying && EditorMenu.DrawStatesLabel) return;
+            if (EditorMenu.DrawStatesGizmos && DebugDrawState != null && IsActiveState)
+                UnityEditor.Handles.Label(DebugDrawState.position, StateName);
         }
 #endif
         private void Update()
         {
+#if UNITY_EDITOR
+            CheckDebugLabel();
+#endif
             if (m_ReactionCooldown > 0)
             {
                 m_ReactionCooldown -= Time.deltaTime;
@@ -227,8 +254,8 @@ namespace Nie
             if (ReleaseGrabbed && thisObject.TryGetComponent<Grabbable>(out var grabbable2))
                 grabbable2.ReleaseIfGrabbed();
 
-            if (PlayAnimatorState.Animator != null)
-                PlayAnimatorState.Animator.Play(PlayAnimatorState.StateHash);
+            //if (PlayAnimatorState.Animator != null)
+            //    PlayAnimatorState.Animator.Play(PlayAnimatorState.StateHash);
 
             if (SetKinematic && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
@@ -241,19 +268,17 @@ namespace Nie
                 rigidBody2.isKinematic = false;
             }
 
-            if (!string.IsNullOrEmpty(OnBeginForceState) && m_TriggeringObject != null)
-                if (m_TriggeringObject.TryGetReactionState(OnBeginForceState, out var state))
-                    state.ForceActivate();
-                else
-                    Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
-
-            OnReactBegin?.Invoke(this, m_TriggeringObject);
+            //if (!string.IsNullOrEmpty(OnBeginForceState) && m_TriggeringObject != null)
+            //    if (m_TriggeringObject.TryGetReactionState(OnBeginForceState, out var state))
+            //        state.ForceActivate();
+            //    else
+            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
 
             TriggerOnBegin.TryReact(gameObject, triggeringObject, position);
 
-            if (ReactionCooldown > 0)
+            if (Cooldown > 0)
             {
-                m_ReactionCooldown = ReactionCooldown;
+                m_ReactionCooldown = Cooldown;
             }
             m_IsReactingBegin = false;
         }
@@ -280,13 +305,11 @@ namespace Nie
                 m_TriggeringObject.transform.parent = m_PreviousAttachedObject;
 
 
-            if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggeringObject != null)
-                if (m_TriggeringObject.TryGetReactionState(OnEndForceState, out var state))
-                    state.ForceActivate();
-                else //if(DebugLog)
-                    Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
-
-            OnReactEnd?.Invoke(this, m_TriggeringObject);
+            //if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggeringObject != null)
+            //    if (m_TriggeringObject.TryGetReactionState(OnEndForceState, out var state))
+            //        state.ForceActivate();
+            //    else //if(DebugLog)
+            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
 
             TriggerOnEnd.TryReact(gameObject, triggeringObject, position, m_TriggeringObject);
             IsActiveState = false;

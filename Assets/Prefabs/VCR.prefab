@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7394954617857397745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2760865436697694812}
+  m_Layer: 0
+  m_Name: DebugDrawState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2760865436697694812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7394954617857397745}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.101700045, y: 0.018000048, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9026650709244245407}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7437896383131339952
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +208,7 @@ GameObject:
   - component: {fileID: 7437896383131242644}
   - component: {fileID: 9026650710491693497}
   m_Layer: 0
-  m_Name: VHR 1
+  m_Name: VCR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +397,8 @@ Transform:
   m_LocalPosition: {x: 0.0554, y: 0.0672, z: 0.1944}
   m_LocalScale: {x: 0.6666665, y: 0.6666667, z: 0.6666665}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2760865436697694812}
   m_Father: {fileID: 7437896383131242644}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -399,7 +431,8 @@ MonoBehaviour:
   StateGroup: 
   IsInitialState: 1
   DebugLog: 0
-  IsActiveState: 0
+  DebugDrawState: {fileID: 2760865436697694812}
+  IsActiveState: 1
   ReactionCooldown: 0
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
@@ -442,6 +475,7 @@ MonoBehaviour:
   StateGroup: 
   IsInitialState: 0
   DebugLog: 0
+  DebugDrawState: {fileID: 2760865436697694812}
   IsActiveState: 0
   ReactionCooldown: 0
   Spawn: {fileID: 0}
