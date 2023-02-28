@@ -10,6 +10,7 @@ namespace Nie
     public class ReactOnFocus : MonoBehaviour
     {
         public bool DebugLog;
+        public bool ShowHand = true;
         [Header("Conditions:")]
 
         [Tooltip("Conditions to execute the focus reaction")]

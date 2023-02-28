@@ -33,7 +33,8 @@ namespace Nie
             var ray = new Ray(transform.position, (RayCastTarget - transform.position).normalized);
             if (Physics.Raycast(ray, out var hit, MaxDistance, LayerMask.value) && hit.collider.gameObject.TryGetComponent<ReactOnFocus>(out var focusable) && focusable.CanFocus(this, hit.point))
             {
-                ShowHand(hit.point);
+                if(focusable.ShowHand)
+                    ShowHand(hit.point);
                 if (m_Focus != focusable)
                     Focus(focusable, hit.point);
             }

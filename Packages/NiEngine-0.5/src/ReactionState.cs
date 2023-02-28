@@ -152,7 +152,7 @@ namespace Nie
                 DebugLabel.transform.localScale = new Vector3(scale.x / parentScale.x, scale.y / parentScale.y, scale.z / parentScale.z);
                 DebugLabel.text = StateName;
             }
-            if ((!EditorMenu.DrawStatesLabel || !IsActiveState) && DebugLabel != null)
+            if ((!EditorMenu.DrawStatesLabel || !IsActiveState || DebugDrawState == null) && DebugLabel != null)
             {
                 if(UnityEditor.EditorApplication.isPlaying)
                     Destroy(DebugLabel.gameObject);
