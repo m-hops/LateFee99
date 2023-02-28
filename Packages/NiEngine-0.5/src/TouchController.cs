@@ -8,7 +8,7 @@ namespace Nie
     public class TouchController : MonoBehaviour
     {
         [Tooltip("touch only objects of these layers")]
-        public LayerMask LayerMask;
+        public LayerMask LayerMask = -1;
 
         [Tooltip("touch only objects closer to this distance")]
         public float MaxDistance = 10;

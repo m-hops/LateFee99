@@ -17,7 +17,7 @@ namespace Nie
         public Rigidbody GrabbedRigidbody { get; private set; }
 
         [Tooltip("Grab only objects of these layers")]
-        public LayerMask LayerMask;
+        public LayerMask LayerMask = -1;
 
         [Tooltip("Grab only objects closer to this distance")]
         public float MaxDistance = 10;

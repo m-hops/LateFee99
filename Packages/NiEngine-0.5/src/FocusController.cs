@@ -11,7 +11,7 @@ namespace Nie
         public Transform FocusTarget;
         
         [Tooltip("Focus only on object of these layers")]
-        public LayerMask LayerMask;
+        public LayerMask LayerMask = -1;
 
         [Tooltip("Focus only on object closer to this distance")]
         public float MaxDistance = 10;
