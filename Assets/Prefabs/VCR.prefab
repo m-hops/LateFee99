@@ -593,6 +593,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811024245527216257}
   m_Mesh: {fileID: 0}
+--- !u!1 &1846186783875757157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6709802484764064899}
+  m_Layer: 0
+  m_Name: DebugState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6709802484764064899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846186783875757157}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.0426, y: 0.1303, z: 0.1944}
+  m_LocalScale: {x: 0.6666665, y: 0.6666667, z: 0.6666665}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7437896383131242644}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2610497568510189470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyCode: 101
+  TriggerFromMainCamera: 1
   Conditions:
     States:
     - Type: 0
@@ -1336,8 +1368,8 @@ MonoBehaviour:
     ReactionReferences:
     - ReactionType: 0
       ObjectTargetType: 1
-      TargetObject: {fileID: 9026650709244245400}
-      ReactionName: Empty
+      TargetObject: {fileID: 7437896383131339956}
+      ReactionName: Rewind
       Event:
         m_PersistentCalls:
           m_Calls: []
@@ -1550,6 +1582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyCode: 101
+  TriggerFromMainCamera: 1
   Conditions:
     States:
     - Type: 0
@@ -1561,8 +1594,8 @@ MonoBehaviour:
     ReactionReferences:
     - ReactionType: 0
       ObjectTargetType: 1
-      TargetObject: {fileID: 9026650709244245400}
-      ReactionName: Empty
+      TargetObject: {fileID: 7437896383131339956}
+      ReactionName: Play
       Event:
         m_PersistentCalls:
           m_Calls: []
@@ -2192,7 +2225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7394954617857397745}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.101700045, y: 0.018000048, z: 0}
+  m_LocalPosition: {x: -0.19, y: 0.085, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2377,6 +2410,10 @@ GameObject:
   - component: {fileID: 9026650710491693497}
   - component: {fileID: 4160179279432595152}
   - component: {fileID: 3811487065871448641}
+  - component: {fileID: 8021385278649603618}
+  - component: {fileID: 329974079887973739}
+  - component: {fileID: 1854649936316274128}
+  - component: {fileID: 8174935269523428335}
   m_Layer: 0
   m_Name: VCR
   m_TagString: Untagged
@@ -2403,6 +2440,7 @@ Transform:
   - {fileID: 9026650708946880071}
   - {fileID: 9026650709399673908}
   - {fileID: 5967986989540992501}
+  - {fileID: 6709802484764064899}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -2483,6 +2521,191 @@ MonoBehaviour:
     ReactionReferences: []
   OnUnfocusReaction:
     ReactionReferences: []
+--- !u!114 &8021385278649603618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437896383131339956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Idle
+  StateGroup: 
+  IsInitialState: 1
+  IsActiveState: 1
+  DebugLog: 0
+  DebugDrawState: {fileID: 6709802484764064899}
+  Cooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8174935269523428335}
+            m_TargetAssemblyTypeName: VCRControls, Assembly-CSharp
+            m_MethodName: Stop
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  TriggerOnEnd:
+    ReactionReferences: []
+--- !u!114 &329974079887973739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437896383131339956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Play
+  StateGroup: 
+  IsInitialState: 0
+  IsActiveState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 6709802484764064899}
+  Cooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8174935269523428335}
+            m_TargetAssemblyTypeName: VCRControls, Assembly-CSharp
+            m_MethodName: Play
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  TriggerOnEnd:
+    ReactionReferences: []
+--- !u!114 &1854649936316274128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437896383131339956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Rewind
+  StateGroup: 
+  IsInitialState: 0
+  IsActiveState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 6709802484764064899}
+  Cooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 8174935269523428335}
+            m_TargetAssemblyTypeName: VCRControls, Assembly-CSharp
+            m_MethodName: Rewind
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  TriggerOnEnd:
+    ReactionReferences: []
+--- !u!114 &8174935269523428335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437896383131339956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6df0bd19585bf6439c711fe15811e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RewindDurationPerHour: 15
+  State: 0
+  OnPlayOver:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Idle
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+  OnRewindOver:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Idle
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!1 &7437896383131339958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,6 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyCode: 101
+  TriggerFromMainCamera: 1
   Conditions:
     States:
     - Type: 0
@@ -2680,8 +2904,8 @@ MonoBehaviour:
     ReactionReferences:
     - ReactionType: 0
       ObjectTargetType: 1
-      TargetObject: {fileID: 9026650709244245400}
-      ReactionName: Empty
+      TargetObject: {fileID: 7437896383131339956}
+      ReactionName: Idle
       Event:
         m_PersistentCalls:
           m_Calls: []
@@ -3140,6 +3364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyCode: 101
+  TriggerFromMainCamera: 1
   Conditions:
     States:
     - Type: 0
@@ -3153,6 +3378,13 @@ MonoBehaviour:
       ObjectTargetType: 1
       TargetObject: {fileID: 9026650709244245400}
       ReactionName: Empty
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+    - ReactionType: 0
+      ObjectTargetType: 1
+      TargetObject: {fileID: 7437896383131339956}
+      ReactionName: Idle
       Event:
         m_PersistentCalls:
           m_Calls: []
