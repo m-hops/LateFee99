@@ -1,0 +1,23 @@
+﻿title: CustomerDialog0
+---
+<<if $variableTest>>
+    <<jump CustomerDialog1>>
+<<endif>>
+
+<<set $variableTest to false>>
+Wow!
+
+My first ever Yarn script in Unity!
+
+-> Gosh!
+-> Incredible!
+-> I'm amazed!
+-> Debug 
+    <<set $variableTest to true>>
+
+Anyway, time to get writing!
+===
+title: CustomerDialog1
+---
+Debug Success!
+===
