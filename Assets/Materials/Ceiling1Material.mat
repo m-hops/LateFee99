@@ -135,7 +135,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.2735849, g: 0.24433368, b: 0.24433368, a: 1}
+    - _EmissionColor: {r: 1.1320755, g: 0.7925335, b: 0.47703803, a: 1}
     - _Noise_Tint: {r: 1, g: 1, b: 1, a: 0}
     - _Normal_Offset: {r: -0.2, g: -0.5, b: 0, a: 0}
     - _Normal_Tiling: {r: 9, g: 9, b: 0, a: 0}
