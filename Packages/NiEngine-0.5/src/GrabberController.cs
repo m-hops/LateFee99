@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Nie
 {
@@ -60,6 +61,7 @@ namespace Nie
 
         Grabbable m_Focus = null;
 
+        public UnityEvent<Vector3> OnGrabAt;
         void Update()
         {
             // TODO tie this into the input system
@@ -153,6 +155,7 @@ namespace Nie
 
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] GrabberController '{name}' grab '{grabbable.name}'");
+            OnGrabAt?.Invoke(grabPosition);
 
             m_IsGrabbing = true;
 

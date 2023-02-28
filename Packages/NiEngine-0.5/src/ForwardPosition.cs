@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Mathematics;
 namespace Nie
 {
     /// <summary>
@@ -27,11 +27,19 @@ namespace Nie
         /// <summary>
         /// Offset from the parent's transform position to start with.
         /// </summary>
-        Vector3 Offset;
-
+        //Vector3 Offset;
+        Vector3 ParentPosition => transform.parent == null ? Vector3.zero : transform.parent.position;
+        Vector3 ParentForward => transform.parent == null ? new Vector3(0,0,1) : transform.parent.forward;
+        public void SetDistanceTo(Vector3 v)
+        {
+            Debug.DrawLine(v, v + new Vector3(0, 1, 0), Color.green, 60);
+            Distance = math.dot(v - ParentPosition, ParentForward);
+            Debug.Log($"Distance:{Distance }");
+            Move();
+        }
         void Start()
         {
-            Offset = transform.localPosition;
+            //Offset = transform.localPosition;
             Move();
         }
 
@@ -48,7 +56,8 @@ namespace Nie
 
         void Move()
         {
-            transform.localPosition = new Vector3(0, 0, Distance) + Offset;
+            transform.localPosition = new Vector3(0, 0, Distance);// + Offset;
         }
     }
+
 }
