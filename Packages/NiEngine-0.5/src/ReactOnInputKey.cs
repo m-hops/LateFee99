@@ -11,6 +11,7 @@ namespace Nie
 
         [Header("Input:")]
         public KeyCode KeyCode;
+        public bool TriggerFromMainCamera = true;
 
         [Tooltip("Conditions to react")]
         public ReactionConditions Conditions;
@@ -25,6 +26,7 @@ namespace Nie
         public ReactionList OnKeyUp;
 
         public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
+        public GameObject TriggerObject => TriggerFromMainCamera ? Camera.main.gameObject : gameObject;
         public bool CanReact()
         {
             if(!enabled) return false;
@@ -36,17 +38,17 @@ namespace Nie
             if (Input.GetKeyDown(KeyCode))
             {
                 if (CanReact())
-                    OnKeyDown.TryReact(TargetObject, null, transform.position);
+                    OnKeyDown.TryReact(TargetObject, TriggerObject, transform.position);
             }
             if (Input.GetKeyUp(KeyCode))
             {
                 if (CanReact())
-                    OnKeyUp.TryReact(TargetObject, null, transform.position);
+                    OnKeyUp.TryReact(TargetObject, TriggerObject, transform.position);
             }
             if (Input.GetKey(KeyCode))
             {
                 if (CanReact())
-                    WhenKeyPressed.TryReact(TargetObject, null, transform.position);
+                    WhenKeyPressed.TryReact(TargetObject, TriggerObject, transform.position);
             }
         }
     }

@@ -32,9 +32,7 @@ namespace Nie
         Vector3 ParentForward => transform.parent == null ? new Vector3(0,0,1) : transform.parent.forward;
         public void SetDistanceTo(Vector3 v)
         {
-            Debug.DrawLine(v, v + new Vector3(0, 1, 0), Color.green, 60);
             Distance = math.dot(v - ParentPosition, ParentForward);
-            Debug.Log($"Distance:{Distance }");
             Move();
         }
         void Start()

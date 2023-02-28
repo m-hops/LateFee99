@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1467696780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1467696781}
+  m_Layer: 7
+  m_Name: Debug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1467696781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467696780}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.395, y: 0.287, z: 0.549}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 854664017968609167}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &854664016267305030
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,9 +424,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a6cb4a91e361746aa7f34076126b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Distance: 1
-  MinDistance: 0.1
-  MaxDistance: 0.75
+  Distance: 1.2000003
+  MinDistance: 0.6
+  MaxDistance: 1.5
   ScrollSpeed: 0.05
 --- !u!1 &854664017270014189
 GameObject:
@@ -422,8 +453,8 @@ Transform:
   m_GameObject: {fileID: 854664017270014189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 854664017012507305}
   m_Father: {fileID: 854664017221210356}
@@ -444,6 +475,8 @@ GameObject:
   - component: {fileID: 854664017968609163}
   - component: {fileID: 998417983}
   - component: {fileID: 998417984}
+  - component: {fileID: 998417996}
+  - component: {fileID: 998417995}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -465,6 +498,7 @@ Transform:
   m_Children:
   - {fileID: 854664016267305029}
   - {fileID: 854664017221210356}
+  - {fileID: 1467696781}
   m_Father: {fileID: 854664016743299624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -571,12 +605,27 @@ MonoBehaviour:
   GrabPosition: {fileID: 854664017270014098}
   Hand: {fileID: 854664016267305030}
   HoldForce: 35000
-  HoldDrag: 30
-  HoldAngularDrag: 45
+  HoldDrag: 25
+  HoldAngularDrag: 40
   ChangedGrabbedObjectLayer: 1
   GrabbedObjectLayer:
     m_LayerIndex: 8
   DebugLog: 0
+  OnGrabAt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 854664017221210357}
+        m_TargetAssemblyTypeName: Nie.ForwardPosition, Re0.51
+        m_MethodName: SetDistanceTo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &998417983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,6 +665,120 @@ MonoBehaviour:
   Hand: {fileID: 854664016267305030}
   DebugLog: 0
   FocusPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &998417996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854664017968609162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: InControl
+  StateGroup: 
+  IsInitialState: 1
+  IsActiveState: 1
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
+--- !u!114 &998417995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854664017968609162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: InCustomerDialog0
+  StateGroup: 
+  IsInitialState: 0
+  IsActiveState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 1467696781}
+  Cooldown: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggeringObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  ThisObject: {fileID: 0}
+  TriggeringObject: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 1052444989822026058}
+            m_TargetAssemblyTypeName: Yarn.Unity.DialogueRunner, YarnSpinner.Unity
+            m_MethodName: StartDialogue
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: CustomerDialog0
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 854664016743299620}
+            m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+            m_MethodName: UnlockControls
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  TriggerOnEnd:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 854664016743299620}
+            m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+            m_MethodName: LockControls
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
 --- !u!1001 &4694294843921805383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -786,22 +949,27 @@ PrefabInstance:
     - target: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
         type: 3}
       propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
         type: 3}
       propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 854664016743299620}
+      objectReference: {fileID: 998417995}
     - target: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
         type: 3}
       propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LockControls
+      value: ForceActivateState
       objectReference: {fileID: 0}
     - target: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
         type: 3}
       propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Nie.StarterAssetsInputs, Re0.51
+      value: Nie.ReactionState, Re0.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
+        type: 3}
+      propertyPath: onDialogueComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: InControl
       objectReference: {fileID: 0}
     - target: {fileID: 8554098716645984650, guid: 8e00c065252ca4c4c91dffbfa9911133,
         type: 3}
@@ -835,6 +1003,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e00c065252ca4c4c91dffbfa9911133, type: 3}
+--- !u!114 &1052444989822026058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5746159291506848013, guid: 8e00c065252ca4c4c91dffbfa9911133,
+    type: 3}
+  m_PrefabInstance: {fileID: 4694294843921805383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7625728959437722352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2950267186408186551, guid: 8e00c065252ca4c4c91dffbfa9911133,
