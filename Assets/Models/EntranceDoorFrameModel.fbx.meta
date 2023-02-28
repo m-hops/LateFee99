@@ -3,7 +3,22 @@ guid: 7dc8154f11ac2964a993d5f133fe2e87
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EntryHallMaterial
+    second: {fileID: 2100000, guid: 8da744aabcdbbf7488c63449ab5f712a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EntryWindowsMaterial
+    second: {fileID: 2100000, guid: 554b4b449694e604f88c1fa27d589432, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: collider
+    second: {fileID: 2100000, guid: 9d546c0700cd04d4fae4c01bd669f66b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
