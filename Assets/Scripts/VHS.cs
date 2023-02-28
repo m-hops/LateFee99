@@ -51,7 +51,7 @@ public class VHS : MonoBehaviour
                 DestroyImmediate(label.gameObject);
             label = null;
         }
-        else
+        else if(label != null)
         {
             label.text = text();
         }

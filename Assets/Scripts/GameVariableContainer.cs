@@ -4,6 +4,9 @@ using UnityEngine;
 using Yarn.Unity;
 public class GameVariableContainer : VariableStorageBehaviour
 {
+    Dictionary<string, string> StringValues = new();
+    Dictionary<string, float> FloatValues = new();
+    Dictionary<string, bool> BoolValues = new();
     public override void Clear()
     {
         throw new System.NotImplementedException();
@@ -15,32 +18,54 @@ public class GameVariableContainer : VariableStorageBehaviour
     }
 
     public override (Dictionary<string, float>, Dictionary<string, string>, Dictionary<string, bool>) GetAllVariables()
-    {
-        throw new System.NotImplementedException();
-    }
+        => (FloatValues, StringValues, BoolValues);
 
     public override void SetAllVariables(Dictionary<string, float> floats, Dictionary<string, string> strings, Dictionary<string, bool> bools, bool clear = true)
     {
-        throw new System.NotImplementedException();
+        FloatValues = floats;
+        StringValues = strings;
+        BoolValues = bools;
     }
 
     public override void SetValue(string variableName, string stringValue)
     {
-        throw new System.NotImplementedException();
+        StringValues[variableName] = stringValue;
+        FloatValues.Remove(variableName);
+        BoolValues.Remove(variableName);
     }
 
     public override void SetValue(string variableName, float floatValue)
     {
-        throw new System.NotImplementedException();
+        FloatValues[variableName] = floatValue;
+        StringValues.Remove(variableName);
+        BoolValues.Remove(variableName);
     }
 
     public override void SetValue(string variableName, bool boolValue)
     {
-        throw new System.NotImplementedException();
+        BoolValues[variableName] = boolValue;
+        FloatValues.Remove(variableName);
+        StringValues.Remove(variableName);
     }
 
     public override bool TryGetValue<T>(string variableName, out T result)
     {
-        throw new System.NotImplementedException();
+        if(StringValues.TryGetValue(variableName, out var stringValue))
+        {
+            result = (T)System.Convert.ChangeType(stringValue, typeof(T));
+            return true;
+        }
+        if (FloatValues.TryGetValue(variableName, out var floatValue))
+        {
+            result = (T)System.Convert.ChangeType(floatValue, typeof(T));
+            return true;
+        }
+        if (BoolValues.TryGetValue(variableName, out var boolValue))
+        {
+            result = (T)System.Convert.ChangeType(boolValue, typeof(T));
+            return true;
+        }
+        result = default;
+        return false;
     }
 }
