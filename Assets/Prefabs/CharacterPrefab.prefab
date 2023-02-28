@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateName: InCustomerDialog0
+  StateName: CustomerDialog0
   StateGroup: 
   IsInitialState: 0
   IsActiveState: 0
