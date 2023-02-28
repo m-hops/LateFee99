@@ -25,7 +25,10 @@ namespace Nie
 			cursorLocked = true;
             cursorInputForLook = true;
 			m_LockControls = true;
-
+			move = Vector3.zero;
+			look = Vector3.zero;
+			jump = false;
+			sprint = false;
 			SetCursorState(cursorLocked);
 
         }
