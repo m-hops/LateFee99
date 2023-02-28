@@ -181,7 +181,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.25
-  m_SkinWidth: 0.02
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &854664016743299626
@@ -232,7 +232,7 @@ MonoBehaviour:
   RotationSpeed: 8
   RotationInputThreshold: 0.0025
   SpeedChangeRate: 10
-  JumpHeight: 1.2
+  JumpHeight: 0.2
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
@@ -313,7 +313,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854664017012507304}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -393,6 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Distance: 1
+  MinDistance: 0.1
+  MaxDistance: 0.75
   ScrollSpeed: 0.3
 --- !u!1 &854664017270014189
 GameObject:
@@ -418,7 +420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854664017270014189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.168, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -439,6 +441,8 @@ GameObject:
   - component: {fileID: 854664017968609161}
   - component: {fileID: 854664017968609160}
   - component: {fileID: 854664017968609163}
+  - component: {fileID: 998417983}
+  - component: {fileID: 998417984}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -487,16 +491,16 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 911.5
   field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147483647
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 13de35753f9c87c4fbcdc4db94be2d33, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -530,14 +534,15 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 0}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -559,12 +564,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e74a9264c98714429461c132b3cbdc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  MaxDistance: 10
   GrabPosition: {fileID: 854664017270014098}
   Hand: {fileID: 854664016267305030}
-  HoldForce: 350
+  HoldForce: 35000
   HoldDrag: 30
   HoldAngularDrag: 45
   ChangedGrabbedObjectLayer: 1
   GrabbedObjectLayer:
     m_LayerIndex: 8
   DebugLog: 0
+--- !u!114 &998417983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854664017968609162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e1d13434866764b9ec8940b4d7b703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  MaxDistance: 10
+  TouchPositionObject: {fileID: 854664017270014098}
+  DebugLog: 0
+  LastTouchedPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &998417984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854664017968609162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a8a55479b9b08489cef7c394c4ebf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FocusTarget: {fileID: 854664017270014098}
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+  MaxDistance: 10
+  Hand: {fileID: 854664016267305030}
+  DebugLog: 0
+  FocusPosition: {x: 0, y: 0, z: 0}
