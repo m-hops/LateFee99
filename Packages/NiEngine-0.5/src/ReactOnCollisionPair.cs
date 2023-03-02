@@ -111,7 +111,7 @@ namespace Nie
                 if (from.DebugLog)
                     Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{from.name}.{from.ThisReactionName}' collision end with '{Other.name}.{Other.ThisReactionName}'.", from);
 
-                from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position);
+                from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position, Other.gameObject);
             }
         }
         // Keep track of all Reaction currently on a delay
@@ -124,7 +124,7 @@ namespace Nie
             if (!enabled) return false;
             if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
-            if (!StateConditions.CanReact(other.gameObject, position)) return false;
+            if (!StateConditions.CanReactAll(gameObject, other.gameObject, position, previousTriggerObjectIfExist: null)) return false;
             if (!OnReactBegin.CanReact(TargetObject, other.gameObject, position)) return false;
             return true;
         }

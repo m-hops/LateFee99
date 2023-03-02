@@ -7,6 +7,7 @@ using System.Linq;
 namespace Nie
 {
     [AddComponentMenu("Nie/Object/ReactOnCollision")]
+    [System.Obsolete]
     public class ReactOnCollision : MonoBehaviour
     {
         #region Data
@@ -44,7 +45,7 @@ namespace Nie
         public bool CanReact(ReactOnCollision by, Vector3 position)
         {
             if (!enabled) return false;
-            if (!Conditions.CanReact(by.gameObject, position)) return false;
+            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
             if (!ReactionOnCollisionEnter.CanReact(TargetObject, by.gameObject, position)) return false;
             return true;
         }
@@ -124,7 +125,7 @@ namespace Nie
             if (m_CooldownTimer > 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
             if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
-            if (!Conditions.CanReact(other, position)) return false;
+            if (!Conditions.CanReactAll(gameObject, other, position, previousTriggerObjectIfExist: null)) return false;
             if (!ReactionOnCollisionEnter.CanReact(TargetObject, other, position)) return false;
             if (SingleAtOnce) m_CurrentSingleReaction = other;
             return true;

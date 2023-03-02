@@ -70,8 +70,8 @@ namespace Nie.Editor
                             targetObject = propObject.objectReferenceValue as GameObject;
                             layoutLine0.PropertyField(propObject);
                             break;
-                        case ReactionReference.TargetType.TriggeringObject:
-                        case ReactionReference.TargetType.PreviousTriggeringObject:
+                        case ReactionReference.TargetType.TriggerObject:
+                        case ReactionReference.TargetType.PreviousTriggerObject:
                             isVirtualCall = true;
                             break;
                     }

@@ -15,12 +15,26 @@ namespace Nie
             Animator,
             Ignore,
         }
+        public enum TargetType
+        {
+            Self,
+            Other,
+            TriggerObject,
+            PreviousTriggerObject,
+        }
         public StateType Type;
+        [UnityEngine.Serialization.FormerlySerializedAs("ObjectTargetType2")]
+        public TargetType ObjectTargetType;
+        //[UnityEngine.Serialization.FormerlySerializedAs("ObjectTargetType2")]
+        //public TargetType TargetObjectType;
         public Animator Animator;
+        [System.Obsolete]
         public ReactionState ReactionState;
+
+        public GameObject Other;
         public string State;
         public int StateHash;
-        public bool CanReact(GameObject triggeringObject, Vector3 position)
+        public bool CanReact(GameObject from, GameObject triggerObject, Vector3 position, GameObject previousTriggerObjectIfExist)
         {
             switch (Type)
             {
@@ -30,8 +44,38 @@ namespace Nie
                             return false;
                     break;
                 case StateType.ReactionState:
-                    if (ReactionState != null && ReactionState.gameObject.TryGetReactionState(State, out var reactionState) && !reactionState.IsActiveState) 
-                        return false;
+                    GameObject target = null;
+                    switch (ObjectTargetType)
+                    {
+                        case TargetType.Self:
+                            target = from;
+                            break;
+                        case TargetType.Other:
+                            target = Other;
+                            break;
+                        case TargetType.TriggerObject:
+                            target = triggerObject;
+                            break;
+                        case TargetType.PreviousTriggerObject:
+                            target = previousTriggerObjectIfExist;
+                            break;
+                    }
+                    if(target != null)
+                    {
+                        bool hasPotential = false;
+                        bool hasAnyActive = false;
+                        foreach (var reactionState in target.AllReactionState(State))
+                        {
+                            hasPotential = true;
+                            if (reactionState.IsActiveState)
+                            {
+                                hasAnyActive = true;
+                                break;
+                            }
+                        }
+                        if (hasPotential && !hasAnyActive)
+                            return false;
+                    }
                     break;
             }
             return true;
@@ -44,15 +88,16 @@ namespace Nie
         //public AnimatorStateReference MustBeInAnimatorState;
         //public ReactionStateReference MustBeInReactionState;
         public List<StateCondition> States;
-        public bool CanReact(GameObject triggeringObject, Vector3 position)
+        public bool CanReactAny(GameObject from, GameObject triggerObject, Vector3 position, GameObject previousTriggerObjectIfExist)
         {
-            //if (MustBeInAnimatorState.Animator != null)
-            //    if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
-            //        return false;
-            //if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
-
-            foreach(var condition in States)
-                if(!condition.CanReact(triggeringObject, position)) return false;
+            foreach (var condition in States)
+                if (condition.CanReact(from, triggerObject, position, previousTriggerObjectIfExist)) return true;
+            return false;
+        }
+        public bool CanReactAll(GameObject from, GameObject triggerObject, Vector3 position, GameObject previousTriggerObjectIfExist)
+        {
+            foreach (var condition in States)
+                if (!condition.CanReact(from, triggerObject, position, previousTriggerObjectIfExist)) return false;
             return true;
         }
     }

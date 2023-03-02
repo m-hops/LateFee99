@@ -9,7 +9,17 @@ namespace Nie
 {
     public static class GameObjectExt
     {
-        public static bool TryGetReactionState(this GameObject @this, string name, out ReactionState state)
+        public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name)
+        {
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name))
+                yield return rs;
+        }
+        public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name, string group)
+        {
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
+                yield return rs;
+        }
+        public static bool TryGetFirstReactionState(this GameObject @this, string name, out ReactionState state)
         {
             foreach(var rs in @this.GetComponents<ReactionState>().Where(x=>x.StateName == name))
             {
@@ -19,7 +29,7 @@ namespace Nie
             state = null;
             return false;
         }
-        public static bool TryGetReactionState(this GameObject @this, string name, string group, out ReactionState state)
+        public static bool TryGetFirstReactionState(this GameObject @this, string name, string group, out ReactionState state)
         {
             foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
             {
@@ -31,6 +41,10 @@ namespace Nie
         }
         public static string GetNameOrNull(this GameObject @this)
             => @this == null ? "<null>" : @this.name;
+        public static string GetNameOrNull(this MonoBehaviour @this)
+            => @this == null ? "<null>" : @this.name;
+        public static GameObject GetGameObjectOrNull(this Component @this)
+            => @this == null ? null : @this.gameObject;
     }
     [AddComponentMenu("Nie/Object/ReactionState")]
     public class ReactionState : MonoBehaviour
@@ -41,8 +55,6 @@ namespace Nie
         public string StateGroup;
         [Tooltip("Will be in active state when the game object starts. Will not execute the reaction")]
         public bool IsInitialState;
-        [Tooltip("Is currently activate and all other state of the same group are deactivated")]
-        public bool IsActiveState;
 
         [Tooltip("Print to console events caused by this Reaction")]
         public bool DebugLog = false;
@@ -63,9 +75,11 @@ namespace Nie
         [Header("Conditions:")]
         [Tooltip("Once this Reaction state activates, it cannot re-active again within the cooldown period, in seconds.")]
         public float Cooldown = 0;
+        [Tooltip("if set, will reactive with new trigger objects while being already active with an old trigger object.")]
+        public bool ReactivateOnNewTrigger = true;
 
 
-        [Header("Actions:")]
+        [Header("On Begin Actions:")]
         [Tooltip("If set, instantiate the provided GameObject at the reaction position")]
         public GameObject Spawn;
 
@@ -75,7 +89,9 @@ namespace Nie
         //public AnimatorStateReference PlayAnimatorState;
 
         [Header("Actions on this object:")]
+        [Tooltip("Will set back to previous value when state ends")]
         public bool SetKinematic;
+        [Tooltip("Will set back to previous value when state ends")]
         public bool SetNonKinematic;
         bool m_PreviousKinematic;
 
@@ -83,12 +99,25 @@ namespace Nie
         public bool ReleaseGrabbed;
 
 
-        [Header("Actions on Triggering Object:")]
+        [Header("Actions on Trigger Object:")]
         [Tooltip("If set, Set the parent of the GameObject that triggered this reaction to this transform.")]
-        public Transform AttachTriggeringObjectAt;
-        [Tooltip("If checked and AttachTriggeringObjectAt is set, will set the new local position and rotation to 0 from the new parent the triggering object is being attached to.")]
+        [UnityEngine.Serialization.FormerlySerializedAs("AttachTriggeringObjectAt")]
+        public Transform AttachTriggerObjectAt;
+        [Tooltip("If checked and AttachTriggerObjectAt is set, will set the new local position and rotation to 0 from the new parent the trigger object is being attached to.")]
         public bool MoveToParentOrigin;
-        Transform m_PreviousAttachedObject;
+        public bool DetachOnEnd = true;
+
+        
+
+        [SerializeField]
+        [Tooltip("Reaction executed when this ReactionState gets activated")]
+        ReactionList TriggerOnBegin;
+
+        [Header("On End Actions:")]
+
+        [SerializeField]
+        [Tooltip("Reaction executed when this ReactionState gets deactivated")]
+        ReactionList TriggerOnEnd;
 
         //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
         //public string OnBeginForceState;
@@ -98,32 +127,34 @@ namespace Nie
 
         [Header("Overrides:")]
         [Tooltip("If set, will execute the reaction on provided object instead of the object with this ReactionState.")]
-        public GameObject ThisObject;
-        [Tooltip("If set, will execute the reaction using provided object as the triggering object.")]
-        public GameObject TriggeringObject;
-
-
-        [SerializeField]
-        [Tooltip("Reaction executed when this ReactionState gets activated")]
-        ReactionList TriggerOnBegin;
-
-        [SerializeField]
-        [Tooltip("Reaction executed when this ReactionState gets deactivated")]
-        ReactionList TriggerOnEnd;
+        public GameObject OverrideThisObject;
+        
+        [Tooltip("If set, will execute the reaction using provided object as the trigger object.")]
+        public GameObject OverrideTriggerObject;
 
 
 
-        GameObject m_TriggeringObject;
-        Vector3 m_TriggeredPosition;
 
-        float m_ReactionCooldown = 0;
-        bool m_IsReactingBegin = false;
-        bool m_IsReactingEnd = false;
+        [Header("Run-time state:")]
+        [Tooltip("Is currently activate and all other state of the same group are deactivated")]
+        public bool IsActiveState;
+
+        [Tooltip("The trigger object when this state was activated")]
+        public GameObject CurrentTriggerObject;
+        [Tooltip("The trigger position when this state was activated")]
+        public Vector3 CurrentTriggeredPosition;
+        [Tooltip("Cool down time before this state can be (re)activated")]
+        public float CurrentReactionCooldown = 0;
+        [Tooltip("The Transform the trigger object was detached from if 'Attach Trigger Object At' is set. It will reattach to it if 'Detach On End' is set.")]
+        public Transform PreviousAttachedObject;
+
+        int m_BeginReactionDepth = 0;
+        int m_EndReactionDepth = 0;
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
 
         Vector3 GetReactionPosition(Vector3 receivedPosition) => DefaultReactionPosition != null ? DefaultReactionPosition.position : receivedPosition;
-        public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
-        public GameObject GetTargetTriggeringObject(GameObject triggeringObject) => TriggeringObject != null ? TriggeringObject : triggeringObject;
+        public GameObject TargetObject => OverrideThisObject != null ? TargetObject : gameObject;
+        public GameObject GetOverriddenTrigger(GameObject triggerObject) => OverrideTriggerObject != null ? OverrideTriggerObject : triggerObject;
         void Start()
         {
             IsActiveState = IsInitialState;
@@ -144,7 +175,7 @@ namespace Nie
             {
                 var obj = GameObject.Instantiate(EditorMenu.DebugLabelAsset, DebugDrawState);
                 DebugLabel = obj.GetComponent<TextMesh>();
-                obj.hideFlags = HideFlags.HideAndDontSave;
+                obj.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;
                 DebugLabel.transform.localPosition = Vector3.zero;
                 DebugLabel.transform.localRotation = Quaternion.identity;
                 var parentScale = DebugDrawState.lossyScale;
@@ -174,29 +205,41 @@ namespace Nie
 #if UNITY_EDITOR
             CheckDebugLabel();
 #endif
-            if (m_ReactionCooldown > 0)
+            if (CurrentReactionCooldown > 0)
             {
-                m_ReactionCooldown -= Time.deltaTime;
+                CurrentReactionCooldown -= Time.deltaTime;
             }
         }
 
-        public bool CanReact(GameObject from, Vector3 position)
+        public bool CanReact(GameObject triggerObject, Vector3 position)
         {
-            return m_ReactionCooldown <= 0;
+            //if (IsActiveState && !ReactivateOnNewTrigger) return false;
+            //if (IsActiveState && CurrentTriggerObject == triggerObject) return false;
+            if (m_BeginReactionDepth > 100)
+            {
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' is requested to begin on object '{gameObject.GetNameOrNull()}' after 100 begin loop. Look for infinite reaction loops. Triggered by '{triggerObject.GetNameOrNull()}' at position: {position}", gameObject);
+                return false;
+            }
+            if (m_EndReactionDepth > 100)
+            {
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' is requested to begin on object '{gameObject.GetNameOrNull()}' after 100 end loop. Look for infinite reaction loops. Triggered by '{triggerObject.GetNameOrNull()}' at position: {position}", gameObject);
+                return false;
+            }
+            return CurrentReactionCooldown <= 0;
         }
         
-        public bool TryReact(GameObject triggeringObject, Vector3 position)
+        public bool TryReact(GameObject triggerObject, Vector3 position)
         {
-            triggeringObject = GetTargetTriggeringObject(triggeringObject);
-            if (!CanReact(triggeringObject, position))
+            triggerObject = GetOverriddenTrigger(triggerObject);
+            if (!CanReact(triggerObject, position))
                 return false;
-            ReactBegin(triggeringObject, position);
+            ReactBegin(triggerObject, position);
             return true;
         }
         public void ForceActivate()
         {
             if (IsActiveState) return;
-            ReactBegin(m_TriggeringObject, m_TriggeredPosition);
+            ReactBegin(CurrentTriggerObject, CurrentTriggeredPosition);
         }
         public void ForceActivateState(string stateName)
         {
@@ -208,44 +251,59 @@ namespace Nie
                 }
             //return false;
         }
-        public void React(GameObject triggeringObject, Vector3 position)
+        public void React(GameObject triggerObject, Vector3 position)
         {
-            if (IsActiveState) return;
-            ReactBegin(triggeringObject, position);
+            ReactBegin(triggerObject, position);
         }
         
-        void ReactBegin(GameObject triggeringObject, Vector3 position)
+        void ReactBegin(GameObject triggerObject, Vector3 position)
         {
-            if (m_IsReactingBegin)
+            if (m_BeginReactionDepth > 100)
             {
-                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' begin on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggeringObject.GetNameOrNull()}' at position: {position}", gameObject);
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' begin on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggerObject.GetNameOrNull()}' at position: {position}", gameObject);
                 return;
             }
-            m_IsReactingBegin = true;
-            foreach (var state in gameObject.GetComponents<ReactionState>())
-                if (state.IsActiveState && state.StateGroup == StateGroup)
-                    state.ReactEnd(triggeringObject, position);
-            
-            triggeringObject = GetTargetTriggeringObject(triggeringObject);
+            ++m_BeginReactionDepth;
+
+            triggerObject = GetOverriddenTrigger(triggerObject);
             var thisObject = TargetObject;
 
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggeringObject: '{(triggeringObject == null ? "<null>" : triggeringObject.name)}', position: {position}");
-            
-            IsActiveState = true;
-            m_TriggeringObject = triggeringObject;
-            m_TriggeredPosition = position;
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggerObject: '{(triggerObject == null ? "<null>" : triggerObject.name)}', position: {position}");
 
-            if (AttachTriggeringObjectAt != null && triggeringObject != null)
+            if (IsActiveState)
             {
-                if (triggeringObject.TryGetComponent<Grabbable>(out var grabbable))
+                // if same trigger as current one
+                // or do not reactivate on new trigger,
+                // then do not execute begin
+                if (triggerObject == CurrentTriggerObject || !ReactivateOnNewTrigger)
+                {
+                    --m_BeginReactionDepth;
+                    return;
+                }
+            }
+                
+            // set to new state
+            CurrentTriggerObject = triggerObject;
+            CurrentTriggeredPosition = position;
+            IsActiveState = true;
+
+            // deactivate previous active state.
+            foreach (var state in gameObject.GetComponents<ReactionState>())
+                if (state.IsActiveState && state != this && state.StateGroup == StateGroup)
+                    state.ReactEnd(triggerObject, position);
+
+
+            if (AttachTriggerObjectAt != null && triggerObject != null)
+            {
+                if (triggerObject.TryGetComponent<Grabbable>(out var grabbable))
                     grabbable.ReleaseIfGrabbed();
-                m_PreviousAttachedObject = triggeringObject.transform.parent;
-                triggeringObject.transform.parent = AttachTriggeringObjectAt.transform;
+                PreviousAttachedObject = triggerObject.transform.parent;
+                triggerObject.transform.parent = AttachTriggerObjectAt.transform;
                 if (MoveToParentOrigin)
                 {
-                    triggeringObject.transform.localRotation = Quaternion.identity;
-                    triggeringObject.transform.localPosition = Vector3.zero;
+                    triggerObject.transform.localRotation = Quaternion.identity;
+                    triggerObject.transform.localPosition = Vector3.zero;
                 }
             }
 
@@ -269,54 +327,55 @@ namespace Nie
                 rigidBody2.isKinematic = false;
             }
 
-            //if (!string.IsNullOrEmpty(OnBeginForceState) && m_TriggeringObject != null)
-            //    if (m_TriggeringObject.TryGetReactionState(OnBeginForceState, out var state))
+            //if (!string.IsNullOrEmpty(OnBeginForceState) && m_TriggerObject != null)
+            //    if (m_TriggerObject.TryGetReactionState(OnBeginForceState, out var state))
             //        state.ForceActivate();
             //    else
-            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
+            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnBegin.TryReact(gameObject, triggeringObject, position);
+            TriggerOnBegin.TryReact(gameObject, triggerObject, position);
 
             if (Cooldown > 0)
             {
-                m_ReactionCooldown = Cooldown;
+                CurrentReactionCooldown = Cooldown;
             }
-            m_IsReactingBegin = false;
+
+            --m_BeginReactionDepth;
         }
 
-        void ReactEnd(GameObject triggeringObject, Vector3 position)
+        void ReactEnd(GameObject triggerObject, Vector3 position)
         {
-            if (m_IsReactingEnd)
+            if (m_EndReactionDepth > 100)
             {
-                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' end on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggeringObject.GetNameOrNull()}' at position: {position}", gameObject);
+                Debug.LogWarning($"[{Time.frameCount}] reaction state '{StateName}' end on object '{gameObject.GetNameOrNull()}' is being triggered twice in the same reaction sequence. Look for infinite reaction loops. Triggered by '{triggerObject.GetNameOrNull()}' at position: {position}", gameObject);
                 return;
             }
-            m_IsReactingEnd = true;
+            ++m_EndReactionDepth;
             var thisObject = TargetObject;
 
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggeringObject: '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}', position: {m_TriggeredPosition}");
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggerObject: '{(CurrentTriggerObject == null ? "<null>" : CurrentTriggerObject.name)}', position: {CurrentTriggeredPosition}");
 
             if ((SetKinematic || SetNonKinematic) && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
                 rigidBody.isKinematic = m_PreviousKinematic;
             }
 
-            if (AttachTriggeringObjectAt != null && m_TriggeringObject != null)
-                m_TriggeringObject.transform.parent = m_PreviousAttachedObject;
+            if (DetachOnEnd && AttachTriggerObjectAt != null && CurrentTriggerObject != null)
+                CurrentTriggerObject.transform.parent = PreviousAttachedObject;
 
 
-            //if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggeringObject != null)
-            //    if (m_TriggeringObject.TryGetReactionState(OnEndForceState, out var state))
+            //if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggerObject != null)
+            //    if (m_TriggerObject.TryGetReactionState(OnEndForceState, out var state))
             //        state.ForceActivate();
             //    else //if(DebugLog)
-            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on triggering object '{(m_TriggeringObject == null ? "<null>" : m_TriggeringObject.name)}' at position: {m_TriggeredPosition}");
+            //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnEnd.TryReact(gameObject, triggeringObject, position, m_TriggeringObject);
+            TriggerOnEnd.TryReact(gameObject, triggerObject, position, CurrentTriggerObject);
             IsActiveState = false;
-            m_TriggeringObject = null;
-            m_TriggeredPosition = Vector3.zero;
-            m_IsReactingEnd = false;
+            CurrentTriggerObject = null;
+            CurrentTriggeredPosition = Vector3.zero;
+            --m_EndReactionDepth;
         }
 
     }

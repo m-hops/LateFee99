@@ -25,30 +25,49 @@ namespace Nie
         [Tooltip("Reaction executed when key has been released.")]
         public ReactionList OnKeyUp;
 
+        public bool DebugLog;
         public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
         public GameObject TriggerObject => TriggerFromMainCamera ? Camera.main.gameObject : gameObject;
         public bool CanReact()
         {
             if(!enabled) return false;
-            if (!Conditions.CanReact(null, transform.position)) return false;
+            if (!Conditions.CanReactAll(gameObject, TriggerObject, transform.position, previousTriggerObjectIfExist: null)) return false;
             return true;
         }
         void Update()
         {
             if (Input.GetKeyDown(KeyCode))
             {
+                if(DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyDown '{KeyCode}'", this);
                 if (CanReact())
+                {
                     OnKeyDown.TryReact(TargetObject, TriggerObject, transform.position);
+                    if(DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyDown '{KeyCode}'", this);
+                }
             }
             if (Input.GetKeyUp(KeyCode))
             {
+                if (DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyUp '{KeyCode}'", this);
                 if (CanReact())
+                {
                     OnKeyUp.TryReact(TargetObject, TriggerObject, transform.position);
+                    if (DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyUp '{KeyCode}'", this);
+                }
             }
             if (Input.GetKey(KeyCode))
             {
+                if (DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received WhenKeyPressed '{KeyCode}'", this);
                 if (CanReact())
+                {
                     WhenKeyPressed.TryReact(TargetObject, TriggerObject, transform.position);
+                    if (DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react WhenKeyPressed '{KeyCode}'", this);
+                }
             }
         }
     }

@@ -14,32 +14,32 @@ namespace Nie
         //[SerializeField]
         //public UnityEvent Events;
         //[SerializeField]
-        //public string ReactionOnTriggeringObject;
-        public void React(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        //public string ReactionOnTriggerObject;
+        public void React(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
             if(ReactionReferences != null)
                 foreach (var reaction in ReactionReferences)
-                    reaction.TryReact(targetObject, triggeringObject, position, previousTriggeringObject);
+                    reaction.TryReact(targetObject, triggerObject, position, previousTriggerObject);
 
-            //if (!string.IsNullOrEmpty(ReactionOnTriggeringObject))
-            //    ReactionReference.TryReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position, previousTriggeringObject);
+            //if (!string.IsNullOrEmpty(ReactionOnTriggerObject))
+            //    ReactionReference.TryReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject);
             //Events?.Invoke();
         }
-        public bool TryReact(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        public bool TryReact(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
-            if (CanReact(targetObject, triggeringObject, position))
+            if (CanReact(targetObject, triggerObject, position))
             {
-                React(targetObject, triggeringObject, position, previousTriggeringObject);
+                React(targetObject, triggerObject, position, previousTriggerObject);
                 return true;
             }
             return false;
         }
-        public bool CanReact(GameObject targetObject, GameObject triggeringObject, Vector3 position, GameObject previousTriggeringObject = null)
+        public bool CanReact(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
-            //if (!string.IsNullOrEmpty(ReactionOnTriggeringObject) && !ReactionReference.CanReact(triggeringObject, ReactionOnTriggeringObject, targetObject, position, previousTriggeringObject)) return false;
+            //if (!string.IsNullOrEmpty(ReactionOnTriggerObject) && !ReactionReference.CanReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject)) return false;
             return ReactionReferences == null 
                 || ReactionReferences.Count == 0
-                || ReactionReferences.Any(x => x.CanReact(targetObject, triggeringObject, position, previousTriggeringObject));
+                || ReactionReferences.Any(x => x.CanReact(targetObject, triggerObject, position, previousTriggerObject));
         }
     }
 }

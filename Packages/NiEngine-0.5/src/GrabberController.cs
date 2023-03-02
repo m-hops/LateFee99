@@ -134,8 +134,15 @@ namespace Nie
         public void TryGrabInFront()
         {
             var ray = new Ray(transform.position, (GrabPosition.position - transform.position).normalized);
-            if (Physics.Raycast(ray, out var hit) && hit.rigidbody != null && !hit.rigidbody.isKinematic && hit.rigidbody.gameObject.TryGetComponent<Grabbable>(out var grabbable) && grabbable.CanGrab(this, hit.point))
-                Grab(grabbable, hit.point);
+            if (Physics.Raycast(ray, out var hit) && hit.rigidbody != null && !hit.rigidbody.isKinematic && hit.rigidbody.gameObject.TryGetComponent<Grabbable>(out var grabbable))
+            {
+                var distance = (hit.point - transform.position).sqrMagnitude;
+                if (distance < MaxDistance * MaxDistance)
+                    if(grabbable.CanGrab(this, hit.point))
+                        Grab(grabbable, hit.point);
+            }
+
+                
         }
         public void SetGameObjectLayer(GameObject obj, int layer)
         {

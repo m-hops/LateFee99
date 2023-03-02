@@ -24,7 +24,7 @@ namespace Nie
         public bool CanTouch(TouchController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (!Conditions.CanReact(by.gameObject, position)) return false;
+            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
             if (!OnTouch.CanReact(TargetObject, by.gameObject, position)) return false;
             return true;
         }

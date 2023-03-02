@@ -35,16 +35,16 @@ namespace Nie
                 return null;
             }
         }
-        public bool CanReact(GameObject triggeringObject, Vector3 position)
+        public bool CanReact(GameObject triggerObject, Vector3 position)
         {
             if (TryGetState(out var state))
-                return state.CanReact(triggeringObject, position);
+                return state.CanReact(triggerObject, position);
             return false;
         }
-        public bool TryReact(GameObject triggeringObject, Vector3 position)
+        public bool TryReact(GameObject triggerObject, Vector3 position)
         {
             if (TryGetState(out var state))
-                return state.TryReact(triggeringObject, position);
+                return state.TryReact(triggerObject, position);
             return false;
         }
         public bool TryGetState(out ReactionState state)

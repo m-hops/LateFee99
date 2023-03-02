@@ -41,7 +41,8 @@ namespace Nie
         public Transform DefaultReactionPosition;
 
         [Tooltip("If set, move the GameObject that triggered this reaction. The GameObject may be null")]
-        public Transform MoveTriggeringObjectAt;
+        [UnityEngine.Serialization.FormerlySerializedAs("MoveTriggeringObjectAt")]
+        public Transform MoveTriggerObjectAt;
 
         [Tooltip("Will release this object if it has a Grabbable component and is currently grabbed")]
         public bool ReleaseGrabbed;
@@ -51,13 +52,14 @@ namespace Nie
         [Header("Overrides:")]
         [Tooltip("If set, will execute the reaction on provided object instead of the object with this ReactionState.")]
         public GameObject ThisObject;
-        [Tooltip("If set, will execute the reaction using provided object as the triggering object.")]
-        public GameObject TriggeringObject;
+        [Tooltip("If set, will execute the reaction using provided object as the trigger object.")]
+        [UnityEngine.Serialization.FormerlySerializedAs("TriggeringObject")]
+        public GameObject TriggerObject;
 
 
         [Header("Events:")]
         [SerializeField]
-        [Tooltip("Event called when the reaction happens. Parameters are (Reaction this, GameObject triggeringObject)")]
+        [Tooltip("Event called when the reaction happens. Parameters are (Reaction this, GameObject triggerObject)")]
         UnityEvent<Reaction, GameObject> OnReact;
 
         [SerializeField]
@@ -70,7 +72,7 @@ namespace Nie
         Vector3 GetReactionPosition(Vector3 receivedPosition) => DefaultReactionPosition != null ? DefaultReactionPosition.position : receivedPosition;
 
         public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
-        public GameObject GetTargetTriggeringObject(GameObject triggeringObject) => TriggeringObject != null ? TriggeringObject : triggeringObject;
+        public GameObject GetOverriddenTriggerObject(GameObject triggerObject) => TriggerObject != null ? TriggerObject : triggerObject;
         private void Update()
         {
             if (m_ReactionCooldown > 0)
@@ -86,27 +88,27 @@ namespace Nie
             return m_ReactionCooldown <= 0;
         }
         public void React() => React(null, ReactionPosition);
-        public bool TryReact(GameObject triggeringObject, Vector3 position)
+        public bool TryReact(GameObject triggerObject, Vector3 position)
         {
-            triggeringObject = GetTargetTriggeringObject(triggeringObject);
-            if (!CanReact(triggeringObject, position)) 
+            triggerObject = GetOverriddenTriggerObject(triggerObject);
+            if (!CanReact(triggerObject, position)) 
                 return false;
-            React(triggeringObject, position);
+            React(triggerObject, position);
             return true;
         }
-        public void React(GameObject triggeringObject, Vector3 position)
+        public void React(GameObject triggerObject, Vector3 position)
         {
 
-            triggeringObject = GetTargetTriggeringObject(triggeringObject);
+            triggerObject = GetOverriddenTriggerObject(triggerObject);
             var thisObject = TargetObject;
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Reaction '{name}' reacts (triggeringObject: '{triggeringObject.name}', position: {position}");
+                Debug.Log($"[{Time.frameCount}] Reaction '{name}' reacts (TriggerObject: '{triggerObject.name}', position: {position}");
 
-            if (MoveTriggeringObjectAt != null && triggeringObject != null)
+            if (MoveTriggerObjectAt != null && triggerObject != null)
             {
-                triggeringObject.transform.position = MoveTriggeringObjectAt.transform.position;
-                triggeringObject.transform.rotation = MoveTriggeringObjectAt.transform.rotation;
-                if (triggeringObject.TryGetComponent<Grabbable>(out var grabbable))
+                triggerObject.transform.position = MoveTriggerObjectAt.transform.position;
+                triggerObject.transform.rotation = MoveTriggerObjectAt.transform.rotation;
+                if (triggerObject.TryGetComponent<Grabbable>(out var grabbable))
                     grabbable.ReleaseIfGrabbed();
             }
 
@@ -119,7 +121,7 @@ namespace Nie
             if (PlayAnimatorState.Animator != null)
                 PlayAnimatorState.Animator.Play(PlayAnimatorState.StateHash);
 
-            OnReact?.Invoke(this, triggeringObject);
+            OnReact?.Invoke(this, triggerObject);
 
 
             if (DestroyGameObject)

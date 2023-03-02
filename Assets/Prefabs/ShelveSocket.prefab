@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9094870917036266858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.09840224, y: -0, z: -0, w: 0.99514675}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9094870918709348284}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.294, y: 0, z: 0}
 --- !u!65 &9094870917036266871
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2238549, y: 0.24689484, z: 0.2742319}
-  m_Center: {x: -0.0013139844, y: 0.0061810017, z: -0.101715565}
+  m_Size: {x: 0.2238549, y: 0.24689484, z: 0.013921171}
+  m_Center: {x: -0.0013139844, y: 0.0061810017, z: 0.028439805}
 --- !u!114 &9094870917036266868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +70,14 @@ MonoBehaviour:
   ReactToCollision: 0
   ReactToTrigger: 1
   StateConditions:
-    States: []
+    States:
+    - Type: 0
+      ObjectTargetType: 1
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 9094870918709348287}
+      Other: {fileID: 9094870918709348285}
+      State: Empty
+      StateHash: 0
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
@@ -80,6 +87,25 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
+    - ReactionType: 1
+      ObjectTargetType: 1
+      TargetObject: {fileID: 9094870918709348285}
+      ReactionName: Filled
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 9094870918709348285}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   OnReactEnd:
     ReactionReferences: []
   DebugLog: 0
@@ -232,7 +258,6 @@ MonoBehaviour:
   StateName: Empty
   StateGroup: 
   IsInitialState: 1
-  IsActiveState: 1
   DebugLog: 0
   DebugDrawState: {fileID: 9094870918276926307}
   Cooldown: 0
@@ -241,14 +266,20 @@ MonoBehaviour:
   SetKinematic: 0
   SetNonKinematic: 0
   ReleaseGrabbed: 0
-  AttachTriggeringObjectAt: {fileID: 0}
+  AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
-  ThisObject: {fileID: 0}
-  TriggeringObject: {fileID: 0}
+  DetachOnEnd: 1
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 1
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  PreviousAttachedObject: {fileID: 0}
 --- !u!114 &9094870918709348286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +295,6 @@ MonoBehaviour:
   StateName: Filled
   StateGroup: 
   IsInitialState: 0
-  IsActiveState: 0
   DebugLog: 0
   DebugDrawState: {fileID: 9094870918276926307}
   Cooldown: 0
@@ -273,14 +303,20 @@ MonoBehaviour:
   SetKinematic: 0
   SetNonKinematic: 0
   ReleaseGrabbed: 0
-  AttachTriggeringObjectAt: {fileID: 9094870918814714022}
+  AttachTriggerObjectAt: {fileID: 9094870918814714022}
   MoveToParentOrigin: 1
-  ThisObject: {fileID: 0}
-  TriggeringObject: {fileID: 0}
+  DetachOnEnd: 1
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  PreviousAttachedObject: {fileID: 0}
 --- !u!1 &9094870918814714023
 GameObject:
   m_ObjectHideFlags: 0

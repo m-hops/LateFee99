@@ -22,7 +22,7 @@ namespace Nie.Editor
             //
             //
             //    h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("ReactionReferences"));
-            //    //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("ReactionOnTriggeringObject"));
+            //    //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("ReactionOnTriggerObject"));
             //    //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("SetReactionStates"));
             //    //h += EditorGUIUtility.singleLineHeight + 4;
             //
@@ -62,7 +62,7 @@ namespace Nie.Editor
             //    //propEvent.isExpanded = layout.Foldout(propEvent.isExpanded, new GUIContent(propEvent.name));
             //    //if (propEvent.isExpanded)
             //    //    layout.PropertyField(propEvent);
-            //    //layout.PropertyField(property.FindPropertyRelative("ReactionOnTriggeringObject"), new GUIContent("Reaction On Triggering Object:"));
+            //    //layout.PropertyField(property.FindPropertyRelative("ReactionOnTriggerObject"), new GUIContent("Reaction On Trigger Object:"));
             //}
             //
             //EditorGUI.EndProperty();
