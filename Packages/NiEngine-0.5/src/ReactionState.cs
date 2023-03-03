@@ -135,6 +135,9 @@ namespace Nie
         //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
         //public string OnEndForceState;
 
+        public ReactionList DelayedReaction;
+        [Tooltip("In second.")]
+        public float Delay;
 
         [Header("Overrides:")]
         [Tooltip("If set, will execute the reaction on provided object instead of the object with this ReactionState.")]
@@ -153,11 +156,13 @@ namespace Nie
         [Tooltip("The trigger object when this state was activated")]
         public GameObject CurrentTriggerObject;
         [Tooltip("The trigger position when this state was activated")]
-        public Vector3 CurrentTriggeredPosition;
+        public Vector3 CurrentTriggerPosition;
         [Tooltip("Cool down time before this state can be (re)activated")]
         public float CurrentReactionCooldown = 0;
-        [Tooltip("The Transform the trigger object was detached from if 'Attach Trigger Object At' is set. It will reattach to it if 'Detach On End' is set.")]
-        public Transform PreviousAttachedObject;
+        //[Tooltip("The Transform the trigger object was detached from if 'Attach Trigger Object At' is set. It will reattach to it if 'Detach On End' is set.")]
+        //public Transform PreviousAttachedObject;
+        [Tooltip("Current Idle Time")]
+        public float CurrentIdleTime = 0;
 
         [UnityEngine.Serialization.FormerlySerializedAs("m_PreviousKinematic")]
         public bool PreviousKinematic;
@@ -225,6 +230,15 @@ namespace Nie
 #if UNITY_EDITOR
             CheckDebugLabel();
 #endif
+            if (IsActiveState)
+            {
+                var NextIdleTime = CurrentIdleTime + Time.deltaTime;
+
+                if (NextIdleTime >= Delay && CurrentIdleTime < Delay)
+                    DelayedReaction.React(gameObject, CurrentTriggerObject, CurrentTriggerPosition, CurrentTriggerObject);
+
+                CurrentIdleTime = NextIdleTime;
+            }
             if (CurrentReactionCooldown > 0)
             {
                 CurrentReactionCooldown -= Time.deltaTime;
@@ -259,7 +273,7 @@ namespace Nie
         public void ForceActivate()
         {
             if (IsActiveState) return;
-            ReactBegin(CurrentTriggerObject, CurrentTriggeredPosition);
+            ReactBegin(CurrentTriggerObject, CurrentTriggerPosition);
         }
         public void ForceActivateState(string stateName)
         {
@@ -284,12 +298,9 @@ namespace Nie
                 return;
             }
             ++m_BeginReactionDepth;
-
+            CurrentIdleTime = 0;
             triggerObject = GetOverriddenTrigger(triggerObject);
             var thisObject = TargetObject;
-
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggerObject: '{(triggerObject == null ? "<null>" : triggerObject.name)}', position: {position}");
 
             if (IsActiveState)
             {
@@ -305,7 +316,7 @@ namespace Nie
                 
             // set to new state
             CurrentTriggerObject = triggerObject;
-            CurrentTriggeredPosition = position;
+            CurrentTriggerPosition = position;
             IsActiveState = true;
 
             // deactivate previous active state.
@@ -313,12 +324,15 @@ namespace Nie
                 if (state.IsActiveState && state != this && state.StateGroup == StateGroup)
                     state.ReactEnd(triggerObject, position);
 
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggerObject: '{(triggerObject == null ? "<null>" : triggerObject.name)}', position: {position}");
+
 
             if (AttachTriggerObjectAt != null && triggerObject != null)
             {
                 if (triggerObject.TryGetComponent<Grabbable>(out var grabbable))
                     grabbable.ReleaseIfGrabbed();
-                PreviousAttachedObject = triggerObject.transform.parent;
+                //PreviousAttachedObject = triggerObject.transform.parent;
                 triggerObject.transform.parent = AttachTriggerObjectAt.transform;
                 if (MoveToParentOrigin)
                 {
@@ -377,7 +391,7 @@ namespace Nie
             var thisObject = TargetObject;
 
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggerObject: '{(CurrentTriggerObject == null ? "<null>" : CurrentTriggerObject.name)}', position: {CurrentTriggeredPosition}");
+                Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactEnd (triggerObject: '{(CurrentTriggerObject == null ? "<null>" : CurrentTriggerObject.name)}', position: {CurrentTriggerPosition}");
 
             if ((SetKinematic || SetNonKinematic) && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
@@ -385,7 +399,7 @@ namespace Nie
             }
 
             if (DetachOnEnd && AttachTriggerObjectAt != null && CurrentTriggerObject != null)
-                CurrentTriggerObject.transform.parent = PreviousAttachedObject;
+                CurrentTriggerObject.transform.parent = null;
 
             if(MoveToOnEnd != null)
             {
@@ -406,7 +420,7 @@ namespace Nie
 
             IsActiveState = false;
             CurrentTriggerObject = null;
-            CurrentTriggeredPosition = Vector3.zero;
+            CurrentTriggerPosition = Vector3.zero;
             --m_EndReactionDepth;
         }
 

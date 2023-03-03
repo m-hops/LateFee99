@@ -95,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.01, y: 1.1, z: 1.01}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1978374564
 GameObject:
@@ -303,7 +303,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.01, y: 1.1, z: 1.01}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2252994618294665884
 GameObject:
@@ -532,13 +532,16 @@ MonoBehaviour:
           m_Calls: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &1877835865272150856
 MonoBehaviour:
@@ -594,13 +597,16 @@ MonoBehaviour:
           m_Calls: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &3834221951730463635
 MonoBehaviour:
@@ -656,13 +662,16 @@ MonoBehaviour:
           m_Calls: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 1
   CurrentTriggerObject: {fileID: 3198980079346952826}
-  CurrentTriggeredPosition: {x: 15.991215, y: 1.1045461, z: 3.5940537}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &4814475501266168715
 MonoBehaviour:
@@ -818,15 +827,20 @@ GameObject:
   - component: {fileID: 3198980077737404739}
   - component: {fileID: 3198980077737404738}
   - component: {fileID: 3198980077737404741}
+  - component: {fileID: 3384334422527472996}
   - component: {fileID: 3198980077737404740}
   - component: {fileID: 3198980077737404743}
   - component: {fileID: 4598185610200294763}
   - component: {fileID: 7803114123783461717}
   - component: {fileID: 1392524698450636122}
-  - component: {fileID: 2258926774179583231}
   - component: {fileID: 7619640422345008221}
   - component: {fileID: 2541798443432428006}
   - component: {fileID: 3198980077737404742}
+  - component: {fileID: 2258926774179583231}
+  - component: {fileID: 4309612959066424478}
+  - component: {fileID: 4575402258772622088}
+  - component: {fileID: 2798914026795221959}
+  - component: {fileID: 4235856768390411541}
   m_Layer: 0
   m_Name: VHSInSleeveBase
   m_TagString: Untagged
@@ -846,7 +860,9 @@ Transform:
   m_LocalScale: {x: 1.3000001, y: 1.3000001, z: 1.3000001}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6017063632437615217}
   - {fileID: 6834136960910986939}
+  - {fileID: 3388720219272617258}
   - {fileID: 3198980077842632214}
   - {fileID: 3198980078279852021}
   - {fileID: 3198980078213382304}
@@ -884,8 +900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateName: Open
-  StateGroup: 
+  StateName: Opening
+  StateGroup: anim
   IsInitialState: 0
   DebugLog: 0
   DebugDrawState: {fileID: 2072559673777042672}
@@ -898,8 +914,8 @@ MonoBehaviour:
   ReleaseGrabbed: 0
   AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 6834136960910986939}
+  DetachOnEnd: 0
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
@@ -919,11 +935,84 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Open
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Open
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Done
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  Delay: 0.5
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &3384334422527472996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Open
+  StateGroup: 
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 1
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
           - m_Target: {fileID: 3198980079346952826}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: set_isStatic
+            m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -947,7 +1036,7 @@ MonoBehaviour:
           m_Calls:
           - m_Target: {fileID: 3198980079346952826}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: set_isStatic
+            m_MethodName: SetActive
             m_Mode: 6
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -960,13 +1049,16 @@ MonoBehaviour:
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &3198980077737404740
 MonoBehaviour:
@@ -995,31 +1087,9 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 3198980077842632214}
   MoveToParentOrigin: 1
   DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
+  MoveToOnEnd: {fileID: 6834136960910986939}
   TriggerOnBegin:
     ReactionReferences:
-    - ReactionType: 1
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
-      ReactionName: InSleeve
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 2054296224}
-            m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-            m_MethodName: Play
-            m_Mode: 5
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: Close
-              m_BoolArgument: 0
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
     - ReactionType: 0
       ObjectTargetType: 2
       TargetObject: {fileID: 0}
@@ -1027,6 +1097,28 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+    - ReactionType: 1
+      ObjectTargetType: 2
+      TargetObject: {fileID: 0}
+      ReactionName: InSleeve
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 9007890594717423262}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
@@ -1042,13 +1134,38 @@ MonoBehaviour:
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
+    - ReactionType: 1
+      ObjectTargetType: 3
+      TargetObject: {fileID: 0}
+      ReactionName: Free
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 9007890594717423262}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 1
   CurrentTriggerObject: {fileID: 2517568391512578975}
-  CurrentTriggeredPosition: {x: 15.991215, y: 1.1045461, z: 3.5940537}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &3198980077737404743
 MonoBehaviour:
@@ -1079,8 +1196,28 @@ MonoBehaviour:
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 3198980077737404761}
+      ReactionName: Grabbed
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   OnRelease:
-    ReactionReferences: []
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Released
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!114 &4598185610200294763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,13 +1250,16 @@ MonoBehaviour:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 1
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &7803114123783461717
 MonoBehaviour:
@@ -1153,13 +1293,16 @@ MonoBehaviour:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &1392524698450636122
 MonoBehaviour:
@@ -1209,60 +1352,6 @@ MonoBehaviour:
     ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
---- !u!114 &2258926774179583231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198980077737404761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0579ab49382e10548b004ef0a700beef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyCode: 101
-  TriggerFromMainCamera: 1
-  Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: CloseWithVHS
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: FreeLoc
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Focused
-      StateHash: 0
-  OnKeyDown:
-    ReactionReferences:
-    - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
-      ReactionName: Open
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  WhenKeyPressed:
-    ReactionReferences: []
-  OnKeyUp:
-    ReactionReferences: []
-  DebugLog: 0
 --- !u!114 &7619640422345008221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1295,13 +1384,16 @@ MonoBehaviour:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 1
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &2541798443432428006
 MonoBehaviour:
@@ -1379,13 +1471,16 @@ MonoBehaviour:
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
   PreviousKinematic: 0
 --- !u!114 &3198980077737404742
 MonoBehaviour:
@@ -1403,7 +1498,35 @@ MonoBehaviour:
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   Conditions:
-    States: []
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Released
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: CloseWithVHS
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: FreeLoc
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Done
+      StateHash: 0
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
@@ -1429,6 +1552,310 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
   FocusedByTriggerObject: {fileID: 0}
+--- !u!114 &2258926774179583231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0579ab49382e10548b004ef0a700beef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyCode: 101
+  TriggerFromMainCamera: 1
+  Conditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: CloseWithVHS
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: FreeLoc
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Focused
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Done
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Released
+      StateHash: 0
+  OnKeyDown:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Opening
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  WhenKeyPressed:
+    ReactionReferences: []
+  OnKeyUp:
+    ReactionReferences: []
+  DebugLog: 0
+--- !u!114 &4309612959066424478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Done
+  StateGroup: anim
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 1
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 1
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &4575402258772622088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Grabbed
+  StateGroup: Grab
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 1
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &2798914026795221959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Released
+  StateGroup: Grab
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 1
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 1
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &4235856768390411541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Closing
+  StateGroup: anim
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 0}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 1
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 3198980077842632214}
+  MoveToParentOrigin: 1
+  DetachOnEnd: 0
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2054296224}
+            m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_MethodName: Play
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Close
+              m_BoolArgument: 0
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+    - ReactionType: 0
+      ObjectTargetType: 2
+      TargetObject: {fileID: 0}
+      ReactionName: InSleeve
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 2054296224}
+            m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+            m_MethodName: Play
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Close
+              m_BoolArgument: 0
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: CloseWithVHS
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Done
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  Delay: 0.5
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!1 &3198980077842632233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,7 +1887,7 @@ Transform:
   m_Children:
   - {fileID: 5333820298039891808}
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7249886004988465343
 MonoBehaviour:
@@ -1588,7 +2015,7 @@ Transform:
   - {fileID: 3198980079346952827}
   - {fileID: 1978374565}
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3198980078279851913
 GameObject:
@@ -1623,9 +2050,8 @@ Transform:
   m_Children:
   - {fileID: 3198980079572444917}
   - {fileID: 6918686957282709185}
-  - {fileID: 3388720219272617258}
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3198980078279852020
 MeshFilter:
@@ -1764,7 +2190,7 @@ MonoBehaviour:
     - Type: 0
       ObjectTargetType: 1
       Animator: {fileID: 0}
-      ReactionState: {fileID: 3198980077737404741}
+      ReactionState: {fileID: 0}
       Other: {fileID: 3198980077737404761}
       State: Open
       StateHash: 0
@@ -1773,7 +2199,7 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 1
       TargetObject: {fileID: 3198980077737404761}
-      ReactionName: CloseWithVHS
+      ReactionName: Closing
       Event:
         m_PersistentCalls:
           m_Calls: []
@@ -2007,7 +2433,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
 --- !u!1 &3656067788061966464
 GameObject:
@@ -2032,14 +2458,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3656067788061966464}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0041, z: 0.0324}
+  m_LocalRotation: {x: -0.07737235, y: -0, z: -0, w: 0.9970023}
+  m_LocalPosition: {x: 0, y: 0.0108, z: 0.0436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -8.875, y: 0, z: 0}
 --- !u!1 &3913682487691129857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,7 +2495,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4155538546678039574
 GameObject:
@@ -2242,7 +2668,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3198980077737404739}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
 --- !u!1 &5962697671734972882
 GameObject:
@@ -2270,11 +2696,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5962697671734972882}
   m_LocalRotation: {x: 0.49999854, y: -0.4999999, z: 0.5000001, w: 0.50000155}
-  m_LocalPosition: {x: -0.147, y: -0.5000009, z: -0.236}
-  m_LocalScale: {x: 0.2, y: 0.11, z: 1.4666669}
+  m_LocalPosition: {x: -0.0294, y: -0.009800013, z: 0.0064400006}
+  m_LocalScale: {x: 0.022000002, y: 0.022000002, z: 0.022000004}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 3198980078279852021}
+  m_Father: {fileID: 3198980077737404739}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2410557036721703316
@@ -2372,3 +2798,48 @@ Transform:
   m_Father: {fileID: 5333820298039891808}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!1 &9007890594717423262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6017063632437615217}
+  - component: {fileID: 5771564909815646034}
+  m_Layer: 0
+  m_Name: CloseCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6017063632437615217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007890594717423262}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0096, z: 0.0338}
+  m_LocalScale: {x: 0.2, y: 0.014999998, z: 0.109999985}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5771564909815646034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007890594717423262}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 2.2, z: 1.01}
+  m_Center: {x: 0, y: 0, z: 0}

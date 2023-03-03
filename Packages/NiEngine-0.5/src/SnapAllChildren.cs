@@ -9,8 +9,15 @@ public class SnapAllChildren : MonoBehaviour
     {
         for(int i = 0; i != transform.childCount; i++)
         {
-            transform.GetChild(i).localPosition = Vector3.zero;
-            transform.GetChild(i).localRotation = Quaternion.identity;
+            var c = transform.GetChild(i);
+            c.localPosition = Vector3.zero;
+            c.localRotation = Quaternion.identity;
+            if(c.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            
         }
     }
 }
