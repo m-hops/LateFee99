@@ -1,0 +1,275 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5635891014514194231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 35135455639158826}
+  m_Layer: 0
+  m_Name: VHS-Spawn-Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &35135455639158826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5635891014514194231}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19.728, y: 1.319, z: 4.327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6929664072630167284}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6929664072630167283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6929664072630167284}
+  - component: {fileID: 6929664072630167285}
+  - component: {fileID: 6929664072630167286}
+  - component: {fileID: 1502653678710691913}
+  - component: {fileID: 6151032857776876689}
+  - component: {fileID: 3344696953413286908}
+  m_Layer: 0
+  m_Name: GameManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6929664072630167284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6929664072803667219}
+  - {fileID: 35135455639158826}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6929664072630167285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be4463af760b46c40907f0160b35db77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrameRate: 24
+--- !u!114 &6929664072630167286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bf7fff17fc0e046bfc5d4167470846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1502653678710691913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c52d97a94649dc46bd761767dea2a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VhsToSpawn:
+  - {fileID: 7332166705655280491, guid: 01cc202e5c859754bb1e80ea5e517236, type: 3}
+  - {fileID: 2962850655418046124, guid: fbd4dc44d3061b2419f85d438808fcd9, type: 3}
+  - {fileID: 770561421449598630, guid: 360cc26c878e05c4da335bc6ea41de6e, type: 3}
+  WhereToSpawn: {fileID: 0}
+  NextIndexToSpawn: 0
+  CurrentTime: 0
+--- !u!114 &6151032857776876689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionName: SpawnNextVHS
+  DebugLog: 0
+  ReactionCooldown: 0
+  RunOnStart: 0
+  DestroyGameObject: 0
+  ReplaceWith: {fileID: 0}
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  MoveTriggerObjectAt: {fileID: 0}
+  ReleaseGrabbed: 0
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  ThisObject: {fileID: 0}
+  TriggerObject: {fileID: 0}
+  OnReact:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1502653678710691913}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: SpawnNextVHS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCooldownOver:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3344696953413286908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionName: AdvanceTime
+  DebugLog: 0
+  ReactionCooldown: 0
+  RunOnStart: 0
+  DestroyGameObject: 0
+  ReplaceWith: {fileID: 0}
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  MoveTriggerObjectAt: {fileID: 0}
+  ReleaseGrabbed: 0
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  ThisObject: {fileID: 0}
+  TriggerObject: {fileID: 0}
+  OnReact:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1502653678710691913}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: AdvanceTime1H
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCooldownOver:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &6929664072803667216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6929664072803667219}
+  - component: {fileID: 6929664072803667218}
+  - component: {fileID: 6929664072803667217}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6929664072803667219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072803667216}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6929664072630167284}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6929664072803667218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072803667216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &6929664072803667217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072803667216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
