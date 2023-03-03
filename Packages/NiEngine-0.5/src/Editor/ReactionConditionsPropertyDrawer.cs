@@ -18,13 +18,12 @@ namespace Nie.Editor
             }
             return h;
         }
-        public static Texture2D IconCondition = (Texture2D)AssetDatabase.LoadAssetAtPath("Packages/NiEngine/src/Editor/Assets/IconCondition.png", typeof(Texture2D));
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
 
             var layout = RectLayout.Vertical(position);
-            property.isExpanded = layout.Foldout(property.isExpanded, new GUIContent(property.name, IconCondition));
+            property.isExpanded = layout.Foldout(property.isExpanded, new GUIContent(property.name, Assets.IconCondition));
             if (property.isExpanded)
             {
                 layout = layout.SubHorizontal();

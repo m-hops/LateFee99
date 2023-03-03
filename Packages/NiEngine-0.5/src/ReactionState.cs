@@ -53,6 +53,7 @@ namespace Nie
         public string StateName;
         [Tooltip("This state is mutually exclusive will all ReactionState of the same group on this GameObject")]
         public string StateGroup;
+        [System.Obsolete("Set active state in run-time fields")]
         [Tooltip("Will be in active state when the game object starts. Will not execute the reaction")]
         public bool IsInitialState;
 
@@ -157,9 +158,14 @@ namespace Nie
         public GameObject GetOverriddenTrigger(GameObject triggerObject) => OverrideTriggerObject != null ? OverrideTriggerObject : triggerObject;
         void Start()
         {
-            IsActiveState = IsInitialState;
+            if (IsInitialState)
+            {
+                Debug.LogWarning("Using obsolete feature 'ReactionState.IsInitialState'", this);
+                IsActiveState = IsInitialState;
+            }
 #if UNITY_EDITOR
-            if(IsInitialState)
+            
+            if(IsActiveState)
                 foreach (var state in gameObject.GetComponents<ReactionState>())
                     if (state != this && state.StateGroup == StateGroup && state.IsInitialState)
                         Debug.LogError($"Only one ReactionState of the same group can set as initial state. ReactionState on GameObject '{name}' : '{StateName}' and '{state.StateName}'");

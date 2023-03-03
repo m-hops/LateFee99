@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEditor;
 using Unity.Mathematics;
@@ -26,6 +30,7 @@ namespace Nie.Editor
         public RectLayout SubVertical(float size) => new RectLayout(AcquireSize(size), false);
 
         public RectLayout SubHorizontal() => new RectLayout(Acquire(FreeRect.width, FreeRect.height), true);
+        public RectLayout SubHorizontalLine(int lineCount) => new RectLayout(Acquire(FreeRect.width, EditorGUIUtility.singleLineHeight * lineCount), true);
         public RectLayout SubVertical() => new RectLayout(Acquire(FreeRect.width, FreeRect.height), false);
         //public Rect Acquire(float size) => IsHorizontal ? Acquire(size, OriginalRect.height) : Acquire(OriginalRect.width, size);
         public static float WidthOf(string text) => GUI.skin.box.CalcSize(new GUIContent(text)).x;
@@ -97,6 +102,7 @@ namespace Nie.Editor
                 return Acquire(FreeRect.width, MinHeight);
             }
         }
+        public Rect AcquireLines(int lineCount) => Acquire(FreeRect.width, EditorGUIUtility.singleLineHeight * lineCount);
         public Rect AcquireHeight(float height)
         {
             if (IsHorizontal)
@@ -110,7 +116,7 @@ namespace Nie.Editor
         }
         public bool Foldout(bool isExpanded, GUIContent content)
         {
-            var size = GUI.skin.box.CalcSize(content);
+            var size = GUI.skin.box.CalcSize(new GUIContent(content.text));
             return EditorGUI.Foldout(AcquireHeight(size.y), isExpanded, content, true);
         }
         public bool Foldout(float width, bool isExpanded, GUIContent content)
@@ -118,9 +124,9 @@ namespace Nie.Editor
             var size = GUI.skin.box.CalcSize(content);
             return EditorGUI.Foldout(Acquire(width, size.y), isExpanded, content, true);
         }
-        public void Label(string text)
+        public void Label(string text) => Label(new GUIContent(text));
+        public void Label(GUIContent content)
         {
-            var content = new GUIContent(text);
             var size = GUI.skin.box.CalcSize(content);
             EditorGUI.LabelField(AcquireWidth(size.x), content);//, new GUIContent(text));
         }
@@ -139,9 +145,16 @@ namespace Nie.Editor
 
         }
         public void PropertyField(SerializedProperty property)=> PropertyField(property, GUIContent.none);
+        public void PropertyField(SerializedProperty property, GUIContent content, bool includeChildren)
+            => EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content, includeChildren);
         public void PropertyField(SerializedProperty property, GUIContent content)
+            => EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content);
+
+        public void PropertyFieldSquare(SerializedProperty property) => PropertyFieldSquare(property, GUIContent.none);
+        public void PropertyFieldSquare(SerializedProperty property, GUIContent content)
         {
-            EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content);
+            var size = EditorGUI.GetPropertyHeight(property);
+            EditorGUI.PropertyField(Acquire(size, size), property, content, true);
         }
         public bool Button(string caption)
         {
@@ -161,6 +174,83 @@ namespace Nie.Editor
         {
             return (TEnum)EditorGUI.EnumPopup(AcquireWidth(minWidth), value);
         }
+
+
+        static Dictionary<Type, Dictionary<Type, string>> _DerivedClass;
+
+        static void OnBeforeAssemblyReload()
+        {
+            _DerivedClass = null;
+        }
+
+        static string NameOfDerivedClass(Type baseType, Type derivedType)
+        {
+            if (derivedType is null) return "<Null>";
+            var types = DerivedClassOf(baseType);
+            if (types.TryGetValue(derivedType, out var name))
+                return name;
+            return derivedType.FullName;
+        }
+        static Dictionary<Type, string> DerivedClassOf(Type baseType)
+        {
+
+            if (_DerivedClass == null)
+            {
+                AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeAssemblyReload;
+                AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+                _DerivedClass = new();
+            }
+            if (!_DerivedClass.TryGetValue(baseType, out var derivedTypes))
+            {
+                derivedTypes = new ();
+                //ClassPickerName
+
+                var ll = System.AppDomain.CurrentDomain.GetAssemblies().SelectMany(
+                    x => x.GetTypes().Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t)));
+                foreach(var type in System.AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes().Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t))))
+                {
+                    string name = type.FullName;
+                    foreach(var attribute in type.GetCustomAttributes(inherit: false))
+                    if (attribute is ClassPickerName classPickerName)
+                    {
+                        name = classPickerName.Name;
+                        break;
+                    }
+                    derivedTypes.Add(type, name);
+                }
+                _DerivedClass.Add(baseType, derivedTypes);
+                
+            }
+            return derivedTypes;
+        }
+        public static void DerivedClassPicker(Rect position, Type baseType, SerializedProperty property)
+        {
+            string typeName = NameOfDerivedClass(baseType, property.managedReferenceValue?.GetType());
+            //string typeName = property.managedReferenceValue?.GetType().Name ?? "Not set";
+            if (EditorGUI.DropdownButton(position, new(typeName), FocusType.Keyboard))
+            {
+                GenericMenu menu = new GenericMenu();
+
+                // null
+                menu.AddItem(new GUIContent("Null"), property.managedReferenceValue == null, () =>
+                {
+                    property.managedReferenceValue = null;
+                    property.serializedObject.ApplyModifiedProperties();
+                });
+
+                // inherited types
+                foreach (var (type,name) in DerivedClassOf(baseType))
+                {
+                    menu.AddItem(new GUIContent(name), typeName == type.Name, () =>
+                    {
+                        property.managedReferenceValue = type.GetConstructor(Type.EmptyTypes).Invoke(null); ;
+                        property.serializedObject.ApplyModifiedProperties();
+                    });
+                }
+                menu.ShowAsContext();
+            }
+        }
+
     }
 
 }

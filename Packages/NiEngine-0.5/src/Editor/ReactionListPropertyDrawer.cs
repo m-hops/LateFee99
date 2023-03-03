@@ -32,11 +32,11 @@ namespace Nie.Editor
             //}
             return h;
         }
-        public static Texture2D IconReactionReference = (Texture2D) AssetDatabase.LoadAssetAtPath("Packages/NiEngine/src/Editor/Assets/IconReactionReference.png", typeof(Texture2D));
+        
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var porp = property.FindPropertyRelative("ReactionReferences");
-            EditorGUI.PropertyField(position, porp, new GUIContent(label.text, IconReactionReference));
+            EditorGUI.PropertyField(position, porp, new GUIContent(label.text, Assets.IconReactionReference));
 
 
             //EditorGUI.BeginProperty(position, label, property);
