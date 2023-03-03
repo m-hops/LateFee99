@@ -1,0 +1,25 @@
+﻿title: NPC
+tags:
+---
+
+<<if $testDialogNPC>>
+    <<jump NPCDialog0>>
+<<endif>>
+
+<<set $ending1 to false>>
+<<set $ending2 to false>>
+<<set $testDialogNPC to false>>
+
+Select an ending
+
+-> Ending 1
+    <<set $ending1 to true>>
+    <<set $testDialogNPC to true>>
+-> Ending 2
+    <<set $ending2 to true>>
+    <<set $testDialogNPC to true>>
+===
+title:NPCDialog0
+---
+Debug Success! 
+===

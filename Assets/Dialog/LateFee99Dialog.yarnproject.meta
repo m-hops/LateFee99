@@ -17,8 +17,17 @@ ScriptedImporter:
     defaultValueBool: 0
     defaultValueNumber: 0
     defaultValueString: 
-    description: 
-    isImplicit: 0
+    description: Implicitly declared in Customer.yarn, node CustomerDialog0
+    isImplicit: 1
+    sourceYarnAsset: {fileID: 6391573757903218779, guid: 50dd13d8653093a45bf91e052b554f73,
+      type: 3}
+  - name: $customerDialogTest
+    typeName: Bool
+    defaultValueBool: 0
+    defaultValueNumber: 0
+    defaultValueString: 
+    description: Implicitly declared in Customer.yarn, node CustomerDialog0
+    isImplicit: 1
     sourceYarnAsset: {fileID: 6391573757903218779, guid: 50dd13d8653093a45bf91e052b554f73,
       type: 3}
   defaultLanguage: en-CA

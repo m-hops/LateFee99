@@ -4,7 +4,7 @@
     <<jump CustomerDialog1>>
 <<endif>>
 
-<<set $variableTest to false>>
+<<set $customerDialogTest to false>>
 Wow!
 
 My first ever Yarn script in Unity!
@@ -13,7 +13,7 @@ My first ever Yarn script in Unity!
 -> Incredible!
 -> I'm amazed!
 -> Debug 
-    <<set $variableTest to true>>
+    <<set $customerDialogTest to true>>
 
 Anyway, time to get writing!
 ===
