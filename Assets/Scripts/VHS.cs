@@ -5,6 +5,7 @@ using UnityEngine;
 public class VHS : MonoBehaviour
 {
     public string Title;
+    public string Genre;
     public float Duration;
     public float HeadTime;
     public enum QualityEnum
