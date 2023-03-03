@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8022174112962479669
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062694331908593891, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208088344963457615, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: m_Name
+      value: VHSInSleeveBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715590753445906603, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: Genre
+      value: Western
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715590753445906603, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: Title
+      value: The Hero Cowboy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715590753445906603, guid: 0b12c1ea558533844a408105ba108e49,
+        type: 3}
+      propertyPath: Quality
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b12c1ea558533844a408105ba108e49, type: 3}
