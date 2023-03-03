@@ -427,7 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Distance: 1.2000003
   MinDistance: 0.6
-  MaxDistance: 2
+  MaxDistance: 2.5
   ScrollSpeed: 0.05
 --- !u!1 &854664017270014189
 GameObject:
@@ -603,10 +603,10 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 2
+  MaxDistance: 2.5
   GrabPosition: {fileID: 854664017270014098}
   Hand: {fileID: 854664016267305030}
-  HoldForce: 35000
+  HoldForce: 30000
   HoldDrag: 25
   HoldAngularDrag: 40
   ChangedGrabbedObjectLayer: 1
@@ -643,7 +643,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 2
+  MaxDistance: 2.5
   TouchPositionObject: {fileID: 854664017270014098}
   DebugLog: 0
   LastTouchedPosition: {x: 0, y: 0, z: 0}
@@ -663,7 +663,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 2
+  MaxDistance: 2.5
   Hand: {fileID: 854664016267305030}
   DebugLog: 0
   FocusPosition: {x: 0, y: 0, z: 0}
@@ -717,6 +717,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   TriggerOnEnd:
     ReactionReferences: []
   OverrideThisObject: {fileID: 0}
@@ -726,6 +729,7 @@ MonoBehaviour:
   CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
   PreviousAttachedObject: {fileID: 0}
+  PreviousKinematic: 0
 --- !u!114 &998417995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,6 +790,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
@@ -807,6 +814,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
@@ -814,6 +824,7 @@ MonoBehaviour:
   CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
   PreviousAttachedObject: {fileID: 0}
+  PreviousKinematic: 0
 --- !u!114 &8119537611180789197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,6 +885,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
@@ -907,6 +921,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
     - ReactionType: 0
       ObjectTargetType: 3
       TargetObject: {fileID: 0}
@@ -938,6 +955,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
@@ -945,6 +965,7 @@ MonoBehaviour:
   CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
   PreviousAttachedObject: {fileID: 0}
+  PreviousKinematic: 0
 --- !u!1001 &2821264067698967588
 PrefabInstance:
   m_ObjectHideFlags: 0

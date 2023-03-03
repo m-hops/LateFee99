@@ -33,6 +33,7 @@ namespace Nie
         #region /////////////////////////// Type Event
 
         public UnityEvent Event;
+        public UnityEvent<GameObject> EventTrigger;
         #endregion
 
 
@@ -68,6 +69,7 @@ namespace Nie
                             return;
                     }
                     return;
+                    
                 case Type.Event:
                     Event?.Invoke();
                     return;

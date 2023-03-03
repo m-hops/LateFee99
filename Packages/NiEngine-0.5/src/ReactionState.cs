@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 namespace Nie
 {
+    
     public static class GameObjectExt
     {
         public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name)
@@ -49,6 +50,14 @@ namespace Nie
     [AddComponentMenu("Nie/Object/ReactionState")]
     public class ReactionState : MonoBehaviour
     {
+        public interface IObserver
+        {
+            void OnBegin(ReactionState state, GameObject from, GameObject triggerObject, Vector3 position);
+            void OnEnd(ReactionState state, GameObject from, GameObject triggerObject, GameObject previousTriggerObject, Vector3 position);
+        }
+        List<IObserver> m_Observers = new();
+        public void AddObserver(IObserver o) => m_Observers.Add(o);
+        public void RemoveObserver(IObserver o) => m_Observers.Remove(o);
         [Tooltip("Name of this state. Used when activating state.")]
         public string StateName;
         [Tooltip("This state is mutually exclusive will all ReactionState of the same group on this GameObject")]
@@ -94,7 +103,6 @@ namespace Nie
         public bool SetKinematic;
         [Tooltip("Will set back to previous value when state ends")]
         public bool SetNonKinematic;
-        bool m_PreviousKinematic;
 
         [Tooltip("Will release this object if it has a Grabbable component and is currently grabbed")]
         public bool ReleaseGrabbed;
@@ -108,7 +116,9 @@ namespace Nie
         public bool MoveToParentOrigin;
         public bool DetachOnEnd = true;
 
-        
+        public Transform MoveToOnEnd;
+
+
 
         [SerializeField]
         [Tooltip("Reaction executed when this ReactionState gets activated")]
@@ -149,8 +159,12 @@ namespace Nie
         [Tooltip("The Transform the trigger object was detached from if 'Attach Trigger Object At' is set. It will reattach to it if 'Detach On End' is set.")]
         public Transform PreviousAttachedObject;
 
+        [UnityEngine.Serialization.FormerlySerializedAs("m_PreviousKinematic")]
+        public bool PreviousKinematic;
+
         int m_BeginReactionDepth = 0;
         int m_EndReactionDepth = 0;
+
         public Vector3 ReactionPosition => DefaultReactionPosition != null ? DefaultReactionPosition.position : transform.position;
 
         Vector3 GetReactionPosition(Vector3 receivedPosition) => DefaultReactionPosition != null ? DefaultReactionPosition.position : receivedPosition;
@@ -324,12 +338,12 @@ namespace Nie
 
             if (SetKinematic && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
-                m_PreviousKinematic = rigidBody.isKinematic;
+                PreviousKinematic = rigidBody.isKinematic;
                 rigidBody.isKinematic = true;
             }
             else if (SetNonKinematic && thisObject.TryGetComponent<Rigidbody>(out var rigidBody2))
             {
-                m_PreviousKinematic = rigidBody2.isKinematic;
+                PreviousKinematic = rigidBody2.isKinematic;
                 rigidBody2.isKinematic = false;
             }
 
@@ -340,6 +354,9 @@ namespace Nie
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
             TriggerOnBegin.TryReact(gameObject, triggerObject, position);
+
+            foreach (var obs in m_Observers)
+                obs.OnBegin(this, thisObject, triggerObject, position);
 
             if (Cooldown > 0)
             {
@@ -364,12 +381,17 @@ namespace Nie
 
             if ((SetKinematic || SetNonKinematic) && thisObject.TryGetComponent<Rigidbody>(out var rigidBody))
             {
-                rigidBody.isKinematic = m_PreviousKinematic;
+                rigidBody.isKinematic = PreviousKinematic;
             }
 
             if (DetachOnEnd && AttachTriggerObjectAt != null && CurrentTriggerObject != null)
                 CurrentTriggerObject.transform.parent = PreviousAttachedObject;
 
+            if(MoveToOnEnd != null)
+            {
+                CurrentTriggerObject.transform.position = MoveToOnEnd.transform.position;
+                CurrentTriggerObject.transform.rotation = MoveToOnEnd.transform.rotation;
+            }
 
             //if (!string.IsNullOrEmpty(OnEndForceState) && m_TriggerObject != null)
             //    if (m_TriggerObject.TryGetReactionState(OnEndForceState, out var state))
@@ -378,6 +400,10 @@ namespace Nie
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
             TriggerOnEnd.TryReact(gameObject, triggerObject, position, CurrentTriggerObject);
+
+            foreach (var obs in m_Observers)
+                obs.OnEnd(this, thisObject, triggerObject, CurrentTriggerObject, position);
+
             IsActiveState = false;
             CurrentTriggerObject = null;
             CurrentTriggeredPosition = Vector3.zero;

@@ -101,34 +101,6 @@ namespace Nie.Editor
                     break;
                 case ReactionReference.Type.Event:
                     layout.PropertyField(property.FindPropertyRelative("Event"));
-
-                    //var propAnimator = property.FindPropertyRelative("Animator");
-                    //if (propAnimator.objectReferenceValue == null
-                    //    && property.serializedObject.targetObject is MonoBehaviour mb2
-                    //    && mb2.TryGetComponent<Animator>(out var animator2))
-                    //{
-                    //    propAnimator.objectReferenceValue = animator2;
-                    //}
-                    //var animator = propAnimator.objectReferenceValue as Animator;
-                    //layoutLine0.PropertyField(propAnimator);
-                    //if (animator != null)
-                    //{
-                    //    layout = layout.SubHorizontal();
-                    //    layout.Label("State:");
-                    //    var propStateName = property.FindPropertyRelative("State");
-                    //    layout.PropertyField(propStateName, -RectLayout.WidthOf("Missing"));
-
-                    //    var stateHash = Animator.StringToHash(propStateName.stringValue);
-                    //    if (animator.HasState(0, stateHash))
-                    //    {
-                    //        property.FindPropertyRelative("StateHash").intValue = stateHash;
-                    //        layout.Label("Found");
-                    //    }
-                    //    else
-                    //    {
-                    //        layout.Label("Missing");
-                    //    }
-                    //}
                     break;
             }
 
