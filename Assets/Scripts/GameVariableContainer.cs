@@ -7,14 +7,26 @@ public class GameVariableContainer : VariableStorageBehaviour
     Dictionary<string, string> StringValues = new();
     Dictionary<string, float> FloatValues = new();
     Dictionary<string, bool> BoolValues = new();
+    void UpdateVariables()
+    {
+
+    }
     public override void Clear()
     {
-        throw new System.NotImplementedException();
+        StringValues.Clear();
+        FloatValues.Clear();
+        BoolValues.Clear();
     }
 
     public override bool Contains(string variableName)
     {
-        throw new System.NotImplementedException();
+        if (StringValues.ContainsKey(variableName))
+            return true;
+        if (FloatValues.ContainsKey(variableName))
+            return true;
+        if (BoolValues.ContainsKey(variableName))
+            return true;
+        return false;
     }
 
     public override (Dictionary<string, float>, Dictionary<string, string>, Dictionary<string, bool>) GetAllVariables()

@@ -7,6 +7,12 @@ public class VHS : MonoBehaviour
     public string Title;
     public float Duration;
     public float HeadTime;
+    public enum QualityEnum
+    {
+        Good,
+        Bad,
+    }
+    public QualityEnum Quality;
 
     public Transform DebugTitle;
     public Transform DebugTime;
