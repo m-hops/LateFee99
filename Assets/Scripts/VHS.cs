@@ -18,17 +18,7 @@ public class VHS : MonoBehaviour
     public Transform DebugTime;
 
     public string CurrentVHSTimeString
-    {
-        get
-        {
-            //float second = HeadTime % 60;
-            //var time = HeadTime - second;
-            //float minute = (HeadTime - second) % 60;
-            //float hour = HeadTime % 60;
-            
-            return new System.TimeSpan(0, (int)(HeadTime % 86400) / 3600, (int)(HeadTime % 3600) / 60, (int)HeadTime % 60, 0).ToString("c");
-        }
-    }
+        => new System.TimeSpan(0, (int)(HeadTime % 86400) / 3600, (int)(HeadTime % 3600) / 60, (int)HeadTime % 60, 0).ToString("c");
 
 #if UNITY_EDITOR
     TextMesh DebugLabelTitle = null;

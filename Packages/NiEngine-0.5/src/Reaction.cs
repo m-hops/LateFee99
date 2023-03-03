@@ -26,6 +26,7 @@ namespace Nie
         [Header("Conditions:")]
         [Tooltip("Once this Reaction reacts, it cannot react again within the cooldown period, in seconds.")]
         public float ReactionCooldown = 0;
+        public bool RunOnStart;
 
         [Header("Actions:")]
         [Tooltip("When reaction is activated, destroy this GameObject")]
@@ -73,6 +74,11 @@ namespace Nie
 
         public GameObject TargetObject => ThisObject != null ? TargetObject : gameObject;
         public GameObject GetOverriddenTriggerObject(GameObject triggerObject) => TriggerObject != null ? TriggerObject : triggerObject;
+        private void Start()
+        {
+            if(RunOnStart)
+                React(gameObject, transform.position);
+        }
         private void Update()
         {
             if (m_ReactionCooldown > 0)
