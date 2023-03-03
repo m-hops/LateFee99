@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 6929664072630167285}
   - component: {fileID: 6929664072630167286}
   - component: {fileID: 1502653678710691913}
-  - component: {fileID: 6151032857776876689}
   - component: {fileID: 3344696953413286908}
+  - component: {fileID: 5563297657242490936}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -110,55 +110,10 @@ MonoBehaviour:
   - {fileID: 7332166705655280491, guid: 01cc202e5c859754bb1e80ea5e517236, type: 3}
   - {fileID: 2962850655418046124, guid: fbd4dc44d3061b2419f85d438808fcd9, type: 3}
   - {fileID: 770561421449598630, guid: 360cc26c878e05c4da335bc6ea41de6e, type: 3}
-  WhereToSpawn: {fileID: 0}
+  WhereToSpawn: {fileID: 5635891014514194231}
   NextIndexToSpawn: 0
-  CurrentTime: 0
---- !u!114 &6151032857776876689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6929664072630167283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ReactionName: SpawnNextVHS
-  DebugLog: 0
-  ReactionCooldown: 0
-  RunOnStart: 0
-  DestroyGameObject: 0
-  ReplaceWith: {fileID: 0}
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  MoveTriggerObjectAt: {fileID: 0}
-  ReleaseGrabbed: 0
-  PlayAnimatorState:
-    Animator: {fileID: 0}
-    State: 
-    StateHash: 0
-  ThisObject: {fileID: 0}
-  TriggerObject: {fileID: 0}
-  OnReact:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1502653678710691913}
-        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
-        m_MethodName: SpawnNextVHS
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnCooldownOver:
-    m_PersistentCalls:
-      m_Calls: []
+  CurrentTime: 64800
+  HourTimeInSecond: 3600
 --- !u!114 &3344696953413286908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +148,64 @@ MonoBehaviour:
       - m_Target: {fileID: 1502653678710691913}
         m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
         m_MethodName: AdvanceTime1H
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1502653678710691913}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: SpawnNextVHS
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCooldownOver:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5563297657242490936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6929664072630167283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionName: SpawnNext
+  DebugLog: 0
+  ReactionCooldown: 0
+  RunOnStart: 1
+  DestroyGameObject: 0
+  ReplaceWith: {fileID: 0}
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  MoveTriggerObjectAt: {fileID: 0}
+  ReleaseGrabbed: 0
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  ThisObject: {fileID: 0}
+  TriggerObject: {fileID: 0}
+  OnReact:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1502653678710691913}
+        m_TargetAssemblyTypeName: GameSession, Assembly-CSharp
+        m_MethodName: SpawnNextVHS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

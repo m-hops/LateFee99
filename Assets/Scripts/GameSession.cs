@@ -9,7 +9,7 @@ public class GameSession : MonoBehaviour
     public GameObject WhereToSpawn;
     public int NextIndexToSpawn;
     public float CurrentTime;
-
+    public float HourTimeInSecond = 60 * 5;
     public string CurrentVHSTimeString
         => new System.TimeSpan(0, (int)(CurrentTime % 86400) / 3600, (int)(CurrentTime % 3600) / 60, (int)CurrentTime % 60, 0).ToString("c");
     public void SpawnNextVHS()
@@ -36,6 +36,7 @@ public class GameSession : MonoBehaviour
     
     void Update()
     {
-        
+        var speed = 3600 / HourTimeInSecond;
+        CurrentTime += Time.deltaTime * speed;
     }
 }

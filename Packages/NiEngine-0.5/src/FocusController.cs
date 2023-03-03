@@ -37,6 +37,7 @@ namespace Nie
             }
 
             CurrentCollider = null;
+            CurrentRigidBody = null;
         }
         enum FocusType
         {
@@ -403,6 +404,9 @@ namespace Nie
                 if (nShowHand)
                 {
                     ShowHand(position);
+                } else
+                {
+                    MoveHand(position);
                 }
 
             } else

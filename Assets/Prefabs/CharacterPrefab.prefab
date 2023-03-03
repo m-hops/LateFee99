@@ -427,7 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Distance: 1.2000003
   MinDistance: 0.6
-  MaxDistance: 1.5
+  MaxDistance: 2
   ScrollSpeed: 0.05
 --- !u!1 &854664017270014189
 GameObject:
@@ -603,7 +603,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 1.5
+  MaxDistance: 2
   GrabPosition: {fileID: 854664017270014098}
   Hand: {fileID: 854664016267305030}
   HoldForce: 35000
@@ -643,7 +643,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 10
+  MaxDistance: 2
   TouchPositionObject: {fileID: 854664017270014098}
   DebugLog: 0
   LastTouchedPosition: {x: 0, y: 0, z: 0}
@@ -663,9 +663,9 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  MaxDistance: 10
+  MaxDistance: 2
   Hand: {fileID: 854664016267305030}
-  DebugLog: 1
+  DebugLog: 0
   FocusPosition: {x: 0, y: 0, z: 0}
   CurrentCollider: {fileID: 0}
   CurrentRigidBody: {fileID: 0}
