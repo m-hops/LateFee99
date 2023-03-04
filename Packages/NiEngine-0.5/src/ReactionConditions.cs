@@ -34,6 +34,10 @@ namespace Nie
         public GameObject Other;
         public string State;
         public int StateHash;
+        public bool CanReact(EventParameters parameters)
+        {
+            return CanReact(parameters.Self, parameters.TriggerObject, parameters.TriggerPosition, parameters.PreviousTriggerObject);
+        }
         public bool CanReact(GameObject from, GameObject triggerObject, Vector3 position, GameObject previousTriggerObjectIfExist)
         {
             switch (Type)

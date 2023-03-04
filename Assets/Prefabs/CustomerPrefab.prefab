@@ -217,6 +217,7 @@ MonoBehaviour:
   DebugLog: 0
   DebugDrawState: {fileID: 2679180095017207093}
   Cooldown: 0
+  ReactivateOnNewTrigger: 1
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
   SetKinematic: 0
@@ -225,17 +226,22 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
   DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!114 &1546108344831544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +260,7 @@ MonoBehaviour:
   DebugLog: 0
   DebugDrawState: {fileID: 2679180095017207093}
   Cooldown: 0
+  ReactivateOnNewTrigger: 1
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
   SetKinematic: 0
@@ -262,17 +269,22 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
   DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!114 &5900305646186954995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +303,7 @@ MonoBehaviour:
   DebugLog: 0
   DebugDrawState: {fileID: 2679180095017207093}
   Cooldown: 0
+  ReactivateOnNewTrigger: 1
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
   SetKinematic: 0
@@ -299,11 +312,20 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
   DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 0
       ObjectTargetType: 2
       TargetObject: {fileID: 0}
+      TargetObjectReference:
+        Type: 2
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: CustomerDialog0
       ReactionName: CustomerDialog0
       Event:
         m_PersistentCalls:
@@ -332,15 +354,22 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!114 &7510745480209233349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugLog: 0
   ShowHand: 1
+  SendFocusToRigidBodyObject: 1
   Conditions:
     States: []
   OnFocusReaction:
@@ -362,8 +392,19 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 0
       TargetObject: {fileID: 0}
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Focused
       ReactionName: Focused
       Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
         m_PersistentCalls:
           m_Calls: []
   OnUnfocusReaction:
@@ -371,10 +412,22 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 0
       TargetObject: {fileID: 0}
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Unfocused
       ReactionName: Unfocused
       Event:
         m_PersistentCalls:
           m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  FocusedByTriggerObject: {fileID: 0}
 --- !u!114 &8910823321465847909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +447,7 @@ MonoBehaviour:
     - Type: 0
       ObjectTargetType: 1
       Animator: {fileID: 0}
-      ReactionState: {fileID: 4392801604232606465}
+      ReactionState: {fileID: 0}
       Other: {fileID: 8034142504081814697}
       State: Focused
       StateHash: 0
@@ -403,14 +456,26 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 0
       TargetObject: {fileID: 0}
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: InDialog
       ReactionName: InDialog
       Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
         m_PersistentCalls:
           m_Calls: []
   WhenKeyPressed:
     ReactionReferences: []
   OnKeyUp:
     ReactionReferences: []
+  DebugLog: 0
 --- !u!114 &932781913
 MonoBehaviour:
   m_ObjectHideFlags: 0

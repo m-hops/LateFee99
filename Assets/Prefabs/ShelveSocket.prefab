@@ -74,7 +74,7 @@ MonoBehaviour:
     - Type: 0
       ObjectTargetType: 1
       Animator: {fileID: 0}
-      ReactionState: {fileID: 9094870918709348287}
+      ReactionState: {fileID: 0}
       Other: {fileID: 9094870918709348285}
       State: Empty
       StateHash: 0
@@ -83,13 +83,32 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 1
       TargetObject: {fileID: 9094870918709348285}
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 9094870918709348285}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Filled
       ReactionName: Filled
       Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 1
       ObjectTargetType: 1
       TargetObject: {fileID: 9094870918709348285}
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: 
       ReactionName: Filled
       Event:
         m_PersistentCalls:
@@ -106,6 +125,9 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
   OnReactEnd:
     ReactionReferences: []
   DebugLog: 0
@@ -261,6 +283,7 @@ MonoBehaviour:
   DebugLog: 0
   DebugDrawState: {fileID: 9094870918276926307}
   Cooldown: 0
+  ReactivateOnNewTrigger: 1
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
   SetKinematic: 0
@@ -269,17 +292,22 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 0}
   MoveToParentOrigin: 0
   DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 1
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!114 &9094870918709348286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +326,7 @@ MonoBehaviour:
   DebugLog: 0
   DebugDrawState: {fileID: 9094870918276926307}
   Cooldown: 0
+  ReactivateOnNewTrigger: 1
   Spawn: {fileID: 0}
   DefaultReactionPosition: {fileID: 0}
   SetKinematic: 0
@@ -306,17 +335,22 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 9094870918814714022}
   MoveToParentOrigin: 1
   DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences: []
   TriggerOnEnd:
     ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
   OverrideThisObject: {fileID: 0}
   OverrideTriggerObject: {fileID: 0}
   IsActiveState: 0
   CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
   CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
 --- !u!1 &9094870918814714023
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,6 +75,14 @@ MonoBehaviour:
     - ReactionType: 0
       ObjectTargetType: 0
       TargetObject: {fileID: 0}
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Lost
       ReactionName: Lost
       Event:
         m_PersistentCalls:

@@ -57,7 +57,7 @@ namespace Nie.Editor
             {
                 if (height < 0)
                     height = FreeRect.height + height;
-                height = math.max(height, MinHeight);
+                //height = math.max(height, MinHeight);
                 Rect r = new Rect(OriginalRect.xMin, FreeRect.yMin, width, height);
                 FreeRect.yMin += r.height;
                 return r;
@@ -139,22 +139,34 @@ namespace Nie.Editor
             GUI.Box(AcquireWidth(width), text);
         }
 
-        public void PropertyField(SerializedProperty property, float width = 100)
+        public Rect PropertyField(SerializedProperty property, float width = 100)
         {
-            EditorGUI.PropertyField(AcquireWidth(width), property, GUIContent.none);
+            var rect = AcquireWidth(width);
+            EditorGUI.PropertyField(rect, property, GUIContent.none);
+            return rect;
 
         }
-        public void PropertyField(SerializedProperty property)=> PropertyField(property, GUIContent.none);
-        public void PropertyField(SerializedProperty property, GUIContent content, bool includeChildren)
-            => EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content, includeChildren);
-        public void PropertyField(SerializedProperty property, GUIContent content)
-            => EditorGUI.PropertyField(AcquireHeight(EditorGUI.GetPropertyHeight(property)), property, content);
+        public Rect PropertyField(SerializedProperty property)=> PropertyField(property, GUIContent.none);
+        public Rect PropertyField(SerializedProperty property, GUIContent content, bool includeChildren)
+        {
+            var rect = AcquireHeight(EditorGUI.GetPropertyHeight(property, includeChildren));
+            EditorGUI.PropertyField(rect, property, content, includeChildren);
+            return rect;
+        }
+        public Rect PropertyField(SerializedProperty property, GUIContent content)
+        {
+            var rect = AcquireHeight(EditorGUI.GetPropertyHeight(property));
+            EditorGUI.PropertyField(rect, property, content);
+            return rect;
+        }
 
-        public void PropertyFieldSquare(SerializedProperty property) => PropertyFieldSquare(property, GUIContent.none);
-        public void PropertyFieldSquare(SerializedProperty property, GUIContent content)
+        public Rect PropertyFieldSquare(SerializedProperty property) => PropertyFieldSquare(property, GUIContent.none);
+        public Rect PropertyFieldSquare(SerializedProperty property, GUIContent content)
         {
             var size = EditorGUI.GetPropertyHeight(property);
-            EditorGUI.PropertyField(Acquire(size, size), property, content, true);
+            var rect = Acquire(size, size);
+            EditorGUI.PropertyField(rect, property, content, true);
+            return rect;
         }
         public bool Button(string caption)
         {
@@ -234,6 +246,7 @@ namespace Nie.Editor
                 // null
                 menu.AddItem(new GUIContent("Null"), property.managedReferenceValue == null, () =>
                 {
+                    property.isExpanded = false;
                     property.managedReferenceValue = null;
                     property.serializedObject.ApplyModifiedProperties();
                 });
@@ -243,6 +256,7 @@ namespace Nie.Editor
                 {
                     menu.AddItem(new GUIContent(name), typeName == type.Name, () =>
                     {
+                        property.isExpanded = true;
                         property.managedReferenceValue = type.GetConstructor(Type.EmptyTypes).Invoke(null); ;
                         property.serializedObject.ApplyModifiedProperties();
                     });

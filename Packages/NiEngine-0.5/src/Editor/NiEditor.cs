@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq;
 using UnityEngine;
 using UnityEditor;
 namespace Nie
@@ -71,7 +70,7 @@ namespace Nie.Editor
             float h = 0;
 
             h += EditorGUIUtility.singleLineHeight;
-            if (property.managedReferenceValue != null)
+            if (property.managedReferenceValue != null && property.isExpanded)
                 h += EditorGUI.GetPropertyHeight(property);
             return h;
         }
@@ -201,212 +200,50 @@ namespace Nie.Editor
     }
 
 
-    [CustomPropertyDrawer(typeof(ReactionStateMachine.State))]
-    public class ReactionStateMachineStatePropertyDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            // Name
-            float h = EditorGUIUtility.singleLineHeight + 5;
-
-            if (property.isExpanded)
-            {
-                // Name
-                h += EditorGUIUtility.singleLineHeight;
-
-                // Notes dropdown
-                h += EditorGUIUtility.singleLineHeight;
-
-                // Notes
-                var propNotes = property.FindPropertyRelative("Notes");
-                if (propNotes.isExpanded)
-                    h += EditorGUIUtility.singleLineHeight * 4;
-
-                // Conditions
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("TestCondition"));
-
-                // Action
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("TestAction"));
-
-                // Conditions 
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Conditions"));
-
-                // Actions
-                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Actions"));
-
-                h += 5;
-            }
-            return h;
-        }
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var layout = RectLayout.Vertical(position);
-
-            var propName = property.FindPropertyRelative("Name");
-            property.isExpanded = layout.Foldout(property.isExpanded, new GUIContent(propName.stringValue, Assets.IconReactionState));
-            if (property.isExpanded)
-            {
-                EditorGUI.BeginProperty(position, label, property);
-
-                // Name
-                layout.PropertyField(propName, new GUIContent("Name"));
-
-                // Notes dropdown
-                var propNotes = property.FindPropertyRelative("Notes");
-                propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Notes"));
-
-                // Notes
-                if (propNotes.isExpanded)
-                {
-                    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
-                }
 
 
-                // Conditions 
-                layout.PropertyField(property.FindPropertyRelative("TestCondition"));
 
-                // Actions 
-                layout.PropertyField(property.FindPropertyRelative("TestAction"));
+    //[CustomPropertyDrawer(typeof(StateName))]
+    //public class StateNamePropertyDrawer : PropertyDrawer
+    //{
+    //    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    //    {
+    //        // StateGroup
+    //        float h = EditorGUIUtility.singleLineHeight;
 
-                // Conditions 
-                layout.PropertyField(property.FindPropertyRelative("Conditions"), new GUIContent("Conditions:", Assets.IconCondition));
+    //        // States
+    //        h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("States"));
 
-                // Actions 
-                layout.PropertyField(property.FindPropertyRelative("Actions"), new GUIContent("Actions:", Assets.IconAction));
-                EditorGUI.EndProperty();
-            }
-        }
+    //        return h;
+    //    }
 
-    }
+    //    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    //    {
+    //        EditorGUI.BeginProperty(position, label, property);
 
-    [CustomPropertyDrawer(typeof(ReactionStateMachine))]
-    public class ReactionStateMachinePropertyDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            // StateGroup
-            float h = EditorGUIUtility.singleLineHeight;
+    //        var layout = RectLayout.Vertical(position);
 
-            // States
-            h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("States"));
+    //        // StateGroup
+    //        layout.PropertyField(property.FindPropertyRelative("StateGroup"));
 
-            return h;
-        }
-        
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.BeginProperty(position, label, property);
+    //        //var propStates = property.FindPropertyRelative("States");
 
-            var layout = RectLayout.Vertical(position);
+    //        // States
+    //        layout.PropertyField(property.FindPropertyRelative("States"), new GUIContent("SomeStates", Assets.IconCondition));
+    //        //propStates.isExpanded = layout.Foldout(propStates.isExpanded);
+    //        //if (propStates.isExpanded)
+    //        //{
+    //        //    layout = layout.SubHorizontal();
+    //        //    layout.AcquireWidth(16);
+    //        //    layout = layout.SubVertical();
+    //        //    //layout.PropertyField(property.FindPropertyRelative("MustBeInAnimatorState"), new GUIContent("Must Be In Animator State"));
+    //        //    //layout.PropertyField(property.FindPropertyRelative("MustBeInReactionState"), new GUIContent("Must Be In Reaction State"));
+    //        //    layout.PropertyField(property.FindPropertyRelative("States:"), new GUIContent("States:", Assets.IconReactionState));
 
-            // StateGroup
-            layout.PropertyField(property.FindPropertyRelative("StateGroup"));
+    //        //}
+    //        EditorGUI.EndProperty();
+    //    }
+    //}
 
-            //var propStates = property.FindPropertyRelative("States");
-
-            // States
-            layout.PropertyField(property.FindPropertyRelative("States"), new GUIContent("SomeStates", Assets.IconCondition));
-            //propStates.isExpanded = layout.Foldout(propStates.isExpanded);
-            //if (propStates.isExpanded)
-            //{
-            //    layout = layout.SubHorizontal();
-            //    layout.AcquireWidth(16);
-            //    layout = layout.SubVertical();
-            //    //layout.PropertyField(property.FindPropertyRelative("MustBeInAnimatorState"), new GUIContent("Must Be In Animator State"));
-            //    //layout.PropertyField(property.FindPropertyRelative("MustBeInReactionState"), new GUIContent("Must Be In Reaction State"));
-            //    layout.PropertyField(property.FindPropertyRelative("States:"), new GUIContent("States:", Assets.IconReactionState));
-
-            //}
-            EditorGUI.EndProperty();
-        }
-    }
-
-
-    [CustomPropertyDrawer(typeof(GameObjectReference))]
-    public class GameObjectReferenceDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            float h = EditorGUIUtility.singleLineHeight;
-            return h;
-        }
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.BeginProperty(position, label, property);
-
-            var layout = RectLayout.Horizontal(position);
-            if (label != GUIContent.none)
-                layout.PrefixLabel(label);
-            layout.FreeRect.xMin -= 16;
-            var propType = property.FindPropertyRelative("Type");
-            var value = (GameObjectReference.TypeEnum)propType.enumValueIndex;
-            var type = layout.EnumPopup(RectLayout.WidthOf(value.ToString()) + 42, value);
-            propType.enumValueIndex = (int)type;
-            switch (type)
-            {
-                case GameObjectReference.TypeEnum.Self:
-                    break;
-                case GameObjectReference.TypeEnum.Object:
-                    layout.PropertyField(property.FindPropertyRelative("ThisGameObject"));
-                    break;
-                case GameObjectReference.TypeEnum.TriggerObject:
-                    break;
-                case GameObjectReference.TypeEnum.PreviousTriggerObject:
-                    break;
-                case GameObjectReference.TypeEnum.FirstOfType:
-                    layout.PropertyField(property.FindPropertyRelative("ObjectType"));
-                    break;
-                case GameObjectReference.TypeEnum.FirstWithTag:
-                    layout.PropertyField(property.FindPropertyRelative("String"));
-                    break;
-                case GameObjectReference.TypeEnum.FirstWithName:
-                    layout.PropertyField(property.FindPropertyRelative("String"));
-                    break;
-            }
-
-            EditorGUI.EndProperty();
-        }
-    }
-
-
-    [CustomPropertyDrawer(typeof(PositionReference))]
-    public class PositionReferenceDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            float h = EditorGUIUtility.singleLineHeight;
-            return h;
-        }
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.BeginProperty(position, label, property);
-
-            var layout = RectLayout.Horizontal(position);
-            if(label != GUIContent.none)
-                layout.PrefixLabel(label);
-            layout.FreeRect.xMin -= 16;
-            var propType = property.FindPropertyRelative("Type");
-            var value = (PositionReference.TypeEnum)propType.enumValueIndex;
-            var type = layout.EnumPopup(RectLayout.WidthOf(value.ToString())+42, value);
-            propType.enumValueIndex = (int)type;
-            switch (type)
-            {
-                case PositionReference.TypeEnum.Self:
-                    break;
-                case PositionReference.TypeEnum.AtPosition:
-                    layout.PropertyField(property.FindPropertyRelative("AtPosition"));
-                    break;
-                case PositionReference.TypeEnum.AtGameObject:
-                    layout.PropertyField(property.FindPropertyRelative("AtTransform"));
-                    break;
-                case PositionReference.TypeEnum.AtTriggerPosition:
-                    break;
-            }
-
-            EditorGUI.EndProperty();
-        }
-    }
 
 }
