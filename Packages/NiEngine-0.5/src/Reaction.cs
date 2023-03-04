@@ -114,6 +114,11 @@ namespace Nie
             {
                 triggerObject.transform.position = MoveTriggerObjectAt.transform.position;
                 triggerObject.transform.rotation = MoveTriggerObjectAt.transform.rotation;
+                if (triggerObject.TryGetComponent<Rigidbody>(out var rigidBody))
+                {
+                    rigidBody.velocity = Vector3.zero;
+                    rigidBody.angularVelocity = Vector3.zero;
+                }
                 if (triggerObject.TryGetComponent<Grabbable>(out var grabbable))
                     grabbable.ReleaseIfGrabbed();
             }

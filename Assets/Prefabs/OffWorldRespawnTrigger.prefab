@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7632968737287987866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7632968737287987865}
+  - component: {fileID: 7632968737287987846}
+  - component: {fileID: 7632968737287987847}
+  - component: {fileID: 7632968737287987864}
+  m_Layer: 0
+  m_Name: OffWorldRespawnTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7632968737287987865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7632968737287987866}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7632968737287987846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7632968737287987866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 41.208595, z: 1000}
+  m_Center: {x: 0, y: -29.395702, z: 0}
+--- !u!114 &7632968737287987847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7632968737287987866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd84f662c0a1d043a3f35817d48e663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ReactToCollision: 1
+  ReactToTrigger: 0
+  Conditions:
+    States: []
+  ReactionOnCollisionEnter:
+    ReactionReferences:
+    - ReactionType: 0
+      ObjectTargetType: 0
+      TargetObject: {fileID: 0}
+      ReactionName: Lost
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  ReactionOnCollisionExit:
+    ReactionReferences: []
+  DebugLog: 0
+--- !u!114 &7632968737287987864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7632968737287987866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionName: Lost
+  DebugLog: 1
+  ReactionCooldown: 0
+  RunOnStart: 0
+  DestroyGameObject: 0
+  ReplaceWith: {fileID: 0}
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  MoveTriggerObjectAt: {fileID: 0}
+  ReleaseGrabbed: 0
+  PlayAnimatorState:
+    Animator: {fileID: 0}
+    State: 
+    StateHash: 0
+  ThisObject: {fileID: 0}
+  TriggerObject: {fileID: 0}
+  OnReact:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCooldownOver:
+    m_PersistentCalls:
+      m_Calls: []

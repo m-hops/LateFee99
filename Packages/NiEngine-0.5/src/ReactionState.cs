@@ -338,6 +338,12 @@ namespace Nie
                 {
                     triggerObject.transform.localRotation = Quaternion.identity;
                     triggerObject.transform.localPosition = Vector3.zero;
+
+                    if (triggerObject.TryGetComponent<Rigidbody>(out var rigidBody2))
+                    {
+                        rigidBody2.velocity = Vector3.zero;
+                        rigidBody2.angularVelocity = Vector3.zero;
+                    }
                 }
             }
 
