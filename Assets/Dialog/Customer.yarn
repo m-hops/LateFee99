@@ -6,7 +6,7 @@ position: -504,-467
     <<jump CustomerDialog1>>
 <<endif>>
 
-<<jump CustomerDialog1>>
+<<jump CustomerDialogPassive>>
 
 ===
 
