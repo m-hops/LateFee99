@@ -15,6 +15,9 @@ namespace Nie
             foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name))
                 yield return rs;
         }
+        public static IEnumerable<ReactionStateMachine> AllReactionStateMachine(this GameObject @this)
+            => @this.GetComponents<ReactionStateMachine>();
+
         public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name, string group)
         {
             foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
@@ -275,6 +278,16 @@ namespace Nie
             if (IsActiveState) return;
             ReactBegin(CurrentTriggerObject, CurrentTriggerPosition);
         }
+        public void ForceDeactivate()
+        {
+            if (!IsActiveState) return;
+            ReactEnd(null, Vector3.zero);
+        }
+        public void ForceDeactivate(EventParameters parameters)
+        {
+            if (!IsActiveState) return;
+            ReactEnd(parameters.TriggerObject, parameters.TriggerPosition);
+        }
         public void ForceActivateState(string stateName)
         {
             foreach (var state in gameObject.GetComponents<ReactionState>())
@@ -323,6 +336,16 @@ namespace Nie
             foreach (var state in gameObject.GetComponents<ReactionState>())
                 if (state.IsActiveState && state != this && state.StateGroup == StateGroup)
                     state.ReactEnd(triggerObject, position);
+            foreach (var sm in gameObject.GetComponents<ReactionStateMachine>())
+                sm.DeactivateAllStateOfGroup(StateGroup, new EventParameters()
+                    {
+                        Self = gameObject,
+                        TriggerObject = triggerObject,
+                        PreviousTriggerObject = null,
+                        TriggerPosition = position,
+                        PreviousTriggerPosition = position,
+                    });
+
 
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' ReactBegin (triggerObject: '{(triggerObject == null ? "<null>" : triggerObject.name)}', position: {position}");

@@ -25,7 +25,7 @@ namespace Nie.Editor
             var layout = RectLayout.Horizontal(position);
             if (label != GUIContent.none)
                 layout.PrefixLabel(label);
-            layout.FreeRect.xMin -= 16;
+            //layout.FreeRect.xMin -= 16;
             var propType = property.FindPropertyRelative("Type");
             var value = (PositionReference.TypeEnum)propType.enumValueIndex;
             var type = layout.EnumPopup(RectLayout.WidthOf(value.ToString()) + 42, value);

@@ -67,52 +67,56 @@ namespace Nie.Editor
         }
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            EditorGUI.BeginProperty(position, label, property);
             var layout = RectLayout.Vertical(position);
 
             var propStateName = property.FindPropertyRelative("StateName");
             var propName = propStateName.FindPropertyRelative("Name");
             property.isExpanded = layout.Foldout(property.isExpanded, new GUIContent(propName.stringValue, Assets.IconReactionState));
+
+
+
+            var propIsActiveState = property.FindPropertyRelative("IsActiveState");
+            Color stateColor = propIsActiveState.boolValue ? Color.green : Color.black;// new Color(0.6f, 0.6f, 0.6f);
+            
+            Rect left = position;
+
+            //left.yMin += EditorGUIUtility.singleLineHeight;
+            left.xMin -= 26;
+            left.width = 3;
+            EditorGUI.DrawRect(left, stateColor);
             if (property.isExpanded)
             {
-                EditorGUI.BeginProperty(position, label, property);
 
-                var propIsActiveState = property.FindPropertyRelative("IsActiveState");
-                Color stateColor = propIsActiveState.boolValue ? Color.green : Color.black;// new Color(0.6f, 0.6f, 0.6f);
-                Rect left = position;
-                
-                left.yMin += EditorGUIUtility.singleLineHeight;
-                left.xMin -= 26;
-                left.width = 3;
-                EditorGUI.DrawRect(left, stateColor);
-                // Name
+                //// Name
 
-                // Notes dropdown
-                var propNotes = property.FindPropertyRelative("Notes");
+                //// Notes dropdown
+                //var propNotes = property.FindPropertyRelative("Notes");
 
-                propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Name & Notes"));
+                //propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Name & Notes"));
 
-                // Notes
-                if (propNotes.isExpanded)
-                {
-                    layout.PropertyField(propName, new GUIContent("Name"));
-                    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
-                }
-                if (string.IsNullOrEmpty(propName.stringValue))
-                {
-                    propNotes.isExpanded = true;
-                }
+                //// Notes
+                //if (propNotes.isExpanded)
+                //{
+                //    layout.PropertyField(propName, new GUIContent("Name"));
+                //    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
+                //}
+                //if (string.IsNullOrEmpty(propName.stringValue))
+                //{
+                //    propNotes.isExpanded = true;
+                //}
 
-                //layout.Label("Run-Time Values");
-                propIsActiveState.isExpanded = layout.Foldout(propIsActiveState.isExpanded, new("Run-Time Values"));
-                if (propIsActiveState.isExpanded)
-                {
-                    layout.PropertyField(propIsActiveState, new GUIContent("Active State"));
-                    //layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), GUIContent.none, includeChildren: true);
-                    //layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), GUIContent.none, includeChildren: true);
-                    layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), new GUIContent("Last Begin Event:"), includeChildren:true);
-                    layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), new GUIContent("Last End Event:"), includeChildren: true);
+                ////layout.Label("Run-Time Values");
+                //propIsActiveState.isExpanded = layout.Foldout(propIsActiveState.isExpanded, new("Run-Time Values"));
+                //if (propIsActiveState.isExpanded)
+                //{
+                //    layout.PropertyField(propIsActiveState, new GUIContent("Active State"));
+                //    //layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), GUIContent.none, includeChildren: true);
+                //    //layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), GUIContent.none, includeChildren: true);
+                //    layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), new GUIContent("Last Begin Event:"), includeChildren:true);
+                //    layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), new GUIContent("Last End Event:"), includeChildren: true);
 
-                }
+                //}
                 //// Conditions 
                 //layout.PropertyField(property.FindPropertyRelative("TestCondition"));
 
@@ -151,8 +155,8 @@ namespace Nie.Editor
                 bottom.width = position.width + 24;
                 EditorGUI.DrawRect(bottom, stateColor);
                 //GUI.Box(layout.Acquire(2), )
-                EditorGUI.EndProperty();
             }
+            EditorGUI.EndProperty();
         }
 
     }

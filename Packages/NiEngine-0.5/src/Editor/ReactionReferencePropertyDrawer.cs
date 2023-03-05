@@ -31,12 +31,17 @@ namespace Nie.Editor
             EditorGUI.BeginProperty(position, label, property);
             var layout = RectLayout.Horizontal(position);
             //layout.PrefixLabel(label);
-
+            bool fixIndent = false;
+            if (EditorGUI.indentLevel > 0)
+            {
+                EditorGUI.indentLevel--;
+                fixIndent = true;
+            }
 
             layout = layout.SubVertical();
             var layoutLine0 = layout.SubHorizontal(EditorGUIUtility.singleLineHeight);
             var propType = property.FindPropertyRelative("ReactionType");
-            var type = layoutLine0.EnumPopup(RectLayout.WidthOf("Reaction") + 18, (ReactionReference.Type)propType.enumValueIndex);
+            var type = layoutLine0.EnumPopup(RectLayout.WidthOf("ReactionOO") + 18, (ReactionReference.Type)propType.enumValueIndex);
             propType.enumValueIndex = (int)type;
             
             switch (type)
@@ -66,52 +71,52 @@ namespace Nie.Editor
 
 
 
-                    // if old values
-                    var propTarget = property.FindPropertyRelative("ObjectTargetType");
-                    if (propTarget != null)
-                    {
-                        var propTargetReference_Type = propTargetReference.FindPropertyRelative("Type");
-                        var propTargetReference_ThisGameObject = propTargetReference.FindPropertyRelative("ThisGameObject");
-                        var propTargetReference_ObjectType = propTargetReference.FindPropertyRelative("ObjectType");
+                    //// if old values
+                    //var propTarget = property.FindPropertyRelative("ObjectTargetType");
+                    //if (propTarget != null)
+                    //{
+                    //    var propTargetReference_Type = propTargetReference.FindPropertyRelative("Type");
+                    //    var propTargetReference_ThisGameObject = propTargetReference.FindPropertyRelative("ThisGameObject");
+                    //    var propTargetReference_ObjectType = propTargetReference.FindPropertyRelative("ObjectType");
 
-                        var target = (ReactionReference.TargetType)propTarget.enumValueIndex;
-                        //target = layoutLine1.EnumPopup(RectLayout.WidthOf(target.ToString()) + 18, target);
-                        //propTarget.enumValueIndex = (int)target;
-                        //GameObject targetObject = null;
-                        //bool isVirtualCall = false;
-                        switch (target)
-                        {
-                            case ReactionReference.TargetType.Self:
+                    //    var target = (ReactionReference.TargetType)propTarget.enumValueIndex;
+                    //    //target = layoutLine1.EnumPopup(RectLayout.WidthOf(target.ToString()) + 18, target);
+                    //    //propTarget.enumValueIndex = (int)target;
+                    //    //GameObject targetObject = null;
+                    //    //bool isVirtualCall = false;
+                    //    switch (target)
+                    //    {
+                    //        case ReactionReference.TargetType.Self:
 
-                                if (property.serializedObject.targetObject is MonoBehaviour mb)
-                                    targetObject = mb.gameObject;
-
-
-                                propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.Self;
-                                break;
-                            case ReactionReference.TargetType.Other:
-
-                                var propObject = property.FindPropertyRelative("TargetObject");
-                                targetObject = propObject.objectReferenceValue as GameObject;
-                                //layoutLine1.PropertyField(propObject);
+                    //            if (property.serializedObject.targetObject is MonoBehaviour mb)
+                    //                targetObject = mb.gameObject;
 
 
-                                propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.Object;
-                                propTargetReference_ThisGameObject.objectReferenceValue = propObject.objectReferenceValue;
-                                break;
-                            case ReactionReference.TargetType.TriggerObject:
-                                isVirtualCall = true;
-                                propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.TriggerObject;
-                                break;
-                            case ReactionReference.TargetType.PreviousTriggerObject:
+                    //            propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.Self;
+                    //            break;
+                    //        case ReactionReference.TargetType.Other:
 
-                                isVirtualCall = true;
-                                propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.PreviousTriggerObject;
-                                break;
-                        }
+                    //            var propObject = property.FindPropertyRelative("TargetObject");
+                    //            targetObject = propObject.objectReferenceValue as GameObject;
+                    //            //layoutLine1.PropertyField(propObject);
 
 
-                    }
+                    //            propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.Object;
+                    //            propTargetReference_ThisGameObject.objectReferenceValue = propObject.objectReferenceValue;
+                    //            break;
+                    //        case ReactionReference.TargetType.TriggerObject:
+                    //            isVirtualCall = true;
+                    //            propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.TriggerObject;
+                    //            break;
+                    //        case ReactionReference.TargetType.PreviousTriggerObject:
+
+                    //            isVirtualCall = true;
+                    //            propTargetReference_Type.intValue = (int)GameObjectReference.TypeEnum.PreviousTriggerObject;
+                    //            break;
+                    //    }
+
+
+                    //}
                     if (targetObject != null || isVirtualCall)
                     {
                         var layoutLine1 = layout.SubHorizontal(EditorGUIUtility.singleLineHeight);
@@ -133,12 +138,12 @@ namespace Nie.Editor
                             layoutLine1.Label("Missing");
                         }
 
-                        // if has old values
-                        if (propTarget != null)
-                        {
-                            var propTargetReference_String = propTargetReference.FindPropertyRelative("String");
-                            propTargetReference_String.stringValue = propStateName.stringValue;
-                        }
+                        //// if has old values
+                        //if (propTarget != null)
+                        //{
+                        //    var propTargetReference_String = propTargetReference.FindPropertyRelative("String");
+                        //    propTargetReference_String.stringValue = propStateName.stringValue;
+                        //}
 
                     }
 
@@ -148,6 +153,10 @@ namespace Nie.Editor
                     break;
             }
 
+            if (fixIndent)
+            {
+                EditorGUI.indentLevel++;
+            }
 
             EditorGUI.EndProperty();
         }

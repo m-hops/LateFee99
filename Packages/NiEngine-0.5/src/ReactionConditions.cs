@@ -77,6 +77,21 @@ namespace Nie
                                 break;
                             }
                         }
+                        foreach (var sm in target.AllReactionStateMachine())
+                        {
+                            foreach(var g in sm.Groups)
+                            {
+                                if(g.TryGetState(new StateName(State), out var state))
+                                {
+                                    hasPotential = true;
+                                    if (state.IsActiveState)
+                                    {
+                                        hasAnyActive = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                         if (hasPotential && !hasAnyActive)
                             return false;
                     }

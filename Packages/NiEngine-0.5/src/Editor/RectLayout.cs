@@ -237,9 +237,10 @@ namespace Nie.Editor
         }
         public static void DerivedClassPicker(Rect position, Type baseType, SerializedProperty property)
         {
-            string typeName = NameOfDerivedClass(baseType, property.managedReferenceValue?.GetType());
+            var type = property.managedReferenceValue?.GetType();
+            //string typeName = NameOfDerivedClass(baseType, type);
             //string typeName = property.managedReferenceValue?.GetType().Name ?? "Not set";
-            if (EditorGUI.DropdownButton(position, new(typeName), FocusType.Keyboard))
+            if (EditorGUI.DropdownButton(position, new GUIContent("aaa")/*new(typeName)*/, FocusType.Keyboard))
             {
                 GenericMenu menu = new GenericMenu();
 
@@ -251,13 +252,14 @@ namespace Nie.Editor
                     property.serializedObject.ApplyModifiedProperties();
                 });
 
+                string typeName = NameOfDerivedClass(baseType, type);
                 // inherited types
-                foreach (var (type,name) in DerivedClassOf(baseType))
+                foreach (var (t,name) in DerivedClassOf(baseType))
                 {
-                    menu.AddItem(new GUIContent(name), typeName == type.Name, () =>
+                    menu.AddItem(new GUIContent(name), typeName == t.Name, () =>
                     {
                         property.isExpanded = true;
-                        property.managedReferenceValue = type.GetConstructor(Type.EmptyTypes).Invoke(null); ;
+                        property.managedReferenceValue = t.GetConstructor(Type.EmptyTypes).Invoke(null); ;
                         property.serializedObject.ApplyModifiedProperties();
                     });
                 }

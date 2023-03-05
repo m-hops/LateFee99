@@ -14,6 +14,7 @@ namespace Nie
 
         [SerializeField] string TypeName;
 
+        [NonSerialized]
         System.Type StoredType;
 
 #if UNITY_EDITOR
@@ -331,19 +332,100 @@ namespace Nie
     }
 
     [Serializable]
-    public abstract class Action
+    public abstract class Action : StateAction
+    {
+        public abstract void Act(Owner owner, EventParameters parameters);
+        public override void OnBegin(Owner owner, EventParameters parameters) => Act(owner, parameters);
+        public override void OnEnd(Owner owner, EventParameters parameters) { }
+    }
+    [Serializable]
+    public abstract class StateAction 
     {
         public abstract void OnBegin(Owner owner, EventParameters parameters);
         public abstract void OnEnd(Owner owner, EventParameters parameters);
     }
     namespace Actions
     {
+        [Serializable, ClassPickerName("Reaction")]
+        public class Reaction : Action
+        {
+            public ReactionReference Reference;
+            public override void Act(Owner owner, EventParameters parameters)
+            {
+                Reference.React(parameters);
+            }
+        }
+        [Serializable, ClassPickerName("Delayed Reaction")]
+        public class DelayedReaction : StateAction, IUpdate
+        {
+            public float Seconds;
+            public bool Repeat;
+
+            public ReactionList Reaction;
+            
+            [Tooltip("Will be set to Seconds when the state begin")]
+            public float CurrentlyRemaining;
+
+            [NonSerialized]
+            EventParameters Parameters;
+            public void Update(Owner owner)
+            {
+                var nextTime = CurrentlyRemaining - Time.deltaTime;
+
+                if (CurrentlyRemaining >= 0 && nextTime < 0)
+                {
+                    Reaction.React(Parameters);
+                    if (Repeat)
+                        CurrentlyRemaining = Seconds;
+                } 
+                else 
+                {
+                    CurrentlyRemaining = nextTime;
+                }
+            }
+            public override void OnBegin(Owner owner, EventParameters parameters)
+            {
+                CurrentlyRemaining = Seconds;
+            }
+            public override void OnEnd(Owner owner, EventParameters parameters)
+            {
+            }
+        }
+        [Serializable, ClassPickerName("Enable")]
+        public class EnableDisable : StateAction
+        {
+            public GameObjectReference Target;
+            public bool Enable;
+            public bool RevertAtEnd;
+
+            [NonSerialized]
+            GameObject TargetObject;
+            [NonSerialized]
+            bool WasActive;
+            public override void OnBegin(Owner owner, EventParameters parameters)
+            {
+                var target = Target.GetTargetGameObject(parameters);
+                if (target != null)
+                {
+                    TargetObject = target;
+                    if (RevertAtEnd)
+                        WasActive = target.activeSelf;
+                    target.SetActive(Enable);
+                    
+                }
+            }
+            public override void OnEnd(Owner owner, EventParameters parameters)
+            {
+                if (RevertAtEnd)
+                    TargetObject.SetActive(WasActive);
+            }
+        }
         [Serializable, ClassPickerName("Spawn")]
-        public class ActionSpawn : Action
+        public class Spawn : Action
         {
             public GameObjectReference ObjectToSpawn;
             public PositionReference SpawnPosition;
-            public override void OnBegin(Owner owner, EventParameters parameters)
+            public override void Act(Owner owner, EventParameters parameters)
             {
                 var obj = ObjectToSpawn.GetTargetGameObject(parameters);
                 if (obj)
@@ -352,12 +434,50 @@ namespace Nie
                     spawned.transform.position = parameters.TriggerPosition;
                 }
             }
-            public override void OnEnd(Owner owner, EventParameters parameters)
-            {
-
-            }
         }
 
+        [Serializable, ClassPickerName("AttachTo")]
+        public class AttachTo : StateAction
+        {
+            public GameObjectReference Attach;
+            public GameObjectReference To;
+            public bool DetachOnEnd;
+
+            GameObject AttachedObject;
+            Transform m_PreviousParent;
+            public override void OnBegin(Owner owner, EventParameters parameters)
+            {
+                m_PreviousParent = null;
+                AttachedObject = null;
+                var a = Attach.GetTargetGameObject(parameters);
+                if (a != null)
+                {
+                    var t = To.GetTargetGameObject(parameters);
+                    if (t != null)
+                    {
+                        AttachedObject = a;
+                        m_PreviousParent = a.transform.parent;
+                        a.transform.parent = t.transform;
+                    }
+                }
+            }
+            public override void OnEnd(Owner owner, EventParameters parameters)
+            {
+                if (DetachOnEnd && AttachedObject != null)
+                {
+                    AttachedObject.transform.parent = m_PreviousParent;
+                }
+            }
+        }
+        [Serializable, ClassPickerName("Event")]
+        public class Event : Action
+        {
+            public UnityEvent UnityEvent;
+            public override void Act(Owner owner, EventParameters parameters)
+            {
+                UnityEvent?.Invoke();
+            }
+        }
     }
 
     [Serializable]
@@ -396,6 +516,7 @@ namespace Nie
 
 
 
+    [Serializable]
     public class ReactionStateMachine : MonoBehaviour
     {
         [Serializable]
@@ -403,29 +524,33 @@ namespace Nie
         {
             public StateName StateName;
             public bool IsActiveState;
-            public EventParameters LastBeginEvent;
-            public EventParameters LastEndEvent;
             public string Notes;
+            [NonSerialized]
+            public EventParameters LastBeginEvent;
+            [NonSerialized]
+            public EventParameters LastEndEvent;
 
             [HideInInspector]
             public ReactionStateMachine StateMachine;
+            [HideInInspector]
+            public StateGroup StateGroup;
 
-            [SerializeReference, DerivedClassPicker]
-            public Condition TestCondition;
+            //[SerializeReference, DerivedClassPicker]
+            //public Condition TestCondition;
 
-            [SerializeReference, DerivedClassPicker]
-            public Action TestAction;
+            //[SerializeReference, DerivedClassPicker]
+            //public Action TestAction;
 
-            [SerializeReference, DerivedClassPicker(showPrefixLabel: false)]
+            [SerializeReference, DerivedClassPicker(typeof(Condition), showPrefixLabel: false)]
             public List<Condition> Conditions;// = new();
 
-            [SerializeReference, DerivedClassPicker(showPrefixLabel: false)]
-            public List<Action> OnBeginActions;
+            [SerializeReference, DerivedClassPicker(typeof(StateAction), showPrefixLabel: false)]
+            public List<StateAction> OnBeginActions;
 
-            [SerializeReference, DerivedClassPicker(showPrefixLabel: false)]
+            [SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
             public List<Action> OnUpdate;
 
-            [SerializeReference, DerivedClassPicker(showPrefixLabel: false)]
+            [SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
             public List<Action> OnEndActions;
 
             [HideInInspector, NonSerialized]
@@ -442,9 +567,10 @@ namespace Nie
                 return true;
             }
 
-            public void Handshake(ReactionStateMachine owner)
+            public void Handshake(ReactionStateMachine owner, StateGroup group = null)
             {
                 StateMachine = owner;
+                StateGroup = group;
                 foreach (var action in Conditions)
                     Handshake(action);
                 foreach (var action in OnBeginActions)
@@ -453,7 +579,9 @@ namespace Nie
                     Handshake(action);
                 if (IsActiveState)
                 {
-                    owner.InitialState = this;
+                    group.HasActiveState = true;
+                    group.CurrentState = this;
+                    //owner.InitialState = this;
                 }
             }
 
@@ -474,8 +602,8 @@ namespace Nie
                 foreach (var o in Updates)
                     o.Update(owner);
 
-                foreach (var update in Updates)
-                    update.Update(owner);
+                foreach (var action in OnUpdate)
+                    action.Act(owner, LastBeginEvent);
             }
 
             public void OnBegin(EventParameters parameters)
@@ -496,69 +624,212 @@ namespace Nie
             public void OnEnd(EventParameters parameters)
             {
                 var owner = new Owner(this);
+                foreach (var action in OnBeginActions)
+                    action.OnEnd(owner, parameters);
+
+
+                parameters.PreviousTriggerObject = LastBeginEvent.TriggerObject;
+                parameters.PreviousTriggerPosition = LastBeginEvent.TriggerPosition;
+
 
                 foreach (var observer in StateObservers)
                     observer.OnEnd(owner, parameters);
 
-                foreach (var action in OnBeginActions)
-                    action.OnEnd(owner, parameters);
+                foreach (var action in OnEndActions)
+                    action.Act(owner, parameters);
 
 
                 LastEndEvent = parameters;
                 IsActiveState = false;
             }
         }
-        [Tooltip("Name of the group of states to be exclusive with")]
-        public string StateGroup;
 
-        public List<State> States = new();
+        [Serializable]
+        public class StateGroup
+        {
+            public StateName GroupName;
+            public string Notes;
+            public bool HasActiveState;
+            public List<State> States = new();
+
+            [NonSerialized]
+            public State CurrentState;
+            public bool HasState(StateName name)
+            {
+                foreach (var s in States)
+                    if (s.StateName == name)
+                        return true;
+                return false;
+            }
+            public bool TryGetState(StateName name, out State state)
+            {
+
+                foreach (var s in States)
+                    if (s.StateName == name)
+                    {
+                        state = s;
+                        return true;
+                    }
+                state = default;
+                return false;
+            }
+
+            public void DeactivateAllState(EventParameters parameters)
+            {
+                foreach (var s in States)
+                {
+                    if (s.IsActiveState)
+                    {
+                        s.IsActiveState = false;
+                        s.OnEnd(parameters);
+                    }
+                }
+                HasActiveState = false;
+            }
+            public void SetActiveState(ReactionStateMachine component, State state, EventParameters parameters)
+            {
+#if UNITY_EDITOR
+                if (state.StateGroup != this || state.StateMachine != component)
+                    Debug.LogError($"ReactionStateMachine '{component.name}' switches to an unknown state '{state.StateName.Name}'", component);
+#endif
+                if (CurrentState != null)
+                {
+                    CurrentState.OnEnd(parameters);
+                }
+                CurrentState = state;
+                if (CurrentState != null)
+                {
+                    CurrentState.OnBegin(parameters);
+                    HasActiveState = true;
+                }
+
+            }
+            public void Handshake(ReactionStateMachine owner)
+            {
+                foreach(var state in States)
+                    state.Handshake(owner, this);
+            }
+            public void Update()
+            {
+                if (CurrentState != null)
+                {
+                    CurrentState.Update();
+
+                }
+            }
+
+        }
+
+        public List<StateGroup> Groups = new();
+
+        //[Tooltip("Name of the group of states to be exclusive with")]
+        //public string GroupName;
+
+        //public List<State> States = new();
+        [NonSerialized]
         List<IInitialize> Initializers = new();
-        State CurrentState;
-        State InitialState;
+        //State CurrentState;
+        //State InitialState;
 
         public bool HasState(StateName name)
         {
-            foreach (var s in States)
-                if (s.StateName == name)
+            foreach (var group in Groups)
+                if (group.HasState(name))
                     return true;
             return false;
         }
-
-        public bool TryGetState(StateName name, out State state)
+        public bool CanReact(string reactionOrStateName, EventParameters parameters)
         {
-
-            foreach (var s in States)
-                if(s.StateName == name)
+            foreach (var group in Groups)
+                if (group.TryGetState(new StateName(reactionOrStateName), out var state))
+                    if (state.CanReact(parameters))
+                        return true;
+            return false;
+        }
+        public void React(string reactionOrStateName, EventParameters parameters)
+        {
+            foreach(var group in Groups)
+            {
+                if (group.TryGetState(new StateName(reactionOrStateName), out var state))
                 {
-                    state = s;
-                    return true;
+                    group.SetActiveState(this, state, parameters);
                 }
-            state = default;
-            return false;
+
+            }
         }
-        public void SetActiveState(State state, EventParameters parameters)
+        public void DeactivateAllStateOfGroup(string groupName, EventParameters parameters)
         {
-#if UNITY_EDITOR
-            if (state.StateMachine != this)
-                Debug.LogError($"ReactionStateMachine '{name}' switches to an unknown state '{state.StateName.Name}'", this);
-#endif
-            if(CurrentState != null)
-            {
-                CurrentState.OnEnd(parameters);
-            }
-            CurrentState = state;
-            if (CurrentState != null)
-            {
-                CurrentState.OnBegin(parameters);
-            }
+            foreach (var group in Groups)
+                if (group.GroupName == new StateName(groupName))
+                    group.DeactivateAllState(parameters);
         }
+        //        public bool HasState(StateName name)
+        //        {
+        //            foreach (var s in States)
+        //                if (s.StateName == name)
+        //                    return true;
+        //            return false;
+        //        }
+
+        //        public bool TryGetState(StateName name, out State state)
+        //        {
+
+        //            foreach (var s in States)
+        //                if (s.StateName == name)
+        //                {
+        //                    state = s;
+        //                    return true;
+        //                }
+        //            state = default;
+        //            return false;
+        //        }
+
+        //        public void DeactivateAllState(EventParameters parameters)
+        //        {
+        //            foreach(var s in States)
+        //            {
+        //                if (s.IsActiveState)
+        //                {
+        //                    s.IsActiveState = false;
+        //                    s.OnEnd(parameters);
+        //                }
+        //            }
+        //        }
+        //        public void SetActiveState(State state, EventParameters parameters)
+        //        {
+        //            // Deactivate other state of the same group
+        //            foreach (var s in gameObject.GetComponents<ReactionState>())
+        //                if (s.IsActiveState && s.StateGroup == GroupName)
+        //                    s.ForceDeactivate(parameters);
+        //            foreach (var sm in gameObject.GetComponents<ReactionStateMachine>())
+        //                if (sm.GroupName == GroupName)
+        //                    sm.DeactivateAllState(parameters);
+
+        //#if UNITY_EDITOR
+        //            if (state.StateMachine != this)
+        //                Debug.LogError($"ReactionStateMachine '{name}' switches to an unknown state '{state.StateName.Name}'", this);
+        //#endif
+        //            if(CurrentState != null)
+        //            {
+        //                CurrentState.OnEnd(parameters);
+        //            }
+        //            CurrentState = state;
+        //            if (CurrentState != null)
+        //            {
+        //                CurrentState.OnBegin(parameters);
+        //            }
+
+        //        }
         #region Unity Callback
         private void Start()
         {
-            foreach (var state in States)
-                state.Handshake(this);
+            foreach (var group in Groups)
+                group.Handshake(this);
 
-            CurrentState = InitialState;
+            //foreach (var state in States)
+            //    state.Handshake(this);
+
+            //CurrentState = InitialState;
 
             var owner = new Owner(this);
             foreach (var i in Initializers)
@@ -567,11 +838,14 @@ namespace Nie
 
         void Update()
         {
-            if(CurrentState != null)
-            {
-                CurrentState.Update();
+            foreach (var group in Groups)
+                group.Update();
 
-            }
+            //if (CurrentState != null)
+            //{
+            //    CurrentState.Update();
+
+            //}
         }
 
         #endregion

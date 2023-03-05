@@ -78,15 +78,12 @@ namespace Nie.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             bool showPrefixLabel=true;
-            if(attribute is DerivedClassPicker derivedClassPicker)
+            Type baseType = fieldInfo.FieldType;
+            if (attribute is DerivedClassPicker derivedClassPicker)
             {
+                baseType = derivedClassPicker.BaseType;
                 showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
             }
-
-            // Get the property type, handle cases where the field is a list
-            Type baseType = fieldInfo.FieldType;
-            if (fieldInfo.FieldType.IsGenericType && fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(List<>))
-                baseType = fieldInfo.FieldType.GenericTypeArguments[0];
             
             Rect dropdownRect = position;
             if (showPrefixLabel)
@@ -245,5 +242,123 @@ namespace Nie.Editor
     //    }
     //}
 
+    [CustomPropertyDrawer(typeof(ReactionStateMachine.StateGroup))]
+    public class ReactionStateMachineStateGroupPropertyDrawer : PropertyDrawer
+    {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            // Name
+            float h = EditorGUIUtility.singleLineHeight + 5;
+
+            if (property.isExpanded)
+            {
+
+                // Name & Notes foldout
+                h += EditorGUIUtility.singleLineHeight;
+
+                var propNotes = property.FindPropertyRelative("Notes");
+                if (propNotes.isExpanded)
+                {
+                    // Name
+                    h += EditorGUIUtility.singleLineHeight;
+                    // Notes field
+                    h += EditorGUIUtility.singleLineHeight * 4;
+                }
+
+                //// Conditions
+                //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("TestCondition"));
+
+                //// Action
+                //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("TestAction"));
+
+                var propIsActiveState = property.FindPropertyRelative("HasActiveState");
+
+                // Name & Notes foldout
+                h += EditorGUIUtility.singleLineHeight;
+
+                if (propIsActiveState.isExpanded)
+                {
+                    h += EditorGUI.GetPropertyHeight(propIsActiveState);
+
+                }
+
+                var propStates = property.FindPropertyRelative("States");
+                for (int i = 0; i != propStates.arraySize; ++i)
+                {
+                    var elem = propStates.GetArrayElementAtIndex(i);
+                    h += EditorGUI.GetPropertyHeight(elem);
+                }
+                h += EditorGUIUtility.singleLineHeight;
+
+                // States 
+                //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("States"));
+
+                h += 7;
+            }
+            return h;
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+            var layout = RectLayout.Vertical(position);
+
+            var propGroupName = property.FindPropertyRelative("GroupName");
+            var propName = propGroupName.FindPropertyRelative("Name");
+            property.isExpanded = layout.Foldout(property.isExpanded, new GUIContent(propName.stringValue, Assets.IconReactionState));
+
+
+
+            var propHasActiveState = property.FindPropertyRelative("HasActiveState");
+            Color stateColor = propHasActiveState.boolValue ? Color.green : Color.black;// new Color(0.6f, 0.6f, 0.6f);
+
+            Rect left = position;
+            //left.yMin += EditorGUIUtility.singleLineHeight;
+            left.xMin -= 26;
+            left.width = 3;
+            left.height = EditorGUIUtility.singleLineHeight;
+            EditorGUI.DrawRect(left, stateColor);
+
+            if (property.isExpanded)
+            {
+
+                // Name
+
+                // Notes dropdown
+                var propNotes = property.FindPropertyRelative("Notes");
+
+                propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Group Name & Notes"));
+
+                // Notes
+                if (propNotes.isExpanded)
+                {
+                    layout.PropertyField(propName, new GUIContent("Name"));
+                    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
+                }
+                //layout.Label("Run-Time Values");
+                propHasActiveState.isExpanded = layout.Foldout(propHasActiveState.isExpanded, new("Run-Time Values"));
+                if (propHasActiveState.isExpanded)
+                {
+                    layout.PropertyField(propHasActiveState, new GUIContent("Has Active State"));
+                    //layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), new GUIContent("Last Begin Event:"), includeChildren: true);
+                    //layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), new GUIContent("Last End Event:"), includeChildren: true);
+
+                }
+
+                var propStates = property.FindPropertyRelative("States");
+                for (int i = 0; i != propStates.arraySize; ++i)
+                {
+                    var group = propStates.GetArrayElementAtIndex(i);
+                    layout.PropertyField(group);
+                }
+                if (layout.Button("Add State"))
+                {
+                    propStates.InsertArrayElementAtIndex(0);
+                }
+                //layout.PropertyField(property.FindPropertyRelative("States"), new GUIContent("States:", Assets.IconReactionState));
+            }
+            EditorGUI.EndProperty();
+        }
+
+    }
 
 }

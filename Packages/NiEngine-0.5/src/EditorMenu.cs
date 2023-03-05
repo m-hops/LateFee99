@@ -7,9 +7,11 @@ namespace Nie
     //[System.AttributeUsage(System.AttributeTargets.Field | System.AttributeTargets.Class)]
     public class DerivedClassPicker : PropertyAttribute
     {
+        public System.Type BaseType;
         public bool ShowPrefixLabel;
-        public DerivedClassPicker(bool showPrefixLabel = true)
+        public DerivedClassPicker(System.Type baseType, bool showPrefixLabel = true)
         {
+            BaseType = baseType;
             ShowPrefixLabel = showPrefixLabel;
         }
     }
