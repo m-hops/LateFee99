@@ -111,7 +111,7 @@ namespace Nie
 
         public GameObject GetTargetGameObject(EventParameters eventParams)
         {
-            if(!TryGetTargetGameObject(eventParams, out var go))
+            if(!TryGetTargetGameObject(eventParams, out var go) || go == null)
             {
                 switch (Type)
                 {
@@ -374,17 +374,22 @@ namespace Nie
 
                 if (CurrentlyRemaining >= 0 && nextTime < 0)
                 {
+                    Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name}");
                     Reaction.React(Parameters);
                     if (Repeat)
                         CurrentlyRemaining = Seconds;
+                    else
+                        CurrentlyRemaining = nextTime;
                 } 
-                else 
+                else
                 {
+                    Debug.Log($"time left nextTime");
                     CurrentlyRemaining = nextTime;
                 }
             }
             public override void OnBegin(Owner owner, EventParameters parameters)
             {
+                Parameters = parameters;
                 CurrentlyRemaining = Seconds;
             }
             public override void OnEnd(Owner owner, EventParameters parameters)

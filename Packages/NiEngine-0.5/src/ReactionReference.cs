@@ -44,9 +44,9 @@ namespace Nie
 
         public static bool HasReaction(GameObject obj, string reactionOrStateName)
         {
-            return obj.GetComponents<Reaction>().Any(x => x.ReactionName == reactionOrStateName)
-                || obj.GetComponents<ReactionState>().Any(x => x.StateName == reactionOrStateName)
-                || obj.GetComponents<ReactionStateMachine>().Any(x => x.HasState(new StateName(reactionOrStateName)));
+            return obj.GetComponents<Reaction>().Any(x => x.enabled && x.ReactionName == reactionOrStateName)
+                || obj.GetComponents<ReactionState>().Any(x => x.enabled && x.StateName == reactionOrStateName)
+                || obj.GetComponents<ReactionStateMachine>().Any(x => x.enabled && x.HasState(new StateName(reactionOrStateName)));
         }
 
         public void React(EventParameters parameters)
@@ -67,13 +67,14 @@ namespace Nie
         public static void React(GameObject targetObject, string reactionOrStateName, EventParameters parameters)
         {
             foreach (var reaction in targetObject.GetComponents<Reaction>())
-                if (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName)
+                if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                     reaction.React(parameters.TriggerObject, parameters.TriggerPosition);
             foreach (var reaction in targetObject.GetComponents<ReactionState>())
-                if (reaction.StateName == reactionOrStateName)
+                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                     reaction.React(parameters.TriggerObject, parameters.TriggerPosition);
             foreach (var sm in targetObject.GetComponents<ReactionStateMachine>())
-                sm.React(reactionOrStateName, parameters);
+                if(sm.enabled)
+                    sm.React(reactionOrStateName, parameters);
         }
 
         public bool CanReact(EventParameters parameters)
@@ -95,21 +96,21 @@ namespace Nie
         {
             int potentialReactCount = 0;
             foreach (var reaction in targetObject.GetComponents<Reaction>())
-                if (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName)
+                if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                 {
                     ++potentialReactCount;
                     if (reaction.CanReact(parameters.TriggerObject, parameters.TriggerPosition))
                         return true;
                 }
             foreach (var reaction in targetObject.GetComponents<ReactionState>())
-                if (reaction.StateName == reactionOrStateName)
+                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                 {
                     ++potentialReactCount;
                     if (reaction.CanReact(parameters.TriggerObject, parameters.TriggerPosition))
                         return true;
                 }
             foreach (var sm in targetObject.GetComponents<ReactionStateMachine>())
-                if (sm.CanReact(reactionOrStateName, parameters))
+                if (sm.enabled && sm.CanReact(reactionOrStateName, parameters))
                     return true;
             // can react when no potential reaction were found.
             if (potentialReactCount == 0) return true;
@@ -202,21 +203,21 @@ namespace Nie
         {
             int potentialReactCount = 0;
             foreach (var reaction in targetObject.GetComponents<Reaction>())
-                if (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName)
+                if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                 {
                     ++potentialReactCount;
                     if (reaction.CanReact(triggerObject, position))
                         return true;
                 }
             foreach (var reaction in targetObject.GetComponents<ReactionState>())
-                if (reaction.StateName == reactionOrStateName)
+                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                 {
                     ++potentialReactCount;
                     if (reaction.CanReact(triggerObject, position))
                         return true;
                 }
             foreach (var sm in targetObject.GetComponents<ReactionStateMachine>())
-                if(sm.CanReact(reactionOrStateName, new EventParameters()
+                if(sm.enabled && sm.CanReact(reactionOrStateName, new EventParameters()
                     {
                         Self = targetObject,
                         TriggerObject = triggerObject,
@@ -241,20 +242,21 @@ namespace Nie
         public static void React(GameObject targetObject, string reactionOrStateName, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
             foreach (var reaction in targetObject.GetComponents<Reaction>())
-                if (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName)
+                if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                     reaction.React(triggerObject, position);
             foreach (var reaction in targetObject.GetComponents<ReactionState>())
-                if (reaction.StateName == reactionOrStateName)
+                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                     reaction.React(triggerObject, position);
             foreach (var sm in targetObject.GetComponents<ReactionStateMachine>())
-                sm.React(reactionOrStateName, new EventParameters()
-                {
-                    Self = targetObject,
-                    TriggerObject = triggerObject,
-                    PreviousTriggerObject = previousTriggerObject,
-                    TriggerPosition = position,
-                    PreviousTriggerPosition = position,
-                });
+                if(sm.enabled)
+                    sm.React(reactionOrStateName, new EventParameters()
+                    {
+                        Self = targetObject,
+                        TriggerObject = triggerObject,
+                        PreviousTriggerObject = previousTriggerObject,
+                        TriggerPosition = position,
+                        PreviousTriggerPosition = position,
+                    });
         }
     }
 }

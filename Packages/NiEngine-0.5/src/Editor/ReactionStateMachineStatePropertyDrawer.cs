@@ -38,18 +38,19 @@ namespace Nie.Editor
                 //// Action
                 //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("TestAction"));
 
-                var propIsActiveState = property.FindPropertyRelative("IsActiveState");
+                h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("IsActiveState"));
+                
 
                 // Name & Notes foldout
                 h += EditorGUIUtility.singleLineHeight;
-
-                if (propIsActiveState.isExpanded)
-                {
-                    h += EditorGUI.GetPropertyHeight(propIsActiveState);
-                    h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("LastBeginEvent"), includeChildren: true);
-                    h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("LastEndEvent"), includeChildren: true);
-
-                }
+                //var propIsActiveState = property.FindPropertyRelative("IsActiveState");
+                //if (propIsActiveState.isExpanded)
+                //{
+                //    h += EditorGUI.GetPropertyHeight(propIsActiveState);
+                //    //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("LastBeginEvent"), includeChildren: true);
+                //    //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("LastEndEvent"), includeChildren: true);
+                //
+                //}
                 // Conditions 
                 h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Conditions"));
 
@@ -82,40 +83,39 @@ namespace Nie.Editor
             Rect left = position;
 
             //left.yMin += EditorGUIUtility.singleLineHeight;
-            left.xMin -= 26;
+            //left.xMin -= 26;
             left.width = 3;
             EditorGUI.DrawRect(left, stateColor);
             if (property.isExpanded)
             {
 
-                //// Name
+                // Name
 
-                //// Notes dropdown
-                //var propNotes = property.FindPropertyRelative("Notes");
+                // Notes dropdown
+                var propNotes = property.FindPropertyRelative("Notes");
 
-                //propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Name & Notes"));
+                propNotes.isExpanded = layout.Foldout(propNotes.isExpanded, new("Name & Notes"));
 
-                //// Notes
-                //if (propNotes.isExpanded)
-                //{
-                //    layout.PropertyField(propName, new GUIContent("Name"));
-                //    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
-                //}
-                //if (string.IsNullOrEmpty(propName.stringValue))
-                //{
-                //    propNotes.isExpanded = true;
-                //}
+                // Notes
+                if (propNotes.isExpanded)
+                {
+                    layout.PropertyField(propName, new GUIContent("Name"));
+                    propNotes.stringValue = EditorGUI.TextField(layout.AcquireHeight(EditorGUIUtility.singleLineHeight * 4), propNotes.stringValue);
+                }
+                if (string.IsNullOrEmpty(propName.stringValue))
+                {
+                    propNotes.isExpanded = true;
+                }
+
+                layout.PropertyField(propIsActiveState, new GUIContent("Active State"));
 
                 ////layout.Label("Run-Time Values");
                 //propIsActiveState.isExpanded = layout.Foldout(propIsActiveState.isExpanded, new("Run-Time Values"));
                 //if (propIsActiveState.isExpanded)
                 //{
-                //    layout.PropertyField(propIsActiveState, new GUIContent("Active State"));
-                //    //layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), GUIContent.none, includeChildren: true);
-                //    //layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), GUIContent.none, includeChildren: true);
-                //    layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), new GUIContent("Last Begin Event:"), includeChildren:true);
-                //    layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), new GUIContent("Last End Event:"), includeChildren: true);
-
+                //    //layout.PropertyField(property.FindPropertyRelative("LastBeginEvent"), new GUIContent("Last Begin Event:"), includeChildren:true);
+                //    //layout.PropertyField(property.FindPropertyRelative("LastEndEvent"), new GUIContent("Last End Event:"), includeChildren: true);
+                //
                 //}
                 //// Conditions 
                 //layout.PropertyField(property.FindPropertyRelative("TestCondition"));

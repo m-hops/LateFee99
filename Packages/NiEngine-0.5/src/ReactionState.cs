@@ -12,20 +12,20 @@ namespace Nie
     {
         public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name)
         {
-            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name))
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.enabled && x.StateName == name))
                 yield return rs;
         }
         public static IEnumerable<ReactionStateMachine> AllReactionStateMachine(this GameObject @this)
-            => @this.GetComponents<ReactionStateMachine>();
+            => @this.GetComponents<ReactionStateMachine>().Where(x=> x.enabled );
 
         public static IEnumerable<ReactionState> AllReactionState(this GameObject @this, string name, string group)
         {
-            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.enabled && x.StateName == name && x.StateGroup == group))
                 yield return rs;
         }
         public static bool TryGetFirstReactionState(this GameObject @this, string name, out ReactionState state)
         {
-            foreach(var rs in @this.GetComponents<ReactionState>().Where(x=>x.StateName == name))
+            foreach(var rs in @this.GetComponents<ReactionState>().Where(x=> x.enabled && x.StateName == name))
             {
                 state = rs;
                 return true;
@@ -35,7 +35,7 @@ namespace Nie
         }
         public static bool TryGetFirstReactionState(this GameObject @this, string name, string group, out ReactionState state)
         {
-            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.StateName == name && x.StateGroup == group))
+            foreach (var rs in @this.GetComponents<ReactionState>().Where(x => x.enabled && x.StateName == name && x.StateGroup == group))
             {
                 state = rs;
                 return true;

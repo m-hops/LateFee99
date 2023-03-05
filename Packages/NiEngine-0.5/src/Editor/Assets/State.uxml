@@ -1,41 +1,49 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="flex-direction: row;">
-        <ui:VisualElement name="veIsActive" style="width: 4px; background-color: rgba(0, 255, 0, 255);" />
-        <ui:VisualElement style="width: 100%;">
+        <ui:VisualElement name="veIsActive" style="width: 4px; background-color: rgb(0, 255, 0);" />
+        <ui:VisualElement style="flex-grow: 1;">
             <ui:TextField picking-mode="Ignore" label="State Name" value="filler text" text="State Name" name="tfName" />
-            <ui:VisualElement style="flex-direction: row;">
-                <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconCondition.png?fileID=2800000&amp;guid=b1f362d000575fc4f913835c2643fed9&amp;type=3#IconCondition&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
-                    <ui:VisualElement style="height: auto; width: auto; background-color: rgba(128, 128, 0, 255); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
+            <ui:ListView focusable="true" virtualization-method="DynamicHeight" reorderable="true" reorder-mode="Animated" show-border="true" show-foldout-header="true" show-add-remove-footer="true" name="lvConditions" header-title="Conditions" />
+            <ui:ListView focusable="true" virtualization-method="DynamicHeight" reorderable="true" reorder-mode="Animated" show-border="true" show-foldout-header="true" show-add-remove-footer="true" name="lvOnBegin" header-title="On Begin" />
+            <ui:ListView focusable="true" virtualization-method="DynamicHeight" reorderable="true" reorder-mode="Animated" show-border="true" show-foldout-header="true" show-add-remove-footer="true" name="lvOnUpdate" header-title="On Update" />
+            <ui:ListView focusable="true" virtualization-method="DynamicHeight" reorderable="true" reorder-mode="Animated" show-border="true" show-foldout-header="true" show-add-remove-footer="true" name="lvOnEnd" header-title="On End" />
+            <ui:VisualElement style="flex-direction: row; display: none;">
+                <ui:VisualElement style="width: 100%;">
+                    <ui:VisualElement style="flex-direction: row;">
+                        <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
+                            <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconCondition.png?fileID=2800000&amp;guid=b1f362d000575fc4f913835c2643fed9&amp;type=3#IconCondition&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
+                            <ui:VisualElement style="height: auto; width: auto; background-color: rgb(128, 128, 0); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
+                        </ui:VisualElement>
+                        <ui:Foldout text="Conditions" name="foConditions" value="false" style="flex-direction: row; width: 100%;" />
+                        <ui:Label text="00" display-tooltip-when-elided="true" name="lbConditionsCount" style="-unity-text-align: middle-right;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-direction: row;">
+                        <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
+                            <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
+                            <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 128, 0); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
+                        </ui:VisualElement>
+                        <ui:Foldout text="On Begin" name="foOnBegin" value="false" style="flex-direction: row; width: 100%;" />
+                        <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnBeginCount" style="-unity-text-align: middle-right;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-direction: row;">
+                        <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
+                            <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
+                            <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 128, 125); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
+                        </ui:VisualElement>
+                        <ui:Foldout text="On Update" name="foOnUpdate" value="false" style="flex-direction: row; width: 100%;" />
+                        <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnUpdate" style="-unity-text-align: middle-right;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-direction: row;">
+                        <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
+                            <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
+                            <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 86, 128); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
+                        </ui:VisualElement>
+                        <ui:Foldout text="On End" name="foOnEnd" value="false" style="flex-direction: row; width: 100%;" />
+                        <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnEndCount" style="-unity-text-align: middle-right;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:Foldout text="Conditions" name="foConditions" value="false" style="flex-direction: row; width: 100%;" />
-                <ui:Label text="00" display-tooltip-when-elided="true" name="lbConditionsCount" style="-unity-text-align: middle-right;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="flex-direction: row;">
-                <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
-                    <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 128, 0); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
-                </ui:VisualElement>
-                <ui:Foldout text="On Begin" name="foOnBegin" value="false" style="flex-direction: row; width: 100%;" />
-                <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnBeginCount" style="-unity-text-align: middle-right;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="flex-direction: row;">
-                <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
-                    <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 128, 125); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
-                </ui:VisualElement>
-                <ui:Foldout text="On Update" name="foOnUpdate" value="false" style="flex-direction: row; width: 100%;" />
-                <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnUpdate" style="-unity-text-align: middle-right;" />
-            </ui:VisualElement>
-            <ui:VisualElement style="flex-direction: row;">
-                <ui:VisualElement style="height: 100%; min-height: auto; min-width: auto;">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/niengine/src/Editor/Assets/IconReactionReference.png?fileID=2800000&amp;guid=a500bdcae4ce3024fb621fec95c4d3c0&amp;type=3#IconReactionReference&apos;); width: 16px; height: 16px; min-width: 16px; min-height: 16px;" />
-                    <ui:VisualElement style="height: auto; width: auto; background-color: rgb(0, 86, 128); top: auto; align-items: flex-end; bottom: auto; min-height: 0;" />
-                </ui:VisualElement>
-                <ui:Foldout text="On End" name="foOnEnd" value="false" style="flex-direction: row; width: 100%;" />
-                <ui:Label text="00" display-tooltip-when-elided="true" name="lbOnEndCount" style="-unity-text-align: middle-right;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement style="background-color: rgba(0, 255, 0, 255); height: 4px;" />
+    <ui:VisualElement style="background-color: rgb(0, 255, 0); height: 4px;" />
 </ui:UXML>
