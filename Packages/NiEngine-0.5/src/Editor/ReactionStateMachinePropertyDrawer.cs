@@ -85,15 +85,15 @@ namespace Nie.Editor
             public Foldout Foldout;
             public TextField GroupName;
             public VisualElement States;
-            public ListView StatesList;
+            //public ListView StatesList;
             public Button BtDelete;
 
             //public SerializedObject SerializedObject;
-            SerializedProperty Property;
-            SerializedProperty PropName;
-            SerializedProperty PropNotes;
-            SerializedProperty PropHasActiveState;
-            SerializedProperty PropStates;
+            public SerializedProperty Property;
+            public SerializedProperty PropName;
+            public SerializedProperty PropNotes;
+            public SerializedProperty PropHasActiveState;
+            public SerializedProperty PropStates;
             public StateGroupVE(SerializedProperty prop)//, SerializedObject serializedObject)
             {
                 Property = prop;
@@ -124,29 +124,10 @@ namespace Nie.Editor
                 GroupName.value = PropName.stringValue;
 
                 States = root.Query<VisualElement>("States").First();
-                StatesList = root.Query<ListView>("StatesList").First();
                 BtDelete = root.Query<Button>("btDelete").First();
 
                 //StatesList.BindProperty(PropStates);
                 //
-                StatesList.makeItem = () => new StateVE();
-                
-                StatesList.bindItem = (e, i) =>
-                {
-                    (e as StateVE).Bind(PropStates.GetArrayElementAtIndex(i));
-
-                    
-                    //e.Q<Label>("CharacterName").text = items[i];
-                    //e.Q<VisualElement>("bg").style.backgroundColor = new StyleColor(GetRandomColor());
-                };
-                var listItem = new List<StateVE>();
-                for (int i = 0; i != PropStates.arraySize; i++)
-                {
-                    var item = new StateVE();
-                    item.Bind(PropStates.GetArrayElementAtIndex(i));
-                    listItem.Add(item);
-                }
-                StatesList.itemsSource = listItem;
 
 
 
@@ -159,35 +140,48 @@ namespace Nie.Editor
                     
                 });
 
-                //VisualElement btAddGroup = this.Query<VisualElement>("btAddState").First();
-                //btAddGroup.RegisterCallback<ClickEvent>(x =>
-                //{
-                //    PropStates.InsertArrayElementAtIndex(PropStates.arraySize);
-                //    var newPropState = PropStates.GetArrayElementAtIndex(PropStates.arraySize - 1);
-                //    // add to ui
-                //    AddStateToEnd(newPropState);
-                //    Property.serializedObject.ApplyModifiedProperties();
-
-                //});
+                VisualElement btAddState = this.Query<VisualElement>("btAddState").First();
+                btAddState.RegisterCallback<ClickEvent>(x =>
+                {
+                    PropStates.InsertArrayElementAtIndex(PropStates.arraySize);
+                    var newPropState = PropStates.GetArrayElementAtIndex(PropStates.arraySize - 1);
+                    PropStates.serializedObject.ApplyModifiedProperties();
+                    RefreshAfter(PropStates.arraySize - 1);
+                });
+                RefreshAfter(0);
             }
-            void AddStateToEnd(SerializedProperty prop)//, SerializedObject serializedObject)
-            {
-                // create new group element
-                var newState = new StateVE(prop);
-                // add to ui
-                //States.Add(newState);
-                //StatesList.add..Add(newState);
-            }
-            public void Open()
+            public void RefreshAfter(int index)
             {
 
+                int i = index;
+                for (; i != States.childCount; ++i)
+                {
+                    var item = States[i] as StateVE;
+                    if (i < PropStates.arraySize)
+                    {
+                        item.BindProperty(this, PropStates.GetArrayElementAtIndex(i), i);
+                    }
+                    else
+                    {
+                        // delete the remaining of items
+                        while(States.childCount > i) 
+                            States.RemoveAt(i);
+                        return;
+                    }
+                }
+                for (; i < PropStates.arraySize; ++i)
+                {
+                    var e = PropStates.GetArrayElementAtIndex(i);
+                    var item = new StateVE(this, e, i);
+                    States.Add(item);
+                }
             }
         }
 
         public class StateVE : VisualElement
         {
             //public Nie.ReactionStateMachine.StateGroup Group;
-
+            public StateGroupVE Parent;
 
             //public SerializedObject SerializedObject;
             SerializedProperty Property;
@@ -202,76 +196,88 @@ namespace Nie.Editor
 
             Foldout Foldout;
             TextField Name;
+            VisualElement VeContent;
             List<VisualElement> VeIsActive;
-            ListView LvCondition;
-            ListView LvOnBegin;
-            ListView LvOnUpdate;
-            ListView LvOnEnd;
 
 
-            Foldout Conditions;
-            Foldout OnBegin;
-            Foldout OnUpdate;
-            Foldout OnEnd;
-            Label ConditionsCount;
-            Label OnBeginCount;
-            Label OnUpdateCount;
-            Label OnEndCount;
-
+            ListView2 Lv2Conditions;
+            ListView2 Lv2OnBegin;
+            ListView2 Lv2OnUpdate;
+            ListView2 Lv2OnEnd;
+            public int Index;
             public StateVE()
             {
                 Build();
             }
-            public StateVE(SerializedProperty prop)//, SerializedObject serializedObject)
+            public StateVE(StateGroupVE parent, SerializedProperty prop, int index)//, SerializedObject serializedObject)
             {
-                //Group = group;
-                //SerializedObject = serializedObject;
                 Build();
-                Bind(prop);
-                Refresh();
+                BindProperty(parent, prop, index);
             }
             void Build()
             {
+                // create state foldout
                 var foldoutRoot = new VisualElement();
                 ReactionStateMachineEditor.StateFoldoutAsset.CloneTree(foldoutRoot);
-                Add(foldoutRoot);
-                Foldout = foldoutRoot.Query<Foldout>("Foldout");
-                //var root = Foldout.contentContainer;
-                var root = new VisualElement();
+                Foldout = foldoutRoot.Query<Foldout>("Foldout").First();
+                VeContent = foldoutRoot.Query<VisualElement>("veContent").First();
                 Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
                 {
-                    root.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+                    VeContent.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
                     Property.isExpanded = x.newValue;
                     Property.serializedObject.ApplyModifiedProperties();
                 });
-                this.Add(root);
-                ReactionStateMachineEditor.StateAsset.CloneTree(root);
-                VeIsActive = root.Query<VisualElement>("veIsActive").ToList();
-                VeIsActive.AddRange(foldoutRoot.Query<VisualElement>("veIsActive").ToList());
+                foldoutRoot.Query<Button>("btDelete").First().RegisterCallback<ClickEvent>(x=>
+                {
+                    Parent.PropStates.DeleteArrayElementAtIndex(Index);
+                    Parent.PropStates.serializedObject.ApplyModifiedProperties();
+                    Parent.RefreshAfter(Index);
+                });
+                Add(foldoutRoot);
+
+                // create state ui
+                var veStateRoot = new VisualElement();
+                ReactionStateMachineEditor.StateAsset.CloneTree(veStateRoot);
+                Name = veStateRoot.Query<TextField>("tfName").First();
+                var veStateContent = veStateRoot.Query<VisualElement>("veStateContent").First();
+                VeContent.Add(veStateRoot);
+
+                Lv2Conditions = new ListView2();
+                veStateContent.Add(Lv2Conditions);
+                Lv2Conditions.SetText("Conditions:");
+                Lv2Conditions.SetIcon(Assets.IconCondition);
+                Lv2Conditions.SetColor(new Color(0.75f, 0.75f, 0));
+                Lv2Conditions.style.marginBottom = 2;
+                Lv2OnBegin = new ListView2();
+                veStateContent.Add(Lv2OnBegin);
+                Lv2OnBegin.SetText("On Begin:");
+                Lv2OnBegin.SetIcon(Assets.IconAction);
+                Lv2OnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
+                Lv2OnBegin.style.marginBottom = 2;
+                Lv2OnUpdate = new ListView2();
+                veStateContent.Add(Lv2OnUpdate);
+                Lv2OnUpdate.SetText("On Update:");
+                Lv2OnUpdate.SetIcon(Assets.IconAction);
+                Lv2OnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
+                Lv2OnUpdate.style.marginBottom = 2;
+                Lv2OnEnd = new ListView2();
+                veStateContent.Add(Lv2OnEnd);
+                Lv2OnEnd.SetText("On End:");
+                Lv2OnEnd.SetIcon(Assets.IconAction);
+                //Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+                Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+                Lv2OnEnd.style.marginBottom = 2;
 
 
-                Name = this.Query<TextField>("tfName").First();
 
-                //Conditions = this.Query<Foldout>("foConditions").First();
-                //OnBegin = this.Query<Foldout>("foOnBegin").First();
-                //OnUpdate = this.Query<Foldout>("foOnUpdate").First();
-                //OnEnd = this.Query<Foldout>("foOnEnd").First();
-
-                //ConditionsCount = this.Query<Label>("lbConditionsCount").First();
-                //OnBeginCount = this.Query<Label>("lbOnBeginCount").First();
-                //OnUpdateCount = this.Query<Label>("lbOnUpdateCount").First();
-                //OnEndCount = this.Query<Label>("lbOnEndCount").First();
-
-
-                LvCondition = root.Query<ListView>("lvConditions").First();
-                LvOnBegin = root.Query<ListView>("lvOnBegin").First();
-                LvOnUpdate = root.Query<ListView>("lvOnUpdate").First();
-                LvOnEnd = root.Query<ListView>("lvOnEnd").First();
+                VeIsActive = foldoutRoot.Query<VisualElement>("veIsActive").ToList();
 
 
             }
-            public void Bind(SerializedProperty property)
+            public void BindProperty(StateGroupVE parent, SerializedProperty property, int index)
             {
+                Parent = parent;
+                Index = index;
                 Property = property;
                 PropName = Property.FindPropertyRelative("StateName").FindPropertyRelative("Name");
                 PropNotes = Property.FindPropertyRelative("Notes");
@@ -282,13 +288,16 @@ namespace Nie.Editor
                 PropOnUpdate = property.FindPropertyRelative("OnUpdate");
                 PropOnEnd = property.FindPropertyRelative("OnEndActions");
 
-                LvCondition.BindProperty(PropCondition);
-                LvOnBegin.BindProperty(PropOnBegin);
-                LvOnUpdate.BindProperty(PropOnUpdate);
-                LvOnEnd.BindProperty(PropOnEnd);
 
-                // Ensure to use Unbind() before tracking a new property
-                if(VeIsActive != null && VeIsActive.Count > 0)
+                VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
+
+                Lv2Conditions.BindProperty(PropCondition);
+                Lv2OnBegin.BindProperty(PropOnBegin);
+                Lv2OnUpdate.BindProperty(PropOnUpdate);
+                Lv2OnEnd.BindProperty(PropOnEnd);
+
+
+                if (VeIsActive != null && VeIsActive.Count > 0)
                 {
                     var element = VeIsActive[0];
                     element.Unbind();
@@ -304,7 +313,6 @@ namespace Nie.Editor
                 Name.RegisterCallback<ChangeEvent<string>>(x =>
                 {
                     Foldout.text = x.newValue; // GroupName.value;
-                    Debug.Log("ChangeEvent");
                     PropName.stringValue = x.newValue;
                     PropName.serializedObject.ApplyModifiedProperties();
 
@@ -316,6 +324,7 @@ namespace Nie.Editor
                 
                 Name.value = PropName.stringValue;
                 Foldout.value = Property.isExpanded;
+                Foldout.text = PropName.stringValue;
                 foreach (var v in VeIsActive)
                     v.style.backgroundColor = PropIsActiveState.boolValue ? Color.green : Color.black;
             }
@@ -328,6 +337,9 @@ namespace Nie.Editor
         public static VisualTreeAsset GroupAsset;
         public static VisualTreeAsset StateAsset;
         public static VisualTreeAsset StateFoldoutAsset;
+        public static VisualTreeAsset ListAsset;
+        public static VisualTreeAsset ListItemAsset;
+        public static VisualTreeAsset ClassPickerAsset;
 
         Nie.ReactionStateMachine StateMachine;
         ReactionStateMachineVE Root;
@@ -340,7 +352,9 @@ namespace Nie.Editor
             GroupAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateGroup.uxml");
             StateAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/State.uxml");
             StateFoldoutAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateFoldout.uxml");
-
+            ListAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/List.uxml");
+            ClassPickerAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ClassPicker.uxml");
+            ListItemAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ListItem.uxml");
             //StyleSheet stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Editor/Star System Editor/StarSystemEditor.uss");
             //rootElement.styleSheets.Add(stylesheet);
         }

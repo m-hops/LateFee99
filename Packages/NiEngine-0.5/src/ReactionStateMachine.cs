@@ -446,6 +446,7 @@ namespace Nie
         {
             public GameObjectReference Attach;
             public GameObjectReference To;
+            public bool MoveToParentOrigin = true;
             public bool DetachOnEnd;
 
             GameObject AttachedObject;
@@ -463,6 +464,11 @@ namespace Nie
                         AttachedObject = a;
                         m_PreviousParent = a.transform.parent;
                         a.transform.parent = t.transform;
+                        if (MoveToParentOrigin)
+                        {
+                            a.transform.localPosition = Vector3.zero;
+                            a.transform.localRotation = Quaternion.identity;
+                        }
                     }
                 }
             }
@@ -519,6 +525,17 @@ namespace Nie
         }
     }
 
+    [Serializable, ClassPickerName("State")]
+    public class ConditionActiveState : Condition
+    {
+        [Tooltip("In Seconds")]
+        public GameObjectReference Target;
+        public string State;
+        public override bool Pass(Owner owner, EventParameters parameters)
+        {
+            return true;
+        }
+    }
 
 
     [Serializable]

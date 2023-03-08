@@ -528,8 +528,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -601,8 +599,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -674,8 +670,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -779,8 +773,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 2517568391512578975}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -835,8 +827,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 2517568391512578975}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -885,6 +875,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3198980077737404739}
   - component: {fileID: 3198980077737404738}
+  - component: {fileID: 1471695615694543406}
   - component: {fileID: 3198980077737404741}
   - component: {fileID: 3384334422527472996}
   - component: {fileID: 3198980077737404740}
@@ -946,6 +937,315 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1471695615694543406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: base
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Open
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: CloseWithVHS
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: anim
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Opening
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Closing
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629657
+      - rid: 5969430209723629659
+      - rid: 5969430209723629660
+      - rid: 5969430209723629658
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Done
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: grab
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Grabbed
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Released
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: focus
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Unfocused
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Focused
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: location
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: FreeLoc
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: ShelveLoc
+      IsActiveState: 0
+      Notes: 
+      StateMachine: {fileID: 0}
+      StateGroup:
+        GroupName:
+          Name: 
+        Notes: 
+        HasActiveState: 0
+        States: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629657
+      type: {class: AttachTo, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Attach:
+          Type: 2
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        To:
+          Type: 0
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        MoveToParentOrigin: 1
+        DetachOnEnd: 0
+    - rid: 5969430209723629658
+      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 0.5
+        Repeat: 0
+        Reaction:
+          ReactionReferences:
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: CloseWithVHS
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: Done
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+        CurrentlyRemaining: 0
+    - rid: 5969430209723629659
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 2
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: InSleeve
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629660
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 2054296224}
+              m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: Close
+                m_BoolArgument: 0
+              m_CallState: 2
 --- !u!114 &3198980077737404741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -977,8 +1277,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1011,8 +1309,6 @@ MonoBehaviour:
   DelayedReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1029,8 +1325,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1086,8 +1380,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1118,8 +1410,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1185,12 +1475,10 @@ MonoBehaviour:
   AttachTriggerObjectAt: {fileID: 3198980077842632214}
   MoveToParentOrigin: 1
   DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 6834136960910986939}
+  MoveToOnEnd: {fileID: 0}
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 2
         ThisGameObject: {fileID: 0}
@@ -1207,8 +1495,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 1
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1263,8 +1549,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 3
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 3
         ThisGameObject: {fileID: 0}
@@ -1281,8 +1565,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 1
-      ObjectTargetType: 3
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1365,8 +1647,6 @@ MonoBehaviour:
   OnGrab:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 3198980077737404761}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1383,8 +1663,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 3198980077737404761}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1403,8 +1681,6 @@ MonoBehaviour:
   OnRelease:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1541,8 +1817,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 3198980077737404761}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1636,8 +1910,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1668,8 +1940,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1756,8 +2026,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1776,8 +2044,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1848,8 +2114,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -2006,7 +2270,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3198980077737404761}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -2030,8 +2294,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -2060,8 +2322,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 0
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 2
         ThisGameObject: {fileID: 0}
@@ -2094,8 +2354,6 @@ MonoBehaviour:
   DelayedReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -2112,8 +2370,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -2298,8 +2554,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 3198980077737404761}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 3198980077737404761}

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
+
 namespace Nie
 {
 #if UNITY_EDITOR
@@ -64,40 +67,238 @@ namespace Nie.Editor
     [CustomPropertyDrawer(typeof(DerivedClassPicker))]
     public class DerivedClassPickerDrawer : PropertyDrawer
     {
-        // TODO can this be removed?
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            float h = 0;
+            Toggle Toggle;
+            DropdownField DropdownField;
+            VisualElement VeContent;
+            PropertyField PropertyField;
 
-            h += EditorGUIUtility.singleLineHeight;
-            if (property.managedReferenceValue != null && property.isExpanded)
-                h += EditorGUI.GetPropertyHeight(property);
-            return h;
-        }
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            bool showPrefixLabel=true;
+            var veRoot = new VisualElement();
+            ReactionStateMachineEditor.ClassPickerAsset.CloneTree(veRoot);
+            Toggle = veRoot.Query<Toggle>().First();
+            Toggle.value = property.isExpanded;
+            DropdownField = veRoot.Query<DropdownField>().First();
+            VeContent = veRoot.Query<VisualElement>("veContent").First();
+
+            VeContent.style.display = property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
+            Toggle.RegisterCallback<ChangeEvent<bool>>(x =>
+            {
+                VeContent.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+                property.isExpanded = x.newValue;
+                property.serializedObject.ApplyModifiedProperties();
+            });
+
+            var itor = property.Copy();
+            int d = itor.depth;
+            bool child = true;
+            while (itor.Next(child))
+            {
+                if (itor.depth <= d)
+                    break;
+                child = false;
+
+                var field = new PropertyField();
+                field.BindProperty(itor.Copy());
+                VeContent.Add(field);
+            }
+
+            //PropertyField = new PropertyField();
+            //PropertyField.BindProperty(property);
+            //PropertyField.RegisterCallback<ChangeEvent<string>>(evt =>
+            //{
+            //    Toggle t = PropertyField.Query<Toggle>().First();
+            //    if (t != null)
+            //    {
+            //        t.style.display = DisplayStyle.None;
+            //    }
+            //});
+            //VeContent.Add(PropertyField);
+
+
             Type baseType = fieldInfo.FieldType;
             if (attribute is DerivedClassPicker derivedClassPicker)
             {
                 baseType = derivedClassPicker.BaseType;
-                showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
+                //showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
             }
-            
-            Rect dropdownRect = position;
-            if (showPrefixLabel)
+            var choicesType = new List<System.Type>();
+            var choices = new List<string>();
+            var currentIndex = -1;
+            var type = property.managedReferenceValue?.GetType();
+            foreach (var (t, name) in DerivedClassOf(baseType))
             {
-                EditorGUI.PrefixLabel(position, new GUIContent(property.displayName));
-                dropdownRect.x += EditorGUIUtility.labelWidth + 2;
-                dropdownRect.width -= EditorGUIUtility.labelWidth + 2;
+                if(type == t)
+                {
+                    currentIndex = choices.Count;
+                }
+                choices.Add(name);
+                choicesType.Add(t);
             }
+            DropdownField.choices = choices;
+            DropdownField.index = currentIndex;
+            //string typeName = NameOfDerivedClass(baseType, type);
+            //DropdownField.RegisterCallback<ChangeEvent<int>>(x =>
+            //{
 
-            dropdownRect.height = EditorGUIUtility.singleLineHeight;
-            RectLayout.DerivedClassPicker(dropdownRect, baseType, property);
+            //    Debug.Log(x.newValue);
+            //    var t = choicesType[x.newValue];
+            //    property.isExpanded = true;
+            //    property.managedReferenceValue = t.GetConstructor(Type.EmptyTypes).Invoke(null);
+            //    property.serializedObject.ApplyModifiedProperties();
+            //});
+            DropdownField.RegisterValueChangedCallback(x =>
+            {
+                int index = choices.FindIndex(y => y == x.newValue);
+                Debug.Log(index);
+                var t = choicesType[index];
+                property.isExpanded = true;
+                
+                property.managedReferenceValue = t.GetConstructor(Type.EmptyTypes).Invoke(null);
+                property.serializedObject.ApplyModifiedProperties();
+
+                VeContent.Clear();
+
+                var itor = property.Copy();
+                int d = itor.depth;
+                bool child = true;
+                while (itor.Next(child))
+                {
+                    if (itor.depth <= d)
+                        break;
+                    child = false;
+
+                    var field = new PropertyField();
+                    field.BindProperty(itor.Copy());
+                    VeContent.Add(field);
+                }
+                //PropertyField = new PropertyField();
+                //PropertyField.BindProperty(property);
+                //VeContent.Add(PropertyField);
+                //property.serializedObject.Update();
+                //PropertyField.Unbind();
+                //PropertyField.Bind(property.serializedObject);
+                //PropertyField.BindProperty(property);
+
+            });
+            return veRoot;
+        }
+
+        //// TODO can this be removed?
+        //public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        //{
+        //    float h = 0;
+
+        //    h += EditorGUIUtility.singleLineHeight;
+        //    if (property.managedReferenceValue != null && property.isExpanded)
+        //        h += EditorGUI.GetPropertyHeight(property);
+        //    return h;
+        //}
+
+        //public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        //{
+        //    bool showPrefixLabel=true;
+        //    Type baseType = fieldInfo.FieldType;
+        //    if (attribute is DerivedClassPicker derivedClassPicker)
+        //    {
+        //        baseType = derivedClassPicker.BaseType;
+        //        showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
+        //    }
             
-            if (property.managedReferenceValue != null)
-                EditorGUI.PropertyField(position, property, GUIContent.none, true);
+        //    Rect dropdownRect = position;
+        //    if (showPrefixLabel)
+        //    {
+        //        EditorGUI.PrefixLabel(position, new GUIContent(property.displayName));
+        //        dropdownRect.x += EditorGUIUtility.labelWidth + 2;
+        //        dropdownRect.width -= EditorGUIUtility.labelWidth + 2;
+        //    }
+
+        //    dropdownRect.height = EditorGUIUtility.singleLineHeight;
+        //    RectLayout.DerivedClassPicker(dropdownRect, baseType, property);
+            
+        //    if (property.managedReferenceValue != null)
+        //        EditorGUI.PropertyField(position, property, GUIContent.none, true);
+        //}
+
+
+        static Dictionary<Type, Dictionary<Type, string>> _DerivedClass;
+
+        static void OnBeforeAssemblyReload()
+        {
+            _DerivedClass = null;
+        }
+
+        static string NameOfDerivedClass(Type baseType, Type derivedType)
+        {
+            if (derivedType is null) return "<Null>";
+            var types = DerivedClassOf(baseType);
+            if (types.TryGetValue(derivedType, out var name))
+                return name;
+            return derivedType.FullName;
+        }
+        static Dictionary<Type, string> DerivedClassOf(Type baseType)
+        {
+
+            if (_DerivedClass == null)
+            {
+                AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeAssemblyReload;
+                AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
+                _DerivedClass = new();
+            }
+            if (!_DerivedClass.TryGetValue(baseType, out var derivedTypes))
+            {
+                derivedTypes = new();
+                //ClassPickerName
+
+                var ll = System.AppDomain.CurrentDomain.GetAssemblies().SelectMany(
+                    x => x.GetTypes().Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t)));
+                foreach (var type in System.AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes().Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t))))
+                {
+                    string name = type.FullName;
+                    foreach (var attribute in type.GetCustomAttributes(inherit: false))
+                        if (attribute is ClassPickerName classPickerName)
+                        {
+                            name = classPickerName.Name;
+                            break;
+                        }
+                    derivedTypes.Add(type, name);
+                }
+                _DerivedClass.Add(baseType, derivedTypes);
+
+            }
+            return derivedTypes;
+        }
+        public static void DerivedClassPicker(Rect position, Type baseType, SerializedProperty property)
+        {
+            var type = property.managedReferenceValue?.GetType();
+            string typeName = NameOfDerivedClass(baseType, type);
+            //string typeName = property.managedReferenceValue?.GetType().Name ?? "Not set";
+            if (EditorGUI.DropdownButton(position, new(typeName), FocusType.Keyboard))
+            {
+                GenericMenu menu = new GenericMenu();
+
+                // null
+                menu.AddItem(new GUIContent("Null"), property.managedReferenceValue == null, () =>
+                {
+                    property.isExpanded = false;
+                    property.managedReferenceValue = null;
+                    property.serializedObject.ApplyModifiedProperties();
+                });
+
+                //string typeName = NameOfDerivedClass(baseType, type);
+                // inherited types
+                foreach (var (t, name) in DerivedClassOf(baseType))
+                {
+                    menu.AddItem(new GUIContent(name), typeName == t.Name, () =>
+                    {
+                        property.isExpanded = true;
+                        property.managedReferenceValue = t.GetConstructor(Type.EmptyTypes).Invoke(null); ;
+                        property.serializedObject.ApplyModifiedProperties();
+                    });
+                }
+                menu.ShowAsContext();
+            }
         }
     }
 
