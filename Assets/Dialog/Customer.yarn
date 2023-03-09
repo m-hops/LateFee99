@@ -4,9 +4,11 @@ position: -504,-467
 
 <<if $StartCD1>> 
     <<jump CustomerDialog1>>
+<<elseif $StartCD2>>
+    <<jump CustomerDialog2>>
+<<else>>
+    <<jump CustomerDialogPassive>>
 <<endif>>
-
-<<jump CustomerDialogPassive>>
 
 ===
 
@@ -27,7 +29,7 @@ Customer: I was wondering if you would be able to help me find a certain movie.
 ===
 
 title: CustomerDialogPassive
-position: -504,-170
+position: -513,-150
 ---
 
 -> Player: Can I help you with anything?
@@ -37,7 +39,7 @@ position: -504,-170
 ===
 
 title: PassiveResponse1
-position: -339,15
+position: -348,35
 ---
 
 Customer: No, but I'll let know if I need something.
@@ -46,7 +48,7 @@ Customer: No, but I'll let know if I need something.
 ===
 
 title: CustomerDialog1A
-position: -81,-41
+position: -60,-86
 ---
 
 Customer: It doesn't have a titl-
@@ -80,8 +82,6 @@ Customer: *ahem*
 
 Customer: ...
 
-Customer: ...
-
 Customer: ...perhaps I'll go take a look around for now.
     <<set $StartCD1 to false>>
 
@@ -93,4 +93,9 @@ position: 249,-87
 The customer stares in confusion at the implications of your suggestion. He shakes his head and continues on.
 
 <<jump CustomerDialog1A>>
+===
+title: CustomerDialog2
+position: -204,-776
+---
+
 ===
