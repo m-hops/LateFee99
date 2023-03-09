@@ -1,23 +1,101 @@
 ﻿title: CustomerDialog0
+position: -504,-467
 ---
-<<if $variableTest>>
+
+<<if $StartCD1>> 
     <<jump CustomerDialog1>>
+<<elseif $StartCD2>>
+    <<jump CustomerDialog2>>
+<<else>>
+    <<jump CustomerDialogPassive>>
 <<endif>>
 
-<<set $customerDialogTest to false>>
-Wow!
-
-My first ever Yarn script in Unity!
-
--> Gosh!
--> Incredible!
--> I'm amazed!
--> Debug 
-    <<set $customerDialogTest to true>>
-
-Anyway, time to get writing!
 ===
+
 title: CustomerDialog1
+position: -88,-462
 ---
-Debug Success!
+
+Customer: Hi there.
+
+Customer: I was wondering if you would be able to help me find a certain movie.
+-> Player: Sure thing! What's the title?
+    <<jump CustomerDialog1A>>
+-> Player: Uhh yeah, but like I'm also doing stuff so do you know it's called?
+    <<jump CustomerDialog1A>>
+-> Player: I'm sorry, we don't have an adult enterainment section.
+    <<jump CustomerDialog1B>>
+
+===
+
+title: CustomerDialogPassive
+position: -513,-150
+---
+
+-> Player: Can I help you with anything?
+    <<jump PassiveResponse1>>
+-> Player: Nevermind.
+    
+===
+
+title: PassiveResponse1
+position: -348,35
+---
+
+Customer: No, but I'll let know if I need something.
+
+<<jump CustomerDialogPassive>>
+===
+
+title: CustomerDialog1A
+position: -60,-86
+---
+
+Customer: It doesn't have a titl-
+
+Customer: *cough cough*
+
+Customer: *wheeze*
+
+Customer: *throat gargle*
+
+Customer: *ahem*
+
+Customer: Sorry about that. I was about to say I can't remember the title.
+
+Customer: I just remember it had an a date on the cover.
+-> Player: Friday the 14th?
+-> Player: Friday the 14th Part II?
+-> Player: Friday the 14th Part III: This year it's on a sunday?
+
+Customer: Uh no. Sorry. 
+
+Customer: Though I do like scary movi- 
+
+Customer: *cough cough*
+
+Customer: *wheeze*
+
+Customer: *throat gargle*
+
+Customer: *ahem*
+
+Customer: ...
+
+Customer: ...perhaps I'll go take a look around for now.
+    <<set $StartCD1 to false>>
+
+===
+title: CustomerDialog1B
+position: 249,-87
+---
+
+The customer stares in confusion at the implications of your suggestion. He shakes his head and continues on.
+
+<<jump CustomerDialog1A>>
+===
+title: CustomerDialog2
+position: -204,-776
+---
+
 ===
