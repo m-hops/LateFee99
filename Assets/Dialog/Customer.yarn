@@ -1,4 +1,4 @@
-﻿title: CustomerDialog0
+title: CustomerDialog0
 position: -504,-467
 ---
 
@@ -13,7 +13,7 @@ position: -504,-467
 ===
 
 title: CustomerDialog1
-position: -88,-462
+position: -507,-200
 ---
 
 Customer: Hi there.
@@ -29,9 +29,13 @@ Customer: I was wondering if you would be able to help me find a certain movie.
 ===
 
 title: CustomerDialogPassive
-position: -513,-150
+position: -506,-870
 ---
 
+<<if $hasSeenVideo>>
+    ->Player: I think I may have found that tape you were looking for.
+        <<jump CustomerDialog2_Danger1>>
+<<endif>>
 -> Player: Can I help you with anything?
     <<jump PassiveResponse1>>
 -> Player: Nevermind.
@@ -39,7 +43,7 @@ position: -513,-150
 ===
 
 title: PassiveResponse1
-position: -348,35
+position: -708,-745
 ---
 
 Customer: No, but I'll let know if I need something.
@@ -48,7 +52,7 @@ Customer: No, but I'll let know if I need something.
 ===
 
 title: CustomerDialog1A
-position: -60,-86
+position: -156,-197
 ---
 
 Customer: It doesn't have a titl-
@@ -87,7 +91,7 @@ Customer: ...perhaps I'll go take a look around for now.
 
 ===
 title: CustomerDialog1B
-position: 249,-87
+position: -504,57
 ---
 
 The customer stares in confusion at the implications of your suggestion. He shakes his head and continues on.
@@ -95,7 +99,109 @@ The customer stares in confusion at the implications of your suggestion. He shak
 <<jump CustomerDialog1A>>
 ===
 title: CustomerDialog2
-position: -204,-776
+position: -139,-467
 ---
+//Will need to be checked globally
+<<set $hasSeenVideo to false>>
+//
 
+Customer: Hello again.
+
+Customer: I have to say, you've quite the collection of horror films here. Even some hard to find titles.
+
+Customer: You much of a fan of horror?
+
+-> Player: It's literally the only thing I watch.
+    <<jump CustomerDialog2_1A>>
+-> Player: A bit, I guess.
+    <<jump CustomerDialog2_1B>>
+-> Player: Nah I'm too much of a chicken.
+    <<jump CustomerDialog2_1C>>
+
+===
+title: CustomerDialog2_1A
+position: 329,-636
+---
+Customer: Wonderful. Fear is a wonderful indulgence for those who have the stomach.
+
+<<jump CustomerDialog2_2>>
+===
+title: CustomerDialog2_1B
+position: 332,-500
+---
+Customer: Fear is a wonderful indulgence for those who have the stomach.
+
+<<jump CustomerDialog2_2>>
+===
+title: CustomerDialog2_1C
+position: 330,-336
+---
+Customer: Too bad. Fear is a wonderful indulgence for those who have the stomach.
+
+<<jump CustomerDialog2_2>>
+===
+
+title: CustomerDialog2_2
+position: 759,-558
+---
+Customer: I'm afraid that I haven't been able to find the film I was looking for earlier. I do recall one detail though and it's that the title was written in red pen.
+
+Customer: You haven't happened to have seen something like that lyring around, have you?
+
+<<if $hasSeenVideo>>
+
+-> Player: Now that you mentioned it, I think I might have.
+-> Player: ...
+    The customer take your hesitation as confirmation.
+
+<<jump CustomerDialog2_Danger1>>
+<<else>>
+
+-> Player: Die Heart has red letters. You thinking of that maybe?
+    Customer: Ha. No. Definetly not an action film. No heroes in this on-
+    <<jump CustomerDialog2_2A>>
+-> Player: Nah dude.
+    <<jump CustomerDialog2_2A>>
+-> Player: Bro, I already told you we don't rent out adult videos anymore.
+    This time, he laughs at your joke.
+
+    Player: Well I guess I should come clea-
+    <<jump CustomerDialog2_2A>>
+<<endif>>
+===
+
+title: CustomerDialog2_2A
+position: 1076,-559
+---
+Customer: *cough cough*
+
+Customer: *wheeze*
+
+Customer: *throat gargle*
+
+Customer: *ahem*
+
+The customer takes a deep breath and composes himself.
+
+Smiling, he places his hand on your shoulder and leans in. 
+
+Customer: Look. I'll be honest with you. It's actually one of my buddies movies. Don't know what's on it, but it's probably one of those "personal" video tapes if you get my drift.
+
+Customer: He sent me in to come and find it. I'm going to keep looking around but if you happen to find the tape, just let me know.
+
+The hand on your shoulder tightens slightly
+
+Customer: And if you wouldn't mind being discreet about it, I'd really-
+
+Customer: -REALLY-
+
+Customer: -appreciate it.
+
+His hand lets go of your shoulder and he continues searching about the store.
+===
+
+title: CustomerDialog2_Danger1
+position: 755,-873
+---
+Customer: Oh! Is that so? 
 ===
