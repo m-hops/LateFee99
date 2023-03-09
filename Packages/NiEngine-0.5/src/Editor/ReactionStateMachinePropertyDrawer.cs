@@ -78,256 +78,406 @@ namespace Nie.Editor
             // add to ui
             RootGroup.Add(newGroup);
         }
-        public class StateGroupVE : VisualElement
+    }
+
+    public class StateGroupVE : VisualElement
+    {
+        //public Nie.ReactionStateMachine.StateGroup Group;
+
+        public Foldout Foldout;
+        public TextField GroupName;
+        public VisualElement States;
+        //public ListView StatesList;
+        public Button BtDelete;
+
+        //public SerializedObject SerializedObject;
+        public SerializedProperty Property;
+        public SerializedProperty PropName;
+        public SerializedProperty PropNotes;
+        public SerializedProperty PropHasActiveState;
+        public SerializedProperty PropStates;
+        public StateGroupVE(SerializedProperty prop)//, SerializedObject serializedObject)
         {
-            //public Nie.ReactionStateMachine.StateGroup Group;
+            Property = prop;
+            PropName = Property.FindPropertyRelative("GroupName").FindPropertyRelative("Name");
+            PropNotes = Property.FindPropertyRelative("Notes");
+            PropHasActiveState = Property.FindPropertyRelative("HasActiveState");
+            PropStates = Property.FindPropertyRelative("States");
 
-            public Foldout Foldout;
-            public TextField GroupName;
-            public VisualElement States;
-            //public ListView StatesList;
-            public Button BtDelete;
-
-            //public SerializedObject SerializedObject;
-            public SerializedProperty Property;
-            public SerializedProperty PropName;
-            public SerializedProperty PropNotes;
-            public SerializedProperty PropHasActiveState;
-            public SerializedProperty PropStates;
-            public StateGroupVE(SerializedProperty prop)//, SerializedObject serializedObject)
+            //Group = group;
+            //SerializedObject = serializedObject;
+            Build();
+        }
+        void Build()
+        {
+            Foldout = new Foldout();
+            Add(Foldout);
+            Foldout.text = PropName.stringValue;
+            Foldout.value = true;
+            //var root = Foldout.contentContainer;
+            var root = new VisualElement();
+            Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
             {
-                Property = prop;
-                PropName = Property.FindPropertyRelative("GroupName").FindPropertyRelative("Name");
-                PropNotes = Property.FindPropertyRelative("Notes");
-                PropHasActiveState = Property.FindPropertyRelative("HasActiveState");
-                PropStates = Property.FindPropertyRelative("States");
+                root.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+            });
+            this.Add(root);
+            ReactionStateMachineEditor.GroupAsset.CloneTree(root);
+            GroupName = root.Query<TextField>("Name").First();
+            GroupName.value = PropName.stringValue;
 
-                //Group = group;
-                //SerializedObject = serializedObject;
-                Build();
-            }
-            void Build()
+            States = root.Query<VisualElement>("States").First();
+            BtDelete = root.Query<Button>("btDelete").First();
+
+            //StatesList.BindProperty(PropStates);
+            //
+
+
+
+            GroupName.RegisterCallback<ChangeEvent<string>>(x =>
             {
-                Foldout = new Foldout();
-                Add(Foldout);
-                Foldout.text = PropName.stringValue;
-                Foldout.value = true;
-                //var root = Foldout.contentContainer;
-                var root = new VisualElement();
-                Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
-                {
-                    root.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
-                });
-                this.Add(root);
-                ReactionStateMachineEditor.GroupAsset.CloneTree(root);
-                GroupName = root.Query<TextField>("Name").First();
-                GroupName.value = PropName.stringValue;
+                Foldout.text = x.newValue; // GroupName.value;
 
-                States = root.Query<VisualElement>("States").First();
-                BtDelete = root.Query<Button>("btDelete").First();
+                PropName.stringValue = x.newValue;
+                PropName.serializedObject.ApplyModifiedProperties();
 
-                //StatesList.BindProperty(PropStates);
-                //
+            });
 
-
-
-                GroupName.RegisterCallback<ChangeEvent<string>>(x => 
-                {
-                    Foldout.text = x.newValue; // GroupName.value;
-
-                    PropName.stringValue = x.newValue;
-                    PropName.serializedObject.ApplyModifiedProperties();
-                    
-                });
-
-                VisualElement btAddState = this.Query<VisualElement>("btAddState").First();
-                btAddState.RegisterCallback<ClickEvent>(x =>
-                {
-                    PropStates.InsertArrayElementAtIndex(PropStates.arraySize);
-                    var newPropState = PropStates.GetArrayElementAtIndex(PropStates.arraySize - 1);
-                    PropStates.serializedObject.ApplyModifiedProperties();
-                    RefreshAfter(PropStates.arraySize - 1);
-                });
-                RefreshAfter(0);
-            }
-            public void RefreshAfter(int index)
+            VisualElement btAddState = this.Query<VisualElement>("btAddState").First();
+            btAddState.RegisterCallback<ClickEvent>(x =>
             {
-
-                int i = index;
-                for (; i != States.childCount; ++i)
-                {
-                    var item = States[i] as StateVE;
-                    if (i < PropStates.arraySize)
-                    {
-                        item.BindProperty(this, PropStates.GetArrayElementAtIndex(i), i);
-                    }
-                    else
-                    {
-                        // delete the remaining of items
-                        while(States.childCount > i) 
-                            States.RemoveAt(i);
-                        return;
-                    }
-                }
-                for (; i < PropStates.arraySize; ++i)
-                {
-                    var e = PropStates.GetArrayElementAtIndex(i);
-                    var item = new StateVE(this, e, i);
-                    States.Add(item);
-                }
-            }
+                PropStates.InsertArrayElementAtIndex(PropStates.arraySize);
+                var newPropState = PropStates.GetArrayElementAtIndex(PropStates.arraySize - 1);
+                PropStates.serializedObject.ApplyModifiedProperties();
+                RefreshAfter(PropStates.arraySize - 1);
+            });
+            RefreshAfter(0);
         }
 
-        public class StateVE : VisualElement
+        public void RefreshAfter(int index)
         {
-            //public Nie.ReactionStateMachine.StateGroup Group;
-            public StateGroupVE Parent;
 
-            //public SerializedObject SerializedObject;
-            SerializedProperty Property;
-            SerializedProperty PropName;
-            SerializedProperty PropNotes;
-            SerializedProperty PropIsActiveState;
-
-            SerializedProperty PropCondition;
-            SerializedProperty PropOnBegin;
-            SerializedProperty PropOnUpdate;
-            SerializedProperty PropOnEnd;
-
-            Foldout Foldout;
-            TextField Name;
-            VisualElement VeContent;
-            List<VisualElement> VeIsActive;
-
-
-            ListView2 Lv2Conditions;
-            ListView2 Lv2OnBegin;
-            ListView2 Lv2OnUpdate;
-            ListView2 Lv2OnEnd;
-            public int Index;
-            public StateVE()
+            int i = index;
+            for (; i != States.childCount; ++i)
             {
-                Build();
-            }
-            public StateVE(StateGroupVE parent, SerializedProperty prop, int index)//, SerializedObject serializedObject)
-            {
-                Build();
-                BindProperty(parent, prop, index);
-            }
-            void Build()
-            {
-                // create state foldout
-                var foldoutRoot = new VisualElement();
-                ReactionStateMachineEditor.StateFoldoutAsset.CloneTree(foldoutRoot);
-                Foldout = foldoutRoot.Query<Foldout>("Foldout").First();
-                VeContent = foldoutRoot.Query<VisualElement>("veContent").First();
-                Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
+                var item = States[i] as StateVE;
+                if (i < PropStates.arraySize)
                 {
-                    VeContent.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
-                    Property.isExpanded = x.newValue;
-                    Property.serializedObject.ApplyModifiedProperties();
-                });
-                foldoutRoot.Query<Button>("btDelete").First().RegisterCallback<ClickEvent>(x=>
+                    item.BindProperty(this, PropStates.GetArrayElementAtIndex(i), i);
+                }
+                else
                 {
-                    Parent.PropStates.DeleteArrayElementAtIndex(Index);
-                    Parent.PropStates.serializedObject.ApplyModifiedProperties();
-                    Parent.RefreshAfter(Index);
-                });
-                Add(foldoutRoot);
-
-                // create state ui
-                var veStateRoot = new VisualElement();
-                ReactionStateMachineEditor.StateAsset.CloneTree(veStateRoot);
-                Name = veStateRoot.Query<TextField>("tfName").First();
-                var veStateContent = veStateRoot.Query<VisualElement>("veStateContent").First();
-                VeContent.Add(veStateRoot);
-
-                Lv2Conditions = new ListView2();
-                veStateContent.Add(Lv2Conditions);
-                Lv2Conditions.SetText("Conditions:");
-                Lv2Conditions.SetIcon(Assets.IconCondition);
-                Lv2Conditions.SetColor(new Color(0.75f, 0.75f, 0));
-                Lv2Conditions.style.marginBottom = 2;
-                Lv2OnBegin = new ListView2();
-                veStateContent.Add(Lv2OnBegin);
-                Lv2OnBegin.SetText("On Begin:");
-                Lv2OnBegin.SetIcon(Assets.IconAction);
-                Lv2OnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
-                Lv2OnBegin.style.marginBottom = 2;
-                Lv2OnUpdate = new ListView2();
-                veStateContent.Add(Lv2OnUpdate);
-                Lv2OnUpdate.SetText("On Update:");
-                Lv2OnUpdate.SetIcon(Assets.IconAction);
-                Lv2OnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
-                Lv2OnUpdate.style.marginBottom = 2;
-                Lv2OnEnd = new ListView2();
-                veStateContent.Add(Lv2OnEnd);
-                Lv2OnEnd.SetText("On End:");
-                Lv2OnEnd.SetIcon(Assets.IconAction);
-                //Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-                Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-                Lv2OnEnd.style.marginBottom = 2;
-
-
-
-                VeIsActive = foldoutRoot.Query<VisualElement>("veIsActive").ToList();
-
-
+                    // delete the remaining of items
+                    while (States.childCount > i)
+                        States.RemoveAt(i);
+                    return;
+                }
             }
-            public void BindProperty(StateGroupVE parent, SerializedProperty property, int index)
+            for (; i < PropStates.arraySize; ++i)
             {
-                Parent = parent;
-                Index = index;
-                Property = property;
-                PropName = Property.FindPropertyRelative("StateName").FindPropertyRelative("Name");
-                PropNotes = Property.FindPropertyRelative("Notes");
-                PropIsActiveState = Property.FindPropertyRelative("IsActiveState");
+                var e = PropStates.GetArrayElementAtIndex(i);
+                var item = new StateVE(this, e, i);
+                States.Add(item);
+            }
+        }
+    }
 
-                PropCondition = property.FindPropertyRelative("Conditions");
-                PropOnBegin = property.FindPropertyRelative("OnBeginActions");
-                PropOnUpdate = property.FindPropertyRelative("OnUpdate");
-                PropOnEnd = property.FindPropertyRelative("OnEndActions");
+    public class StateVE : VisualElement
+    {
+        //public Nie.ReactionStateMachine.StateGroup Group;
+        public StateGroupVE Parent;
 
+        //public SerializedObject SerializedObject;
+        SerializedProperty Property;
+        SerializedProperty PropName;
+        SerializedProperty PropNotes;
+        SerializedProperty PropIsActiveState;
 
-                VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
+        SerializedProperty PropCondition;
+        SerializedProperty PropOnBegin;
+        SerializedProperty PropOnUpdate;
+        SerializedProperty PropOnEnd;
 
-                Lv2Conditions.BindProperty(PropCondition);
-                Lv2OnBegin.BindProperty(PropOnBegin);
-                Lv2OnUpdate.BindProperty(PropOnUpdate);
-                Lv2OnEnd.BindProperty(PropOnEnd);
+        Foldout Foldout;
+        TextField Name;
+        PropertyField PfLastBeginEvent;
+        VisualElement VeContent;
+        List<VisualElement> VeIsActive;
+        //Foldout FoInternal;
 
+        ListView2 Lv2Conditions;
+        ListView2 Lv2OnBegin;
+        ListView2 Lv2OnUpdate;
+        ListView2 Lv2OnEnd;
+        public int Index;
+        public StateVE()
+        {
+            Build();
+        }
+        public StateVE(StateGroupVE parent, SerializedProperty prop, int index)//, SerializedObject serializedObject)
+        {
+            Build();
+            BindProperty(parent, prop, index);
+        }
+        private static object GetValue_Imp(object source, string name)
+        {
+            if (source == null)
+                return null;
+            var type = source.GetType();
 
-                if (VeIsActive != null && VeIsActive.Count > 0)
+            while (type != null)
+            {
+                var f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (f != null)
+                    return f.GetValue(source);
+
+                var p = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (p != null)
+                    return p.GetValue(source, null);
+
+                type = type.BaseType;
+            }
+            return null;
+        }
+        private static object GetValue_Imp(object source, string name, int index)
+        {
+            var enumerable = GetValue_Imp(source, name) as System.Collections.IEnumerable;
+            if (enumerable == null) return null;
+            var enm = enumerable.GetEnumerator();
+            //while (index-- >= 0)
+            //    enm.MoveNext();
+            //return enm.Current;
+
+            for (int i = 0; i <= index; i++)
+            {
+                if (!enm.MoveNext()) return null;
+            }
+            return enm.Current;
+        }
+        public static object GetTargetObjectOfProperty(SerializedProperty prop)
+        {
+            if (prop == null) return null;
+
+            var path = prop.propertyPath.Replace(".Array.data[", "[");
+            object obj = prop.serializedObject.targetObject;
+            var elements = path.Split('.');
+            foreach (var element in elements)
+            {
+                if (element.Contains("["))
                 {
-                    var element = VeIsActive[0];
-                    element.Unbind();
-                    element.TrackPropertyValue(PropIsActiveState, x =>
+                    var elementName = element.Substring(0, element.IndexOf("["));
+                    var index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+                    obj = GetValue_Imp(obj, elementName, index);
+                }
+                else
+                {
+                    obj = GetValue_Imp(obj, element);
+                }
+            }
+            return obj;
+        }
+        void Build()
+        {
+            // create state foldout
+            var foldoutRoot = new VisualElement();
+            ReactionStateMachineEditor.StateFoldoutAsset.CloneTree(foldoutRoot);
+            Foldout = foldoutRoot.Query<Foldout>("Foldout").First();
+            VeContent = foldoutRoot.Query<VisualElement>("veContent").First();
+            Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
+            {
+                VeContent.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+                Property.isExpanded = x.newValue;
+                Property.serializedObject.ApplyModifiedProperties();
+            });
+            foldoutRoot.Query<Button>("btDelete").First().RegisterCallback<ClickEvent>(x =>
+            {
+                Parent.PropStates.DeleteArrayElementAtIndex(Index);
+                Parent.PropStates.serializedObject.ApplyModifiedProperties();
+                Parent.RefreshAfter(Index);
+            });
+            var veIcon = foldoutRoot.Query<VisualElement>("veIcon").First();
+            veIcon.RegisterCallback<ClickEvent>(x =>
+            {
+                if (UnityEditor.EditorApplication.isPlaying)
+                {
+                    if (Property.serializedObject.targetObject is ReactionStateMachine rsm)
                     {
-                        foreach (var v in VeIsActive)
-                            v.style.backgroundColor = x.boolValue ? Color.green : Color.black;
-                    });
+                        if (rsm.TryGetGroup(Parent.PropName.stringValue, out var group)
+                            && group.TryGetState(PropName.stringValue, out var state))
+                        {
+                            var parameters = EventParameters.Default;
+                            if (state.IsActiveState)
+                            {
+                                Debug.Log($"Deactivating State '{state.StateName.Name}' on gameObject '{rsm.gameObject.name}' without trigger object.");
+                                group.DeactivateAllState(parameters);
+                            }
+                            else
+                            {
+                                Debug.Log($"Activating State '{state.StateName.Name}' on gameObject '{rsm.gameObject.name}' without trigger object.");
+                                group.DeactivateAllState(parameters);
+                                group.SetActiveState(rsm, state, parameters);
+                            }
+                            //PropIsActiveState.serializedObject.Update();
+                        }
+
+                    }
+                }
+                else
+                {
+                    PropIsActiveState.boolValue = !PropIsActiveState.boolValue;
+                    Parent.PropStates.serializedObject.ApplyModifiedProperties();
+                    Debug.Log($"Set state to {PropIsActiveState.boolValue}");
+                }
+            });
+            veIcon.RegisterCallback<DragUpdatedEvent>(x =>
+            {
+                if (DragAndDrop.objectReferences.Length > 0 && DragAndDrop.objectReferences[0] is GameObject triggerObject)
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+                else
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
+
+            });
+            veIcon.RegisterCallback<DragPerformEvent>(x =>
+            {
+                if (DragAndDrop.objectReferences.Length > 0 && DragAndDrop.objectReferences[0] is GameObject triggerObject)
+                {
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+                    if(Property.serializedObject.targetObject is ReactionStateMachine rsm)
+                    {
+                        if(rsm.TryGetGroup(Parent.PropName.stringValue, out var group)
+                            && group.TryGetState(PropName.stringValue, out var state))
+                        {
+                            if (!UnityEditor.EditorApplication.isPlaying)
+                            {
+                                group.Handshake(rsm);
+                                state.Handshake(rsm, group);
+                            }
+                            var parameters = EventParameters.Trigger(rsm.gameObject, triggerObject);
+                            if (state.IsActiveState)
+                            {
+                                Debug.Log($"Deactivating State '{state.StateName.Name}' on gameObject '{rsm.gameObject.name}' with trigger object '{triggerObject.name}'.");
+                                group.DeactivateAllState(parameters);
+                            }
+                            else
+                            {
+                                Debug.Log($"Activating State '{state.StateName.Name}' on gameObject '{rsm.gameObject.name}' with trigger object '{triggerObject.name}'.");
+                                group.DeactivateAllState(parameters);
+                                group.SetActiveState(rsm, state, parameters);
+                            }
+                            if (!UnityEditor.EditorApplication.isPlaying)
+                                Property.serializedObject.Update();
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
                 }
 
-                //VeIsActive.Bind(PropIsActiveState);
+            });
 
-                Name.RegisterCallback<ChangeEvent<string>>(x =>
-                {
-                    Foldout.text = x.newValue; // GroupName.value;
-                    PropName.stringValue = x.newValue;
-                    PropName.serializedObject.ApplyModifiedProperties();
+            Add(foldoutRoot);
 
-                });
-                Refresh();
-            }
-            public void Refresh()
+            // create state ui
+            var veStateRoot = new VisualElement();
+            ReactionStateMachineEditor.StateAsset.CloneTree(veStateRoot);
+
+            Name = veStateRoot.Query<TextField>("tfName").First();
+
+            //FoInternal = veStateRoot.Query<Foldout>("foInternal").First();
+            //var veInternalContent = FoInternal.contentContainer;
+            //PfLastBeginEvent = new PropertyField();
+            //veInternalContent.Add(PfLastBeginEvent);//LastBeginEvent
+
+            var veStateContent = veStateRoot.Query<VisualElement>("veStateContent").First();
+            VeContent.Add(veStateRoot);
+
+            Lv2Conditions = new ListView2();
+            veStateContent.Add(Lv2Conditions);
+            Lv2Conditions.SetText("Conditions:");
+            Lv2Conditions.SetIcon(Assets.IconCondition);
+            Lv2Conditions.SetColor(new Color(0.75f, 0.75f, 0));
+            Lv2Conditions.style.marginBottom = 2;
+            Lv2OnBegin = new ListView2();
+            veStateContent.Add(Lv2OnBegin);
+            Lv2OnBegin.SetText("On Begin:");
+            Lv2OnBegin.SetIcon(Assets.IconAction);
+            Lv2OnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
+            Lv2OnBegin.style.marginBottom = 2;
+            Lv2OnUpdate = new ListView2();
+            veStateContent.Add(Lv2OnUpdate);
+            Lv2OnUpdate.SetText("On Update:");
+            Lv2OnUpdate.SetIcon(Assets.IconAction);
+            Lv2OnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
+            Lv2OnUpdate.style.marginBottom = 2;
+            Lv2OnEnd = new ListView2();
+            veStateContent.Add(Lv2OnEnd);
+            Lv2OnEnd.SetText("On End:");
+            Lv2OnEnd.SetIcon(Assets.IconAction);
+            //Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+            Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+            Lv2OnEnd.style.marginBottom = 2;
+
+            PfLastBeginEvent = new PropertyField();
+            PfLastBeginEvent.style.marginLeft = 16;
+            veStateContent.Add(PfLastBeginEvent);
+            VeIsActive = foldoutRoot.Query<VisualElement>("veIsActive").ToList();
+
+
+        }
+        public void BindProperty(StateGroupVE parent, SerializedProperty property, int index)
+        {
+            Parent = parent;
+            Index = index;
+            Property = property;
+            PropName = Property.FindPropertyRelative("StateName").FindPropertyRelative("Name");
+            PropNotes = Property.FindPropertyRelative("Notes");
+            PropIsActiveState = Property.FindPropertyRelative("IsActiveState");
+
+            PropCondition = property.FindPropertyRelative("Conditions");
+            PropOnBegin = property.FindPropertyRelative("OnBeginActions");
+            PropOnUpdate = property.FindPropertyRelative("OnUpdate");
+            PropOnEnd = property.FindPropertyRelative("OnEndActions");
+
+
+            VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
+            PfLastBeginEvent.BindProperty(property.FindPropertyRelative("LastBeginEvent"));
+            Lv2Conditions.BindProperty(PropCondition);
+            Lv2OnBegin.BindProperty(PropOnBegin);
+            Lv2OnUpdate.BindProperty(PropOnUpdate);
+            Lv2OnEnd.BindProperty(PropOnEnd);
+
+
+            if (VeIsActive != null && VeIsActive.Count > 0)
             {
-                
-                Name.value = PropName.stringValue;
-                Foldout.value = Property.isExpanded;
-                Foldout.text = PropName.stringValue;
-                foreach (var v in VeIsActive)
-                    v.style.backgroundColor = PropIsActiveState.boolValue ? Color.green : Color.black;
+                var element = VeIsActive[0];
+                element.Unbind();
+                element.TrackPropertyValue(PropIsActiveState, x =>
+                {
+                    foreach (var v in VeIsActive)
+                        v.style.backgroundColor = x.boolValue ? Color.green : Color.black;
+                });
             }
+
+            //VeIsActive.Bind(PropIsActiveState);
+
+            Name.RegisterCallback<ChangeEvent<string>>(x =>
+            {
+                Foldout.text = x.newValue; // GroupName.value;
+                PropName.stringValue = x.newValue;
+                PropName.serializedObject.ApplyModifiedProperties();
+
+            });
+            Refresh();
+        }
+        public void Refresh()
+        {
+
+            Name.value = PropName.stringValue;
+            Foldout.value = Property.isExpanded;
+            Foldout.text = PropName.stringValue;
+            foreach (var v in VeIsActive)
+                v.style.backgroundColor = PropIsActiveState.boolValue ? Color.green : Color.black;
         }
     }
     [CustomEditor(typeof(ReactionStateMachine))]

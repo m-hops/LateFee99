@@ -1,12 +1,99 @@
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 
 namespace Nie.Editor
 {
     [CustomPropertyDrawer(typeof(ReactionReference))]
     public class ReactionReferencePropertyDrawer : PropertyDrawer
     {
+        public static void Update(SerializedProperty property, Label lbFound)
+        {
+            //var propType = property.FindPropertyRelative("ReactionType");
+            var propTargetReference = property.FindPropertyRelative("TargetObjectReference");
+            var propStateName = property.FindPropertyRelative("ReactionName");
+
+            var gameObjectReference = GameObjectReference.FromProperty(propTargetReference);
+            bool isVirtualCall = (gameObjectReference.Type != GameObjectReference.TypeEnum.Object && gameObjectReference.Type != GameObjectReference.TypeEnum.Self);
+
+            GameObject self = null;
+            if (property.serializedObject.targetObject is MonoBehaviour mb2)
+                self = mb2.gameObject;
+            gameObjectReference.TryGetTargetGameObject(EventParameters.WithoutTrigger(self), out var targetObject);
+
+            if (isVirtualCall)
+                lbFound.text = "Virtual";
+            else if (targetObject != null)
+            {
+
+                string reactionName = propStateName.stringValue;
+
+                if (ReactionReference.HasReaction(targetObject, reactionName))
+                    lbFound.text = "Found";
+                else
+                    lbFound.text = "Missing";
+            }
+            else
+                lbFound.text = "No Target";
+
+        }
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            var propType = property.FindPropertyRelative("ReactionType");
+            var propTargetReference = property.FindPropertyRelative("TargetObjectReference");
+            var propStateName = property.FindPropertyRelative("ReactionName");
+
+
+            if ((ReactionReference.Type)propType.enumValueIndex == ReactionReference.Type.Event)
+            {
+                var pfEvent = new PropertyField();
+                pfEvent.BindProperty(property.FindPropertyRelative("Event"));
+                return pfEvent;
+            }
+
+
+            var veVertical = new VisualElement();
+            veVertical.style.flexDirection = FlexDirection.Column;
+
+            var veNameRow = new VisualElement();
+            veNameRow.style.flexDirection = FlexDirection.Row;
+            var lbName = new Label("Name:");
+            var tfName = new TextField();
+            var lbFound = new Label("");
+            tfName.style.flexGrow = 1;
+            tfName.value = propStateName.stringValue;
+            veNameRow.Add(lbName);
+            veNameRow.Add(tfName);
+            veNameRow.Add(lbFound);
+
+
+            var pfTargetReference = new PropertyField();
+            pfTargetReference.BindProperty(propTargetReference);
+            pfTargetReference.label = "";
+            veVertical.Add(pfTargetReference);
+            veVertical.Add(veNameRow);
+            //veVertical.Add(tfName);
+            //veVertical.Add(lbFound);
+            //pfTargetReference.Query<EnumField>().First().RegisterValueChangedCallback(x =>
+            //{
+            //    Update(property, lbFound);
+            //});
+            pfTargetReference.RegisterValueChangeCallback(x =>
+            {
+                //x.changedProperty.serializedObject.ApplyModifiedProperties();
+                Update(property, lbFound);
+            });
+            tfName.RegisterCallback<ChangeEvent<string>>(x =>
+            {
+                propStateName.stringValue = x.newValue;
+                propStateName.serializedObject.ApplyModifiedProperties();
+                Update(property, lbFound);
+            });
+            Update(property, lbFound);
+            return veVertical;
+        }
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             float h = 8;
