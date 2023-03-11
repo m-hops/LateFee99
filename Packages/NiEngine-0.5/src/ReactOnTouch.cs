@@ -25,7 +25,7 @@ namespace Nie
         {
             if (!enabled) return false;
             if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!OnTouch.CanReact(TargetObject, by.gameObject, position)) return false;
+            if (!OnTouch.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
             return true;
         }
 
@@ -33,14 +33,14 @@ namespace Nie
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Touched By '{by.name}'");
-            OnTouch.TryReact(TargetObject, by.gameObject, position);
+            OnTouch.TryReact(gameObject, TargetObject, by.gameObject, position);
         }
 
         public void Release(TouchController by, Vector3 position)
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Released By '{by.name}'");
-            OnRelease.TryReact(TargetObject, by.gameObject, position);
+            OnRelease.TryReact(gameObject, TargetObject, by.gameObject, position);
         }
 
     }

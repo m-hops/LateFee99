@@ -58,7 +58,7 @@ public class VCRControls : MonoBehaviour
                     {
                         m_CurrentVHS.HeadTime = m_CurrentVHS.Duration;
                         State = StateEnum.Idle;
-                        OnPlayOver.TryReact(gameObject, m_CurrentVHS.gameObject, transform.position);
+                        OnPlayOver.TryReact(gameObject, gameObject, m_CurrentVHS.gameObject, transform.position);
                     }
                 }
                 break;
@@ -70,7 +70,7 @@ public class VCRControls : MonoBehaviour
                     {
                         m_CurrentVHS.HeadTime = 0;
                         State = StateEnum.Idle;
-                        OnRewindOver.TryReact(gameObject, m_CurrentVHS.gameObject, transform.position);
+                        OnRewindOver.TryReact(gameObject, gameObject, m_CurrentVHS.gameObject, transform.position);
                     }
                 }
                 break;

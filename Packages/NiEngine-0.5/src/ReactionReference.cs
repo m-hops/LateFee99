@@ -38,6 +38,7 @@ namespace Nie
         public static bool IsActiveState(EventParameters parameters, string stateName)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             bool hasPotential = false;
             foreach (var reactionState in parameters.Self.AllReactionState(stateName))
             {
@@ -73,6 +74,7 @@ namespace Nie
         public bool React(EventParameters parameters)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             switch (ReactionType)
             {
                 case Type.Reaction:
@@ -92,6 +94,7 @@ namespace Nie
         public static bool React(string reactionOrStateName, EventParameters parameters)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             foreach (var reaction in parameters.Self.GetComponents<Reaction>())
                 if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                 {
@@ -114,6 +117,7 @@ namespace Nie
         public bool CanReact(EventParameters parameters)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             switch (ReactionType)
             {
                 case Type.Reaction:
@@ -131,6 +135,7 @@ namespace Nie
         public static bool CanReact(string reactionOrStateName, EventParameters parameters)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             int potentialReactCount = 0;
             foreach (var reaction in parameters.Self.GetComponents<Reaction>())
                 if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
@@ -157,6 +162,7 @@ namespace Nie
         public bool TryReact(EventParameters parameters)
         {
             Debug.Assert(parameters.Self != null);
+            Debug.Assert(parameters.Current.From != null);
             if (CanReact(parameters))
             {
                 React(parameters);

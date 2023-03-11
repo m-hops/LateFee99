@@ -42,7 +42,7 @@ namespace Nie
                     Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyDown '{KeyCode}'", this);
                 if (CanReact())
                 {
-                    OnKeyDown.TryReact(TargetObject, TriggerObject, transform.position);
+                    OnKeyDown.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
                     if(DebugLog)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyDown '{KeyCode}'", this);
                 }
@@ -53,7 +53,7 @@ namespace Nie
                     Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyUp '{KeyCode}'", this);
                 if (CanReact())
                 {
-                    OnKeyUp.TryReact(TargetObject, TriggerObject, transform.position);
+                    OnKeyUp.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
                     if (DebugLog)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyUp '{KeyCode}'", this);
                 }
@@ -64,7 +64,7 @@ namespace Nie
                     Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received WhenKeyPressed '{KeyCode}'", this);
                 if (CanReact())
                 {
-                    WhenKeyPressed.TryReact(TargetObject, TriggerObject, transform.position);
+                    WhenKeyPressed.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
                     if (DebugLog)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react WhenKeyPressed '{KeyCode}'", this);
                 }

@@ -32,21 +32,21 @@ namespace Nie
         {
             if (!enabled) return false;
             if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist:null)) return false;
-            if (!OnFocusReaction.CanReact(TargetObject, by.gameObject, position)) return false;
+            if (!OnFocusReaction.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
             return true;
         }
         public void Focus(FocusController by, Vector3 position)
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Focused By '{by.name}'", this);
-            if(OnFocusReaction.TryReact(TargetObject, by.gameObject, position))
+            if(OnFocusReaction.TryReact(gameObject, TargetObject, by.gameObject, position))
                 FocusedByTriggerObject = by.gameObject;
         }
         public void Unfocus(FocusController by, Vector3 position)
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Unfocused By '{by.name}'", this);
-            OnUnfocusReaction.TryReact(TargetObject, by.gameObject, position, previousTriggerObject: FocusedByTriggerObject);
+            OnUnfocusReaction.TryReact(gameObject, TargetObject, by.gameObject, position, previousTriggerObject: FocusedByTriggerObject);
             FocusedByTriggerObject = null;
         }
     }

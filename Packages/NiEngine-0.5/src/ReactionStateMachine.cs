@@ -79,160 +79,6 @@ namespace Nie
 #endif
     }
 
-    [Serializable]
-    public struct EventParameters
-    {
-        [Serializable]
-        public struct ParameterSet
-        {
-            /// <summary>
-            /// Object sending the event
-            /// </summary>
-            public GameObject From;
-            /// <summary>
-            /// Object that triggered the event.
-            /// may be different if an event is passed around between objects
-            /// </summary>
-            public GameObject TriggerObject;
-            public Vector3 TriggerPosition;
-
-            public override string ToString()
-            {
-                return $"(From: '{From.GetNameOrNull()}', TriggerObject: '{TriggerObject.GetNameOrNull()}', TriggerPosition: {TriggerPosition}";
-            }
-            public static ParameterSet Default => new ParameterSet
-            {
-                From = null,
-                TriggerObject = null,
-                TriggerPosition = Vector3.zero,
-            };
-            public static ParameterSet Trigger(GameObject from, GameObject triggerObject, Vector3 position) => new ParameterSet
-            {
-                From = from,
-                TriggerObject = triggerObject,
-                TriggerPosition = position,
-            };
-            public static ParameterSet WithoutTrigger(GameObject from) => new ParameterSet
-            {
-                From = from,
-                TriggerObject = null,
-                TriggerPosition = Vector3.zero,
-            };
-        }
-        /// <summary>
-        /// The object on which the event happens
-        /// </summary>
-        public GameObject Self;
-
-
-        public ParameterSet Current;
-        public ParameterSet OnBegin;
-
-        ///// <summary>
-        ///// Object sending the event
-        ///// </summary>
-        //public GameObject From => Current.From;
-
-        ///// <summary>
-        ///// Object that triggered the event.
-        ///// may be different if an event is passed around between objects
-        ///// </summary>
-        //public GameObject TriggerObject => Current.TriggerObject;
-        ///// <summary>
-        ///// Previous trigger object, useful in StateAction.OnEnd for getting the object that triggered its StateAction.OnBegin
-        ///// </summary>
-        //public Vector3 TriggerPosition => Current.TriggerPosition;
-
-
-        //public GameObject FromOnBegin;
-        //public Vector3 PreviousTriggerPosition;
-        //public GameObject PreviousTriggerObject;
-
-        public System.Text.StringBuilder DebugTrace;
-
-
-        public EventParameters WithDebugTrace(System.Text.StringBuilder stringBuilder)
-        {
-            var copy = this;
-            copy.DebugTrace = stringBuilder;
-            return copy;
-        }
-        public EventParameters WithSelf(GameObject self)
-        {
-            var copy = this;
-            copy.Current.From = Self;
-            copy.Self = self;
-            return copy;
-        }
-        public EventParameters WithBegin(EventParameters begin)
-        {
-            var copy = this;
-            copy.OnBegin.From = begin.Current.From;
-            copy.OnBegin.TriggerObject = begin.Current.TriggerObject;
-            copy.OnBegin.TriggerPosition = begin.Current.TriggerPosition;
-            return copy;
-        }
-        public EventParameters WithOnBeginTrigger()
-        {
-            var copy = this;
-            copy.Current.From = OnBegin.From;
-            copy.Current.TriggerPosition = OnBegin.TriggerPosition;
-            copy.Current.TriggerObject = OnBegin.TriggerObject;
-            return copy;
-        }
-        public override string ToString()
-        {
-            return $"(Self: '{Self.GetNameOrNull()}', Current:{Current}, OnBegin:{OnBegin}";
-        }
-        public static EventParameters Default => new EventParameters
-        {
-            Self = null,
-            Current = ParameterSet.Default,
-            OnBegin = ParameterSet.Default,
-        };
-        public static EventParameters Trigger(GameObject self, GameObject from, GameObject triggerObject) => new EventParameters
-        {
-            Self = self,
-            Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
-            OnBegin = ParameterSet.Default,
-        };
-        public static EventParameters Trigger(GameObject self, GameObject from, GameObject triggerObject, Vector3 position) => new EventParameters
-        {
-            Self = self,
-            Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
-            OnBegin = ParameterSet.Default,
-        };
-        public static EventParameters WithoutTrigger(GameObject self) => new EventParameters
-        {
-            Self = self,
-            Current = ParameterSet.Default,
-            OnBegin = ParameterSet.Default,
-        };
-    }
-    public struct Owner
-    {
-        public Owner(MonoBehaviour monoBehaviour)
-        {
-            MonoBehaviour = monoBehaviour;
-            StateMachine = null;
-            State = null;
-        }
-        public Owner(ReactionStateMachine sm)
-        {
-            MonoBehaviour = null;
-            StateMachine = sm;
-            State = null;
-        }
-        public Owner(ReactionStateMachine.State state)
-        {
-            MonoBehaviour = null;
-            StateMachine = state.StateMachine;
-            State = state;
-        }
-        public MonoBehaviour MonoBehaviour;
-        public ReactionStateMachine StateMachine;
-        public ReactionStateMachine.State State;
-    }
 
     [Serializable]
     public struct StateName : IComparable, IComparable<StateName>, IEquatable<StateName>
@@ -279,6 +125,8 @@ namespace Nie
             return Name.GetHashCode();
         }
     }
+
+    // interface
     public interface IStateObserver
     {
         void OnBegin(Owner owner, EventParameters parameters);
@@ -292,6 +140,7 @@ namespace Nie
     {
         void Initialize(Owner owner);
     }
+
 
     [Serializable]
     public abstract class Action : StateAction, IAction
@@ -428,17 +277,17 @@ namespace Nie
             public ActionSet NewOnUpdate = new();
             public ActionSet NewOnEnd = new();
 
-            [SerializeReference, DerivedClassPicker(typeof(Condition), showPrefixLabel: false)]
-            public List<Condition> Conditions;// = new();
+            //[SerializeReference, DerivedClassPicker(typeof(Condition), showPrefixLabel: false)]
+            //public List<Condition> Conditions;// = new();
 
-            [SerializeReference, DerivedClassPicker(typeof(StateAction), showPrefixLabel: false)]
-            public List<StateAction> OnBeginActions;
+            //[SerializeReference, DerivedClassPicker(typeof(StateAction), showPrefixLabel: false)]
+            //public List<StateAction> OnBeginActions;
 
-            [SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
-            public List<Action> OnUpdate;
+            //[SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
+            //public List<Action> OnUpdate;
 
-            [SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
-            public List<Action> OnEndActions;
+            //[SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
+            //public List<Action> OnEndActions;
 
             [HideInInspector, NonSerialized]
             public List<IUpdate> Updates = new();
@@ -615,6 +464,7 @@ namespace Nie
             public void SetActiveState(ReactionStateMachine component, State state, EventParameters parameters)
             {
                 Debug.Assert(parameters.Self == StateMachine.gameObject);
+                Debug.Assert(parameters.Current.From != null);
 #if UNITY_EDITOR
                 if (state.StateGroup != this || state.StateMachine != component)
                     Debug.LogError($"ReactionStateMachine '{component.name}' switches to an unknown state '{state.StateName.Name}'", component);
@@ -688,11 +538,12 @@ namespace Nie
 
         public void ForceActivateState(string stateName)
         {
-            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject));
+            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject, gameObject));
         }
         public bool React(string reactionOrStateName, EventParameters parameters)
         {
             Debug.Assert(parameters.Self == gameObject);
+            Debug.Assert(parameters.Current.From != null);
             foreach (var group in Groups)
             {
                 if (group.TryGetState(new StateName(reactionOrStateName), out var state))

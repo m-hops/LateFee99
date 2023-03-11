@@ -47,7 +47,7 @@ namespace Nie
             if (!enabled) return false;
             //if (!NewConditions.Pass(new Owner(this), EventParameters.Trigger(gameObject, by.gameObject, position))) return false;
             if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!ReactionOnCollisionEnter.CanReact(TargetObject, by.gameObject, position)) return false;
+            if (!ReactionOnCollisionEnter.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
             return true;
         }
 
@@ -55,14 +55,14 @@ namespace Nie
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Touched By '{by.name}'");
-            ReactionOnCollisionEnter.TryReact(TargetObject, by.gameObject, position);
+            ReactionOnCollisionEnter.TryReact(gameObject, TargetObject, by.gameObject, position);
         }
 
         public void Release(TouchController by, Vector3 position)
         {
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Touchable '{name}' Released By '{by.name}'");
-            ReactionOnCollisionExit.TryReact(TargetObject, by.gameObject, position);
+            ReactionOnCollisionExit.TryReact(gameObject, TargetObject, by.gameObject, position);
         }
 
 
@@ -114,7 +114,7 @@ namespace Nie
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'", this);
 
-            ReactionOnCollisionEnter.React(TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
+            ReactionOnCollisionEnter.React(gameObject, TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
 
             if (ReactionCooldown > 0)
                 m_CooldownTimer = ReactionCooldown;
@@ -127,7 +127,7 @@ namespace Nie
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
             if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
             if (!Conditions.CanReactAll(gameObject, other, position, previousTriggerObjectIfExist: null)) return false;
-            if (!ReactionOnCollisionEnter.CanReact(TargetObject, other, position)) return false;
+            if (!ReactionOnCollisionEnter.CanReact(gameObject, TargetObject, other, position)) return false;
             if (SingleAtOnce) m_CurrentSingleReaction = other;
             return true;
         }

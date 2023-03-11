@@ -241,7 +241,7 @@ namespace Nie
                 var NextIdleTime = CurrentIdleTime + Time.deltaTime;
 
                 if (NextIdleTime >= Delay && CurrentIdleTime < Delay)
-                    DelayedReaction.React(gameObject, CurrentTriggerObject, CurrentTriggerPosition, CurrentTriggerObject);
+                    DelayedReaction.React(gameObject, gameObject, CurrentTriggerObject, CurrentTriggerPosition, CurrentTriggerObject);
 
                 CurrentIdleTime = NextIdleTime;
             }
@@ -293,7 +293,7 @@ namespace Nie
         }
         public void ForceActivateState(string stateName)
         {
-            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject));
+            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject, gameObject));
             //foreach (var state in gameObject.GetComponents<ReactionState>())
             //    if (state.StateName == stateName)
             //    {
@@ -398,7 +398,7 @@ namespace Nie
             //    else
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnBegin.TryReact(gameObject, triggerObject, position);
+            TriggerOnBegin.TryReact(gameObject, gameObject, triggerObject, position);
 
             foreach (var obs in m_Observers)
                 obs.OnBegin(this, thisObject, triggerObject, position);
@@ -444,7 +444,7 @@ namespace Nie
             //    else //if(DebugLog)
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnEnd.TryReact(gameObject, triggerObject, position, CurrentTriggerObject);
+            TriggerOnEnd.TryReact(gameObject, gameObject, triggerObject, position, CurrentTriggerObject);
 
             foreach (var obs in m_Observers)
                 obs.OnEnd(this, thisObject, triggerObject, CurrentTriggerObject, position);

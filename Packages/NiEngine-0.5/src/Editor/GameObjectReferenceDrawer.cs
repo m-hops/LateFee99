@@ -65,7 +65,7 @@ namespace Nie.Editor
                         break;
                     case GameObjectReference.TypeEnum.TriggerObject:
                         break;
-                    case GameObjectReference.TypeEnum.PreviousTriggerObject:
+                    case GameObjectReference.TypeEnum.TriggerObjectOnBegin:
                         break;
                     case GameObjectReference.TypeEnum.FirstOfType:
                         pfObjectType.BindProperty(property.FindPropertyRelative("ObjectType"));
@@ -93,7 +93,7 @@ namespace Nie.Editor
                     break;
                 case GameObjectReference.TypeEnum.TriggerObject:
                     break;
-                case GameObjectReference.TypeEnum.PreviousTriggerObject:
+                case GameObjectReference.TypeEnum.TriggerObjectOnBegin:
                     break;
                 case GameObjectReference.TypeEnum.FirstOfType:
                     pfObjectType.BindProperty(property.FindPropertyRelative("ObjectType"));
@@ -138,7 +138,7 @@ namespace Nie.Editor
                     break;
                 case GameObjectReference.TypeEnum.TriggerObject:
                     break;
-                case GameObjectReference.TypeEnum.PreviousTriggerObject:
+                case GameObjectReference.TypeEnum.TriggerObjectOnBegin:
                     break;
                 case GameObjectReference.TypeEnum.FirstOfType:
                     layout.PropertyField(property.FindPropertyRelative("ObjectType"));

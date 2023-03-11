@@ -44,26 +44,26 @@ namespace Nie
 
 
 
-        public void React(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
+        public void React(GameObject from, GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
             if (ReactionReferences != null)
                 foreach (var reaction in ReactionReferences)
-                    reaction.TryReact(targetObject, triggerObject, position, previousTriggerObject);
+                    reaction.TryReact(from, triggerObject, position, previousTriggerObject);
 
             //if (!string.IsNullOrEmpty(ReactionOnTriggerObject))
             //    ReactionReference.TryReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject);
             //Events?.Invoke();
         }
-        public bool TryReact(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
+        public bool TryReact(GameObject from, GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
-            if (CanReact(targetObject, triggerObject, position))
+            if (CanReact(from, targetObject, triggerObject, position))
             {
-                React(targetObject, triggerObject, position, previousTriggerObject);
+                React(from, targetObject, triggerObject, position, previousTriggerObject);
                 return true;
             }
             return false;
         }
-        public bool CanReact(GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
+        public bool CanReact(GameObject from, GameObject targetObject, GameObject triggerObject, Vector3 position, GameObject previousTriggerObject = null)
         {
             //if (!string.IsNullOrEmpty(ReactionOnTriggerObject) && !ReactionReference.CanReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject)) return false;
             return ReactionReferences == null 

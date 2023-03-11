@@ -282,11 +282,6 @@ namespace Nie.Editor
         SerializedProperty PropNotes;
         SerializedProperty PropIsActiveState;
 
-        SerializedProperty PropCondition;
-        SerializedProperty PropOnBegin;
-        SerializedProperty PropOnUpdate;
-        SerializedProperty PropOnEnd;
-
         SerializedProperty PropNewConditions;
         SerializedProperty PropNewOnBegin;
         SerializedProperty PropNewOnUpdate;
@@ -300,15 +295,6 @@ namespace Nie.Editor
         List<VisualElement> VeIsActive;
         //Foldout FoInternal;
 
-        ListView2 Lv2Conditions;
-        ListView2 Lv2OnBegin;
-        ListView2 Lv2OnUpdate;
-        ListView2 Lv2OnEnd;
-
-        //ListView2 Lv2NewConditions;
-        //ListView2 Lv2NewOnBegin;
-        //ListView2 Lv2NewOnUpdate;
-        //ListView2 Lv2NewOnEnd;
         PropertyField PfNewConditions;
         PropertyField PfNewOnBegin;
         PropertyField PfNewOnUpdate;
@@ -521,59 +507,6 @@ namespace Nie.Editor
             veStateContent.Add(PfNewOnUpdate);
             veStateContent.Add(PfNewOnEnd);
 
-            //Lv2NewConditions = new ListView2();
-            //veStateContent.Add(Lv2NewConditions);
-            //Lv2NewConditions.SetText("New Conditions:");
-            //Lv2NewConditions.SetIcon(Assets.IconCondition);
-            //Lv2NewConditions.SetColor(new Color(0.75f, 0.75f, 0));
-            //Lv2NewConditions.style.marginBottom = 2;
-            //Lv2NewOnBegin = new ListView2();
-            //veStateContent.Add(Lv2NewOnBegin);
-            //Lv2NewOnBegin.SetText("New On Begin:");
-            //Lv2NewOnBegin.SetIcon(Assets.IconAction);
-            //Lv2NewOnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
-            //Lv2NewOnBegin.style.marginBottom = 2;
-            //Lv2NewOnUpdate = new ListView2();
-            //veStateContent.Add(Lv2NewOnUpdate);
-            //Lv2NewOnUpdate.SetText("New On Update:");
-            //Lv2NewOnUpdate.SetIcon(Assets.IconAction);
-            //Lv2NewOnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
-            //Lv2NewOnUpdate.style.marginBottom = 2;
-            //Lv2NewOnEnd = new ListView2();
-            //veStateContent.Add(Lv2NewOnEnd);
-            //Lv2NewOnEnd.SetText("New On End:");
-            //Lv2NewOnEnd.SetIcon(Assets.IconAction);
-            ////Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-            //Lv2NewOnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-            //Lv2NewOnEnd.style.marginBottom = 2;
-
-
-            Lv2Conditions = new ListView2();
-            veStateContent.Add(Lv2Conditions);
-            Lv2Conditions.SetText("Conditions:");
-            Lv2Conditions.SetIcon(Assets.IconCondition);
-            Lv2Conditions.SetColor(new Color(0.75f, 0.75f, 0));
-            Lv2Conditions.style.marginBottom = 2;
-            Lv2OnBegin = new ListView2();
-            veStateContent.Add(Lv2OnBegin);
-            Lv2OnBegin.SetText("On Begin:");
-            Lv2OnBegin.SetIcon(Assets.IconAction);
-            Lv2OnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
-            Lv2OnBegin.style.marginBottom = 2;
-            Lv2OnUpdate = new ListView2();
-            veStateContent.Add(Lv2OnUpdate);
-            Lv2OnUpdate.SetText("On Update:");
-            Lv2OnUpdate.SetIcon(Assets.IconAction);
-            Lv2OnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
-            Lv2OnUpdate.style.marginBottom = 2;
-            Lv2OnEnd = new ListView2();
-            veStateContent.Add(Lv2OnEnd);
-            Lv2OnEnd.SetText("On End:");
-            Lv2OnEnd.SetIcon(Assets.IconAction);
-            //Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-            Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
-            Lv2OnEnd.style.marginBottom = 2;
-
             PfLastBeginEvent = new PropertyField();
             PfLastBeginEvent.style.marginLeft = 16;
             veStateContent.Add(PfLastBeginEvent);
@@ -590,11 +523,6 @@ namespace Nie.Editor
             PropNotes = Property.FindPropertyRelative("Notes");
             PropIsActiveState = Property.FindPropertyRelative("IsActiveState");
 
-            PropCondition = property.FindPropertyRelative("Conditions");
-            PropOnBegin = property.FindPropertyRelative("OnBeginActions");
-            PropOnUpdate = property.FindPropertyRelative("OnUpdate");
-            PropOnEnd = property.FindPropertyRelative("OnEndActions");
-
             PropNewConditions = property.FindPropertyRelative("NewConditions");
             PropNewOnBegin = property.FindPropertyRelative("NewOnBegin");
             PropNewOnUpdate = property.FindPropertyRelative("NewOnUpdate");
@@ -605,10 +533,6 @@ namespace Nie.Editor
 
             VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
             PfLastBeginEvent.BindProperty(property.FindPropertyRelative("LastBeginEvent"));
-            Lv2Conditions.BindProperty(PropCondition);
-            Lv2OnBegin.BindProperty(PropOnBegin);
-            Lv2OnUpdate.BindProperty(PropOnUpdate);
-            Lv2OnEnd.BindProperty(PropOnEnd);
             PfNewConditions.BindProperty(PropNewConditions);
             PfNewOnBegin.BindProperty(PropNewOnBegin);
             PfNewOnUpdate.BindProperty(PropNewOnUpdate);
@@ -664,15 +588,6 @@ namespace Nie.Editor
         {
             Undo.undoRedoPerformed += OnUndo;
             StateMachine = (Nie.ReactionStateMachine)target;
-            //StateMachineAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateMachine.uxml");
-            //GroupAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateGroup.uxml");
-            //StateAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/State.uxml");
-            //StateFoldoutAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateFoldout.uxml");
-            //ListAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/List.uxml");
-            //ClassPickerAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ClassPicker.uxml");
-            //ListItemAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ListItem.uxml");
-            //StyleSheet stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Editor/Star System Editor/StarSystemEditor.uss");
-            //rootElement.styleSheets.Add(stylesheet);
         }
         private void OnDisable()
         {
@@ -685,283 +600,15 @@ namespace Nie.Editor
             Debug.Log("OnUndo");
             Root.OnUndo();
         }
-        //private void HandleUndo()
-        //{
-        //    serializedObject.Update();
-
-        //    // TODO recreate the whole ui here
-        //    //var parentElement = uiRoot.parent;
-        //    //var index = parentElement.IndexOf(uiRoot);
-        //    //parentElement.RemoveAt(index);
-
-        //    //uiRoot = CreateInspectorGUI();
-        //    //parentElement.Insert(index, uiRoot);
-        //}
         public override VisualElement CreateInspectorGUI()
         {
 
             Root = new ReactionStateMachineVE(StateMachine, serializedObject);
             return Root;
 
-            //VisualElement btAddGroup = Root.Query<VisualElement>("btAddGroup").First();
-            //btAddGroup.RegisterCallback<ClickEvent>(x =>
-            //{
-            //    Debug.Log("Add Group");
-            //    AddGroupToEnd(new ReactionStateMachine.StateGroup());
-            //    EditorUtility.SetDirty(StateMachine);
-                
-            //});
-
-
-            //VisualElement veGroups = Root.Query<VisualElement>("Groups").First();
-            //return Root;
         }
 
-        //public class StateMachineVisual : VisualElement
-        //{
-        //    ReactionStateMachine StateMachine;
-        //    //ReactionStateMachine.State State;
-        //    //public Action<VisualElement> OnChange;
-        //    //VisualElement Root;
-        //    public StateMachineVisual(ReactionStateMachine sm)
-        //    {
-        //        StateMachine = sm;
-        //        //Root = new VisualElement();
-        //        Update();
-        //    }
-        //    void Update()
-        //    {
-        //        if (StateMachine != null)
-        //        {
-
-        //            foreach (var group in StateMachine.Groups)
-        //            {
-        //                var groupBox = new UnityEngine.UIElements.GroupBox("Group");
-
-        //                var groupName = new UnityEngine.UIElements.TextField("Group Name:");
-        //                groupBox.Add(groupName);
-        //                Add(groupBox);
-        //                //groupName.RegisterValueChangedCallback()
-        //            }
-
-        //        }
-        //        var buttonAddGroup = new UnityEngine.UIElements.Button(() =>
-        //        {
-        //            StateMachine.Groups.Add(new ReactionStateMachine.StateGroup());
-        //            Clear();
-        //            Update();
-        //            //OnChange(Root);
-        //        });
-        //        Add(buttonAddGroup);
-        //    }
-        //}
-        //SerializedProperty Groups;
-        //void OnEnable()
-        //{
-        //    Groups = serializedObject.FindProperty("Groups");
-        //}
-        ////void OnNewGroup(VisualElement ve)
-        ////{
-        ////    Root.Remove(StateMachineVE);
-        ////    Root.Add(StateMachineVE);
-        ////}
-        //VisualElement Root;
-        //StateMachineVisual StateMachineVE;
-        //public override VisualElement CreateInspectorGUI()
-        //{
-        //    ReactionStateMachine sm = target as ReactionStateMachine;
-        //    //sm.Groups;
-        //    //SerializedObject serializedObject = new SerializedObject(sm);
-
-        //    VisualElement root = new VisualElement();
-        //    StateMachineVE = new StateMachineVisual(sm);
-        //    //StateMachineVE.OnChange += OnNewGroup;
-
-        //    root.Add(StateMachineVE);
-        //    Root = root;
-        //    return root;
-
-
-        //    //foreach (var group in sm.Groups)
-        //    ////for (int i = 0; i != Groups.arraySize; ++i)
-        //    //{
-
-        //    //    //EditorGUILayout.BeginHorizontal();
-        //    //    //GUILayout.Space(16);
-        //    //    //EditorGUILayout.BeginVertical();
-        //    //    foreach (var state in group.States)
-        //    //    //for (int iState = 0; iState != propStates.arraySize; ++iState)
-        //    //    {
-
-        //    //        var listConditions = new UnityEngine.UIElements.ListView(state.Conditions);
-        //    //        root.Add(listConditions);
-        //    //        //EditorGUILayout.BeginHorizontal();
-        //    //        //GUILayout.Space(16);
-        //    //        //EditorGUILayout.BeginVertical();
-        //    //        //var propConditions = state.FindPropertyRelative("Conditions");
-        //    //        //foreach(var condition in state.Conditions)
-        //    //        //for (int iCondition = 0; iCondition != propConditions.arraySize; ++iCondition)
-        //    //        //{
-        //    //        //    var condition = propConditions.GetArrayElementAtIndex(iCondition);
-        //    //        //    EditorGUILayout.PropertyField(condition);
-        //    //        //}
-        //    //        //if (GUILayout.Button("Add Condition"))
-        //    //        //{
-        //    //        //    propConditions.InsertArrayElementAtIndex(propConditions.arraySize);
-        //    //        //}
-        //    //        //EditorGUILayout.EndVertical();
-        //    //        //EditorGUILayout.EndHorizontal();
-        //    //        //layout.PropertyField(group);
-        //    //    }
-
-        //    //    var buttonAddState = new UnityEngine.UIElements.Button(() =>
-        //    //        {
-        //    //            var s = new ReactionStateMachine.State();
-        //    //            group.States.Add(s);
-        //    //            //AssetDatabase.AddObjectToAsset(s, sm);
-        //    //            EditorUtility.SetDirty(sm);
-        //    //            AssetDatabase.SaveAssets();
-        //    //            AssetDatabase.Refresh();
-        //    //        });
-        //    //    buttonAddState.Add(new UnityEngine.UIElements.Label("Add State"));
-        //    //    root.Add(buttonAddState);
-        //    //}
-        //    //var buttonAddGroup = new UnityEngine.UIElements.Button(() =>
-        //    //{
-        //    //    sm.Groups.Add(new ReactionStateMachine.StateGroup());
-        //    //    EditorUtility.SetDirty(sm);
-        //    //});
-        //    //buttonAddGroup.Add(new UnityEngine.UIElements.Label("Add Group"));
-        //    //root.Add(buttonAddGroup);
-        //    ////UnityEditor.UIElements.
-        //    ////var o = new UnityEditor.UIElements.PropertyField(serializedObject.FindProperty("Groups"));
-        //    ////root.Add(o);
-        //    ////position.BindProperty(posProp);
-        //    //return root;
-        //}
-
-        //public override void OnInspectorGUI()
-        //{
-            
-        //    EditorGUILayout.BeginVertical();
-        //    serializedObject.Update();
-        //    //EditorGUILayout.PropertyField(Groups);
-        //    serializedObject.ApplyModifiedProperties();
-        //    for (int i = 0; i != Groups.arraySize; ++i)
-        //    {
-        //        var group = Groups.GetArrayElementAtIndex(i);
-
-        //        EditorGUILayout.BeginHorizontal();
-        //        GUILayout.Space(16);
-        //        EditorGUILayout.BeginVertical();
-        //        var propStates = group.FindPropertyRelative("States");
-        //        for (int iState = 0; iState != propStates.arraySize; ++iState)
-        //        {
-        //            var state = propStates.GetArrayElementAtIndex(iState);
-
-        //            EditorGUILayout.BeginHorizontal();
-        //            GUILayout.Space(16);
-        //            EditorGUILayout.BeginVertical();
-        //            var propConditions = state.FindPropertyRelative("Conditions");
-        //            for (int iCondition = 0; iCondition != propConditions.arraySize; ++iCondition)
-        //            {
-        //                var condition = propConditions.GetArrayElementAtIndex(iCondition);
-        //                EditorGUILayout.PropertyField(condition);
-        //            }
-        //            if (GUILayout.Button("Add Condition"))
-        //            {
-        //                propConditions.InsertArrayElementAtIndex(propConditions.arraySize);
-        //            }
-        //            EditorGUILayout.EndVertical();
-        //            EditorGUILayout.EndHorizontal();
-        //            //layout.PropertyField(group);
-        //        }
-        //        if (GUILayout.Button("Add State"))
-        //        {
-        //            propStates.InsertArrayElementAtIndex(propStates.arraySize);
-        //        }
-        //        EditorGUILayout.EndVertical();
-        //        EditorGUILayout.EndHorizontal();
-
-        //        //EditorGUILayout.PropertyField(group);
-        //    }
-        //    if (GUILayout.Button("Add Group"))
-        //    {
-        //        Groups.InsertArrayElementAtIndex(Groups.arraySize);
-        //    }
-        //    serializedObject.ApplyModifiedProperties();
-        //    EditorGUILayout.EndVertical();
-        //}
 
     }
 
-    //[CustomPropertyDrawer(typeof(ReactionStateMachine))]
-    //public class ReactionStateMachinePropertyDrawer : PropertyDrawer
-    //{
-    //    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    //    {
-    //        // StateGroup
-    //        float h = EditorGUIUtility.singleLineHeight;
-
-
-    //        var propGroup = property.FindPropertyRelative("Groups");
-    //        //propGroup.isExpanded = layout.Foldout(propGroup, new GUIContent("Groups"))
-    //        //layout.Label(Groups);
-    //        for (int i = 0; i != propGroup.arraySize; ++i)
-    //        {
-    //            var group = propGroup.GetArrayElementAtIndex(i);
-    //            h += EditorGUI.GetPropertyHeight(group);
-    //        }
-    //        h += EditorGUIUtility.singleLineHeight;
-    //        //// Groups
-    //        //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Groups"));
-
-    //        //// States
-    //        //h += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("States"));
-
-    //        return h;
-    //    }
-
-    //    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    //    {
-    //        EditorGUI.BeginProperty(position, label, property);
-
-    //        var layout = RectLayout.Vertical(position);
-
-    //        var propGroup = property.FindPropertyRelative("Groups");
-    //        //propGroup.isExpanded = layout.Foldout(propGroup, new GUIContent("Groups"))
-    //        //layout.Label(Groups);
-    //        for (int i = 0; i != propGroup.arraySize; ++i)
-    //        {
-    //            var group = propGroup.GetArrayElementAtIndex(i);
-    //            layout.PropertyField(group);
-    //        }
-    //        if (layout.Button("Add Group"))
-    //        {
-    //            propGroup.InsertArrayElementAtIndex(propGroup.arraySize);
-    //        }
-    //        // Groups
-    //        //layout.PropertyField();
-
-    //        // GroupName
-    //        //layout.PropertyField(property.FindPropertyRelative("GroupName"));
-
-    //        //var propStates = property.FindPropertyRelative("States");
-
-    //        // States
-    //        //layout.PropertyField(property.FindPropertyRelative("States"), new GUIContent("SomeStates", Assets.IconCondition));
-    //        //propStates.isExpanded = layout.Foldout(propStates.isExpanded);
-    //        //if (propStates.isExpanded)
-    //        //{
-    //        //    layout = layout.SubHorizontal();
-    //        //    layout.AcquireWidth(16);
-    //        //    layout = layout.SubVertical();
-    //        //    //layout.PropertyField(property.FindPropertyRelative("MustBeInAnimatorState"), new GUIContent("Must Be In Animator State"));
-    //        //    //layout.PropertyField(property.FindPropertyRelative("MustBeInReactionState"), new GUIContent("Must Be In Reaction State"));
-    //        //    layout.PropertyField(property.FindPropertyRelative("States:"), new GUIContent("States:", Assets.IconReactionState));
-
-    //        //}
-    //        EditorGUI.EndProperty();
-    //    }
-    //}
 }

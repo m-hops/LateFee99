@@ -16,7 +16,7 @@ namespace Nie
             Object,
             Self,
             TriggerObject,
-            PreviousTriggerObject,
+            TriggerObjectOnBegin,
             ObjectFrom,
             ObjectFromOnBegin,
             FirstOfType,
@@ -52,8 +52,8 @@ namespace Nie
                     case GameObjectReference.TypeEnum.TriggerObject:
                         Debug.LogWarning($"[{Time.frameCount}] GameObjectReference on '{eventParams.Self.name}' could not find Trigger Object", eventParams.Self);
                         break;
-                    case GameObjectReference.TypeEnum.PreviousTriggerObject:
-                        Debug.LogWarning($"[{Time.frameCount}] GameObjectReference on '{eventParams.Self.name}' could not find Previous Trigger Object", eventParams.Self);
+                    case GameObjectReference.TypeEnum.TriggerObjectOnBegin:
+                        Debug.LogWarning($"[{Time.frameCount}] GameObjectReference on '{eventParams.Self.name}' could not find Trigger Object OnBegin", eventParams.Self);
                         break;
                     case GameObjectReference.TypeEnum.FirstOfType:
                         Debug.LogWarning($"[{Time.frameCount}] GameObjectReference on '{eventParams.Self.name}' unable to find First Object Of Type '{String}'", eventParams.Self);
@@ -87,7 +87,7 @@ namespace Nie
                 case GameObjectReference.TypeEnum.TriggerObject:
                     go = eventParams.Current.TriggerObject;
                     return go != null;
-                case GameObjectReference.TypeEnum.PreviousTriggerObject:
+                case GameObjectReference.TypeEnum.TriggerObjectOnBegin:
                     go = eventParams.OnBegin.TriggerObject;
                     return go != null;
                 case GameObjectReference.TypeEnum.FirstOfType:
