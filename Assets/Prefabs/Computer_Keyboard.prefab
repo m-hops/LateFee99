@@ -1068,12 +1068,14 @@ MonoBehaviour:
       Notes: 
       LastBeginEvent:
         Self: {fileID: 0}
-        From: {fileID: 0}
-        FromOnBegin: {fileID: 0}
-        TriggerObject: {fileID: 0}
-        PreviousTriggerObject: {fileID: 0}
-        TriggerPosition: {x: 0, y: 0, z: 0}
-        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
       NewConditions:
         Conditions: []
       NewOnBegin:
@@ -1082,10 +1084,6 @@ MonoBehaviour:
         Actions: []
       NewOnEnd:
         Actions: []
-      Conditions: []
-      OnBeginActions: []
-      OnUpdate: []
-      OnEndActions: []
     - StateName:
         Name: InUse
       IsActiveState: 0
@@ -1093,12 +1091,14 @@ MonoBehaviour:
       Notes: 
       LastBeginEvent:
         Self: {fileID: 0}
-        From: {fileID: 0}
-        FromOnBegin: {fileID: 0}
-        TriggerObject: {fileID: 0}
-        PreviousTriggerObject: {fileID: 0}
-        TriggerPosition: {x: 0, y: 0, z: 0}
-        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
       NewConditions:
         Conditions: []
       NewOnBegin:
@@ -1108,10 +1108,6 @@ MonoBehaviour:
         Actions: []
       NewOnEnd:
         Actions: []
-      Conditions: []
-      OnBeginActions: []
-      OnUpdate: []
-      OnEndActions: []
     - StateName:
         Name: Cooldown
       IsActiveState: 0
@@ -1119,12 +1115,14 @@ MonoBehaviour:
       Notes: 
       LastBeginEvent:
         Self: {fileID: 0}
-        From: {fileID: 0}
-        FromOnBegin: {fileID: 0}
-        TriggerObject: {fileID: 0}
-        PreviousTriggerObject: {fileID: 0}
-        TriggerPosition: {x: 0, y: 0, z: 0}
-        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
       NewConditions:
         Conditions: []
       NewOnBegin:
@@ -1134,10 +1132,6 @@ MonoBehaviour:
         Actions: []
       NewOnEnd:
         Actions: []
-      Conditions: []
-      OnBeginActions: []
-      OnUpdate: []
-      OnEndActions: []
   references:
     version: 2
     RefIds:
