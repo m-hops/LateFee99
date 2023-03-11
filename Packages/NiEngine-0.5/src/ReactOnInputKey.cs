@@ -13,60 +13,86 @@ namespace Nie
         public KeyCode KeyCode;
         public bool TriggerFromMainCamera = true;
 
-        [Tooltip("Conditions to react")]
-        public ReactionConditions Conditions;
 
-        [Tooltip("Reaction executed when key has been pressed down.")]
-        public ReactionList OnKeyDown;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewConditions")]
+        public ConditionSet NewConditions;
 
-        [Tooltip("Reaction executed when input is pressed.")]
-        public ReactionList WhenKeyPressed;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewOnKeyDown")]
+        public StateActionSet NewOnKeyDown;
 
-        [Tooltip("Reaction executed when key has been released.")]
-        public ReactionList OnKeyUp;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewWhenKeyPressed")]
+        public ActionSet NewWhenKeyPressed;
+
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewOnKeyUp")]
+        public ActionSet NewOnKeyUp;
 
         public bool DebugLog;
-        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
+
+        public GameObject TargetObject => gameObject;
         public GameObject TriggerObject => TriggerFromMainCamera ? Camera.main.gameObject : gameObject;
         public bool CanReact()
         {
             if(!enabled) return false;
-            if (!Conditions.CanReactAll(gameObject, TriggerObject, transform.position, previousTriggerObjectIfExist: null)) return false;
-            return true;
+
+            var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] ReactOnInputKey.CanReact '{name}' {parameters}");
+                parameters = parameters.WithDebugTrace(new());
+            }
+            bool pass = NewConditions.Pass(new Owner(this), parameters);
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] ReactOnInputKey.CanReact '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+
+            return pass;
         }
         void Update()
         {
             if (Input.GetKeyDown(KeyCode))
             {
-                if(DebugLog)
-                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyDown '{KeyCode}'", this);
+
                 if (CanReact())
                 {
-                    OnKeyDown.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
-                    if(DebugLog)
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyDown '{KeyCode}'", this);
+                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
+                    if (DebugLog)
+                    {
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyDown '{name}' {parameters}");
+                        parameters = parameters.WithDebugTrace(new());
+                    }
+                    NewOnKeyDown.OnBegin(new Owner(this), parameters);
+                    if (DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyDown '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }
             if (Input.GetKeyUp(KeyCode))
             {
-                if (DebugLog)
-                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received OnKeyUp '{KeyCode}'", this);
                 if (CanReact())
                 {
-                    OnKeyUp.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
+                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
                     if (DebugLog)
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react OnKeyUp '{KeyCode}'", this);
+                    {
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyUp '{name}' {parameters}");
+                        parameters = parameters.WithDebugTrace(new());
+                    }
+                    NewOnKeyDown.OnEnd(new Owner(this), parameters);
+                    NewOnKeyUp.Act(new Owner(this), parameters);
+                    if (DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyUp '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }
             if (Input.GetKey(KeyCode))
             {
-                if (DebugLog)
-                    Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' received WhenKeyPressed '{KeyCode}'", this);
                 if (CanReact())
                 {
-                    WhenKeyPressed.TryReact(gameObject, TargetObject, TriggerObject, transform.position);
+                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
                     if (DebugLog)
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey '{name}' react WhenKeyPressed '{KeyCode}'", this);
+                    {
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.WhenKeyPressed '{name}' {parameters}");
+                        parameters = parameters.WithDebugTrace(new());
+                    }
+                    NewWhenKeyPressed.Act(new Owner(this), parameters);
+                    if (DebugLog)
+                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.WhenKeyPressed '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }
         }

@@ -1379,6 +1379,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyCode: 101
   TriggerFromMainCamera: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755595
+  NewOnKeyDown:
+    Actions:
+    - rid: 5969430306130755597
+  NewWhenKeyPressed:
+    Actions: []
+  NewOnKeyUp:
+    Actions: []
   Conditions:
     States:
     - Type: 0
@@ -1411,6 +1421,41 @@ MonoBehaviour:
   OnKeyUp:
     ReactionReferences: []
   DebugLog: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755595
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Focused
+    - rid: 5969430306130755597
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 7437896383131339956}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Rewind
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!114 &9209269835858195920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,6 +1724,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyCode: 101
   TriggerFromMainCamera: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755601
+  NewOnKeyDown:
+    Actions:
+    - rid: 5969430306130755602
+  NewWhenKeyPressed:
+    Actions: []
+  NewOnKeyUp:
+    Actions: []
   Conditions:
     States:
     - Type: 0
@@ -1711,6 +1766,41 @@ MonoBehaviour:
   OnKeyUp:
     ReactionReferences: []
   DebugLog: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755601
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Focused
+    - rid: 5969430306130755602
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 7437896383131339956}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Play
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!114 &3965669687656479824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3127,6 +3217,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyCode: 101
   TriggerFromMainCamera: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755593
+  NewOnKeyDown:
+    Actions:
+    - rid: 5969430306130755594
+  NewWhenKeyPressed:
+    Actions: []
+  NewOnKeyUp:
+    Actions: []
   Conditions:
     States:
     - Type: 0
@@ -3159,6 +3259,41 @@ MonoBehaviour:
   OnKeyUp:
     ReactionReferences: []
   DebugLog: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755593
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Focused
+    - rid: 5969430306130755594
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 7437896383131339956}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Idle
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!114 &8627153137421758837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3779,6 +3914,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyCode: 101
   TriggerFromMainCamera: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755598
+  NewOnKeyDown:
+    Actions:
+    - rid: 5969430306130755599
+    - rid: 5969430306130755600
+  NewWhenKeyPressed:
+    Actions: []
+  NewOnKeyUp:
+    Actions: []
   Conditions:
     States:
     - Type: 0
@@ -3827,6 +3973,61 @@ MonoBehaviour:
   OnKeyUp:
     ReactionReferences: []
   DebugLog: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755598
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Focused
+    - rid: 5969430306130755599
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 9026650709244245400}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Empty
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430306130755600
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 7437896383131339956}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Idle
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!114 &8087618934649500342
 MonoBehaviour:
   m_ObjectHideFlags: 0

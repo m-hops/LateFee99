@@ -248,6 +248,9 @@ namespace Nie
         }
     }
 
+
+
+
     [Serializable]
     public class ReactionStateMachine : MonoBehaviour
     {
@@ -259,35 +262,16 @@ namespace Nie
             public bool DebugLog;
             public string Notes;
             public EventParameters LastBeginEvent;
-            //public EventParameters LastEndEvent;
 
             [NonSerialized]
             public ReactionStateMachine StateMachine;
             [NonSerialized]
             public StateGroup StateGroup;
 
-            //[SerializeReference, DerivedClassPicker]
-            //public Condition TestCondition;
-
-            //[SerializeReference, DerivedClassPicker]
-            //public Action TestAction;
-
             public ConditionSet NewConditions = new();
             public StateActionSet NewOnBegin = new();
             public ActionSet NewOnUpdate = new();
             public ActionSet NewOnEnd = new();
-
-            //[SerializeReference, DerivedClassPicker(typeof(Condition), showPrefixLabel: false)]
-            //public List<Condition> Conditions;// = new();
-
-            //[SerializeReference, DerivedClassPicker(typeof(StateAction), showPrefixLabel: false)]
-            //public List<StateAction> OnBeginActions;
-
-            //[SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
-            //public List<Action> OnUpdate;
-
-            //[SerializeReference, DerivedClassPicker(typeof(Action), showPrefixLabel: false)]
-            //public List<Action> OnEndActions;
 
             [HideInInspector, NonSerialized]
             public List<IUpdate> Updates = new();
@@ -308,12 +292,6 @@ namespace Nie
             {
                 StateMachine = owner;
                 StateGroup = group;
-                //foreach (var action in Conditions)
-                //    Handshake(action);
-                //foreach (var action in OnBeginActions)
-                //    Handshake(action);
-                //foreach (var action in OnEndActions)
-                //    Handshake(action);
                 foreach (var action in NewConditions.Conditions)
                     Handshake(action);
                 foreach (var action in NewOnBegin.Actions)
@@ -324,7 +302,6 @@ namespace Nie
                 {
                     group.HasActiveState = true;
                     group.CurrentState = this;
-                    //owner.InitialState = this;
                 }
             }
 
@@ -352,8 +329,6 @@ namespace Nie
                     o.Update(owner, parameters);
 
                 NewOnUpdate.Act(owner, parameters);
-                //foreach (var action in OnUpdate)
-                //    action.Act(owner, parameters);
 
                 if (DebugLog)
                 {
@@ -372,7 +347,6 @@ namespace Nie
                 {
                     parameters = parameters.WithDebugTrace(new());
                     parameters.DebugTrace.AppendLine($"[{Time.frameCount}]ReactionStateMachine.OnBegin [\"{StateMachine.name}\".{StateGroup.GroupName}.{StateName}] {parameters}");
-                    //Debug.Log($"[{Time.frameCount}] ReactionStateMachine '{StateMachine.name}'.'{StateGroup.GroupName}'.'{StateName}' On Begin {parameters}");
                 }
 
 
@@ -384,13 +358,10 @@ namespace Nie
 
 
                 NewOnBegin.OnBegin(owner, parameters);
-                //foreach (var action in OnBeginActions)
-                //    action.OnBegin(owner, parameters);
 
                 if (DebugLog)
-                {
                     Debug.Log(parameters.DebugTrace.ToString(), StateMachine.gameObject);
-                }
+
                 LastBeginEvent = parametersCopy;
             }
 

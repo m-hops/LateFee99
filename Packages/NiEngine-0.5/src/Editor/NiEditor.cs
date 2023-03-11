@@ -85,7 +85,8 @@ namespace Nie.Editor
 
     [CustomEditor(typeof(Grabbable))] public class GrabbableEditor : EditorBase { }
     [CustomEditor(typeof(ReactOnCollisionPair))] public class ReactOnCollisionPairEditor : EditorBase { }
-
+    [CustomEditor(typeof(ReactOnInputKey))] public class ReactOnInputKeyEditor : EditorBase { }
+    
     [CustomPropertyDrawer(typeof(DerivedClassPicker))]
     public class DerivedClassPickerDrawer : PropertyDrawer
     {

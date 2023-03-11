@@ -105,13 +105,13 @@ namespace Nie
         {
             Self = self,
             Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
-            OnBegin = ParameterSet.Default,
+            OnBegin = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
         };
         public static EventParameters Trigger(GameObject self, GameObject from, GameObject triggerObject, Vector3 position) => new EventParameters
         {
             Self = self,
             Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
-            OnBegin = ParameterSet.Default,
+            OnBegin = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
         };
         public static EventParameters WithoutTrigger(GameObject self) => new EventParameters
         {

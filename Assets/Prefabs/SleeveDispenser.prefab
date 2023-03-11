@@ -39,7 +39,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058588465420848895}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
   m_Name: 
@@ -292,8 +292,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 2058588465564964658}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -312,8 +310,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 2058588465564964658}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -344,6 +340,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyCode: 101
   TriggerFromMainCamera: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755592
+  NewOnKeyDown:
+    Actions:
+    - rid: 5969430306130755591
+  NewWhenKeyPressed:
+    Actions: []
+  NewOnKeyUp:
+    Actions: []
   Conditions:
     States:
     - Type: 0
@@ -356,8 +362,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 2058588465420848895}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 2058588465420848895}
@@ -378,6 +382,44 @@ MonoBehaviour:
   OnKeyUp:
     ReactionReferences: []
   DebugLog: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755591
+      type: {class: Spawn, ns: Nie.Actions, asm: Re0.51}
+      data:
+        ObjectToSpawn:
+          Type: 0
+          ThisGameObject: {fileID: 3691929698902290399, guid: 36ac2b30d11693a43831f527ebdf8a01,
+            type: 3}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        SpawnPosition:
+          Type: 4
+          AtPosition: {x: 0, y: 0, z: 0}
+          AtTransform:
+            Type: 0
+            ThisGameObject: {fileID: 2058588465420848895}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+    - rid: 5969430306130755592
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Focused
 --- !u!1 &4627428554015467571
 GameObject:
   m_ObjectHideFlags: 0
