@@ -15,7 +15,7 @@ namespace Nie
         public bool DebugLog = false;
 
 #if UNITY_EDITOR
-        [EditorCools.Button]
+        //[EditorCools.Button]
         public void Trigger()
         {
             if (UnityEditor.EditorApplication.isPlaying)

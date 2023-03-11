@@ -27,7 +27,7 @@ namespace Nie
         public List<AudioClip> AlternativeClips;
 
 #if UNITY_EDITOR
-        [EditorCools.Button("Play")]
+        //[EditorCools.Button("Play")]
         public void PlayInEditor()
         {
             var source = GetComponent<AudioSource>();

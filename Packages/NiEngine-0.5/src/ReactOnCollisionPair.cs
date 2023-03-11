@@ -45,6 +45,15 @@ namespace Nie
         public bool ReactToCollision = true;
         public bool ReactToTrigger = true;
 
+
+        public ConditionSet Conditions;
+
+        public StateActionSet OnBegin;
+
+        public ActionSet OnEnd;
+
+
+
         [Tooltip("Conditions to execute this reaction")]
         [FormerlySerializedAs("Conditions")]
         public ReactionConditions StateConditions;
@@ -72,12 +81,14 @@ namespace Nie
         [System.Serializable]
         public class ReactionTrigger
         {
+            public ReactOnCollisionPair Self;
             public ReactOnCollisionPair Other;
             public Vector3 Position;
             public float TimerCountdown;
             public bool HasBegun;
-            public ReactionTrigger(ReactOnCollisionPair other, Vector3 position, float delay)
+            public ReactionTrigger(ReactOnCollisionPair self, ReactOnCollisionPair other, Vector3 position, float delay)
             {
+                Self = self;
                 Other = other;
                 Position = position;
                 TimerCountdown = delay;
@@ -91,27 +102,30 @@ namespace Nie
                 }
                 return false;
             }
-            public void Begin(ReactOnCollisionPair from)
+            public void Begin()
             {
 
-                if (from.DebugLog)
-                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{from.name}.{from.ThisReactionName}' collision begin with '{Other.name}.{Other.ThisReactionName}'.", from);
+                if (Self.DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{Self.name}.{Self.ThisReactionName}' collision begin with '{Other.name}.{Other.ThisReactionName}'.", Self);
 
-                from.OnReactBegin.React(from.TargetObject, Other.gameObject, Position);
+                Self.OnBegin.OnBegin(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
+                //from.OnReactBegin.React(from.TargetObject, Other.gameObject, Position);
 
-                if (from.ReactionCooldown > 0)
+                if (Self.ReactionCooldown > 0)
                 {
-                    TimerCountdown = from.ReactionCooldown;
-                    from.m_CooldownWith.Add(this);
+                    TimerCountdown = Self.ReactionCooldown;
+                    Self.m_CooldownWith.Add(this);
                 }
                 HasBegun = true;
             }
-            public void End(ReactOnCollisionPair from)
+            public void End()
             {
-                if (from.DebugLog)
-                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{from.name}.{from.ThisReactionName}' collision end with '{Other.name}.{Other.ThisReactionName}'.", from);
+                if (Self.DebugLog)
+                    Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{Self.name}.{Self.ThisReactionName}' collision end with '{Other.name}.{Other.ThisReactionName}'.", Self);
 
-                from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position, Other.gameObject);
+                Self.OnBegin.OnEnd(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
+                Self.OnEnd.Act(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
+                //from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position, Other.gameObject);
             }
         }
         // Keep track of all Reaction currently on a delay
@@ -124,8 +138,11 @@ namespace Nie
             if (!enabled) return false;
             if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
             if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
-            if (!StateConditions.CanReactAll(gameObject, other.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!OnReactBegin.CanReact(TargetObject, other.gameObject, position)) return false;
+
+            if (!Conditions.Pass(new Owner(this), EventParameters.Trigger(gameObject, gameObject, other.gameObject, position))) return false;
+
+            //if (!StateConditions.CanReactAll(gameObject, other.gameObject, position, previousTriggerObjectIfExist: null)) return false;
+            //if (!OnReactBegin.CanReact(TargetObject, other.gameObject, position)) return false;
             return true;
         }
         public bool RequestReaction(ReactOnCollisionPair other, Vector3 position)
@@ -149,7 +166,7 @@ namespace Nie
 
                 if (reaction.Tick())
                 {
-                    reaction.Begin(this);
+                    reaction.Begin();
                     return true;
                 }
                 return false;
@@ -184,7 +201,7 @@ namespace Nie
         {
             foreach (var other in m_TouchingWith)
             {
-                other.End(this);
+                other.End();
                 other.Other.EndTouchIfTouching(this);
             }
         }
@@ -192,14 +209,14 @@ namespace Nie
 #region Touching state
         void BeginTouch(ReactOnCollisionPair other, Vector3 position)
         {
-            var reaction = new ReactionTrigger(other, position, ReactionDelay);
+            var reaction = new ReactionTrigger(this, other, position, ReactionDelay);
             m_TouchingWith.Add(reaction);
 
             // React if not currently on cooldown
             if (m_CooldownWith.All(x => x.Other != other))
             {
                 if (ReactionDelay == 0)
-                    reaction.Begin(this);//ReactBegin(reaction);
+                    reaction.Begin();
                 else
                     m_DelayReactions.Add(reaction);
             }
@@ -221,7 +238,7 @@ namespace Nie
             var reaction = m_TouchingWith.FirstOrDefault(reaction => reaction.Other == other);
             if (reaction != null && m_TouchingWith.Remove(reaction))
             {
-                reaction.End(this);
+                reaction.End();
                 return true;
             }
             return false;

@@ -65,7 +65,7 @@ namespace Nie
         public string StateName;
         [Tooltip("This state is mutually exclusive will all ReactionState of the same group on this GameObject")]
         public string StateGroup;
-        [System.Obsolete("Set active state in run-time fields")]
+        //[System.Obsolete("Set active state in run-time fields")]
         [Tooltip("Will be in active state when the game object starts. Will not execute the reaction")]
         public bool IsInitialState;
 
@@ -78,7 +78,7 @@ namespace Nie
 #endif
 
 #if UNITY_EDITOR
-        [EditorCools.Button]
+        //[EditorCools.Button]
         public void SetActiveState()
         {
             if(UnityEditor.EditorApplication.isPlaying)
@@ -182,7 +182,7 @@ namespace Nie
         {
             if (IsInitialState)
             {
-                Debug.LogWarning("Using obsolete feature 'ReactionState.IsInitialState'", this);
+                //Debug.LogWarning("Using obsolete feature 'ReactionState.IsInitialState'", this);
                 IsActiveState = IsInitialState;
             }
 #if UNITY_EDITOR
@@ -195,11 +195,11 @@ namespace Nie
         }
 #if UNITY_EDITOR
         
-        TextMesh DebugLabel = null;
+        //TextMesh DebugLabel = null;
         void CheckDebugLabel()
         {
-            
-            if(EditorMenu.DrawStatesLabel && IsActiveState && DebugDrawState != null && DebugLabel == null)
+            /*
+            if (EditorMenu.DrawStatesLabel && IsActiveState && DebugDrawState != null && DebugLabel == null)
             {
                 var obj = GameObject.Instantiate(EditorMenu.DebugLabelAsset, DebugDrawState);
                 DebugLabel = obj.GetComponent<TextMesh>();
@@ -219,13 +219,16 @@ namespace Nie
                     DestroyImmediate(DebugLabel.gameObject);
                 DebugLabel = null;
             }
+            */
         }
         void OnDrawGizmos()
         {
+            /*
             CheckDebugLabel();
             if (UnityEditor.EditorApplication.isPlaying && EditorMenu.DrawStatesLabel) return;
             if (EditorMenu.DrawStatesGizmos && DebugDrawState != null && IsActiveState)
                 UnityEditor.Handles.Label(DebugDrawState.position, StateName);
+            */
         }
 #endif
         private void Update()
@@ -286,17 +289,18 @@ namespace Nie
         public void ForceDeactivate(EventParameters parameters)
         {
             if (!IsActiveState) return;
-            ReactEnd(parameters.TriggerObject, parameters.TriggerPosition);
+            ReactEnd(parameters.Current.TriggerObject, parameters.Current.TriggerPosition);
         }
         public void ForceActivateState(string stateName)
         {
-            foreach (var state in gameObject.GetComponents<ReactionState>())
-                if (state.StateName == stateName)
-                {
-                    state.React(null, state.gameObject.transform.position);
-                    //return true;
-                }
-            //return false;
+            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject));
+            //foreach (var state in gameObject.GetComponents<ReactionState>())
+            //    if (state.StateName == stateName)
+            //    {
+            //        state.React(null, state.gameObject.transform.position);
+            //        //return true;
+            //    }
+            ////return false;
         }
         public void React(GameObject triggerObject, Vector3 position)
         {
@@ -339,11 +343,9 @@ namespace Nie
             foreach (var sm in gameObject.GetComponents<ReactionStateMachine>())
                 sm.DeactivateAllStateOfGroup(StateGroup, new EventParameters()
                     {
-                        Self = gameObject,
-                        TriggerObject = triggerObject,
-                        PreviousTriggerObject = null,
-                        TriggerPosition = position,
-                        PreviousTriggerPosition = position,
+                        Self = sm.gameObject,
+                        Current = EventParameters.ParameterSet.Trigger(gameObject, triggerObject, position),
+                        OnBegin = EventParameters.ParameterSet.Trigger(null, null, position)
                     });
 
 
@@ -448,8 +450,8 @@ namespace Nie
                 obs.OnEnd(this, thisObject, triggerObject, CurrentTriggerObject, position);
 
             IsActiveState = false;
-            CurrentTriggerObject = null;
-            CurrentTriggerPosition = Vector3.zero;
+            //CurrentTriggerObject = null;
+            //CurrentTriggerPosition = Vector3.zero;
             --m_EndReactionDepth;
         }
 

@@ -1,0 +1,2683 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &14347689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 14347690}
+  - component: {fileID: 14347693}
+  - component: {fileID: 14347692}
+  m_Layer: 0
+  m_Name: Top
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14347690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14347689}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.008200049, z: 0.055}
+  m_LocalScale: {x: 0.2, y: 0.015, z: 0.11}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3051770572343910896}
+  m_Father: {fileID: 2054296223}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &14347693
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14347689}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &14347692
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14347689}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: be3abe887226d0d41b93e3f3becaaa25, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1978374564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978374565}
+  m_Layer: 0
+  m_Name: animation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1978374565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978374564}
+  m_LocalRotation: {x: -0.0006859095, y: -0, z: -0, w: 0.99999976}
+  m_LocalPosition: {x: 0, y: 0.011190649, z: -0.06998637}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2054296223}
+  m_Father: {fileID: 3198980078213382304}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2054296222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054296223}
+  - component: {fileID: 2054296225}
+  - component: {fileID: 2054296224}
+  m_Layer: 0
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2054296223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054296222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 14347690}
+  m_Father: {fileID: 1978374565}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &2054296225
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054296222}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: eb19712a042538b4987906344f8a3f76, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1435969208285275907, guid: eb19712a042538b4987906344f8a3f76, type: 2}
+    value: {fileID: 2054296224}
+  - key: {fileID: 3706874836629780292, guid: eb19712a042538b4987906344f8a3f76, type: 2}
+    value: {fileID: 2054296224}
+  - key: {fileID: 7252903469398859894, guid: eb19712a042538b4987906344f8a3f76, type: 2}
+    value: {fileID: 2054296224}
+  - key: {fileID: 125308186796163441, guid: eb19712a042538b4987906344f8a3f76, type: 2}
+    value: {fileID: 2054296224}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &2054296224
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054296222}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b6b36deda463bf4cb6f871edd5d60af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &135756824232870967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3051770572343910896}
+  - component: {fileID: 8197983501529018360}
+  m_Layer: 0
+  m_Name: TopCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3051770572343910896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135756824232870967}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 14347690}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8197983501529018360
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135756824232870967}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 1.1, z: 1.01}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1576822212532365188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3069235678205387562}
+  - component: {fileID: 4352213401270067515}
+  - component: {fileID: 4503066848444718101}
+  m_Layer: 0
+  m_Name: Bottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3069235678205387562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576822212532365188}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0052999826, z: -0.014900001}
+  m_LocalScale: {x: 0.2, y: 0.014999999, z: 0.10999999}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8980401258895115742}
+  m_Father: {fileID: 3198980078213382304}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4352213401270067515
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576822212532365188}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4503066848444718101
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576822212532365188}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: be3abe887226d0d41b93e3f3becaaa25, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2252994618294665884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5790064643089599172}
+  m_Layer: 0
+  m_Name: DebugTime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5790064643089599172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252994618294665884}
+  m_LocalRotation: {x: 0.00000025331968, y: -0.00000017881392, z: 3.6551755e-14, w: -1}
+  m_LocalPosition: {x: -0.669, y: 0.43, z: -0.62}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5333820298039891808}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 180, y: -180, z: 180}
+--- !u!1 &2329274657807151335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6058771865061325266}
+  m_Layer: 0
+  m_Name: Debug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6058771865061325266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329274657807151335}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.471, y: 0, z: -0.466}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5333820298039891808}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!1 &2517568391512578975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5333820298039891808}
+  - component: {fileID: 9005027989896447592}
+  - component: {fileID: 1967933499827942909}
+  - component: {fileID: 5670492231733668070}
+  - component: {fileID: 7814095136242897124}
+  - component: {fileID: 1877835865272150856}
+  - component: {fileID: 3834221951730463635}
+  - component: {fileID: 4814475501266168715}
+  - component: {fileID: 3076304633072837045}
+  - component: {fileID: 2258926773330156892}
+  - component: {fileID: 7555823976891500494}
+  m_Layer: 0
+  m_Name: VHS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5333820298039891808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.18699998, y: 0.024999993, z: 0.102000006}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 6058771865061325266}
+  - {fileID: 9102454852538488327}
+  - {fileID: 6986391273493909962}
+  - {fileID: 5790064643089599172}
+  m_Father: {fileID: 3198980077842632214}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &9005027989896447592
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1967933499827942909
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1a9b00d0c31cf174b887b25f75c04e3d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &5670492231733668070
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!114 &7814095136242897124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: Free
+  StateGroup: 
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 6058771865061325266}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 0
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: 
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4155538546678039574}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &1877835865272150856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: InVCR
+  StateGroup: 
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 6058771865061325266}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 1
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: 
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4155538546678039574}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 0
+  CurrentTriggerObject: {fileID: 0}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &3834221951730463635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: InSleeve
+  StateGroup: 
+  IsInitialState: 0
+  DebugLog: 0
+  DebugDrawState: {fileID: 6058771865061325266}
+  Cooldown: 0
+  ReactivateOnNewTrigger: 0
+  Spawn: {fileID: 0}
+  DefaultReactionPosition: {fileID: 0}
+  SetKinematic: 0
+  SetNonKinematic: 0
+  ReleaseGrabbed: 1
+  AttachTriggerObjectAt: {fileID: 0}
+  MoveToParentOrigin: 0
+  DetachOnEnd: 1
+  MoveToOnEnd: {fileID: 0}
+  TriggerOnBegin:
+    ReactionReferences:
+    - ReactionType: 1
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: 
+      ReactionName: 
+      Event:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4155538546678039574}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  TriggerOnEnd:
+    ReactionReferences: []
+  DelayedReaction:
+    ReactionReferences: []
+  Delay: 0
+  OverrideThisObject: {fileID: 0}
+  OverrideTriggerObject: {fileID: 0}
+  IsActiveState: 1
+  CurrentTriggerObject: {fileID: 3198980079346952826}
+  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
+  CurrentReactionCooldown: 0
+  CurrentIdleTime: 0
+  PreviousKinematic: 0
+--- !u!114 &4814475501266168715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd8295884aae8074287418bd28efe243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugLog: 0
+  DetachWhenGrabbed: 1
+  ReattachWhenRelease: 0
+  Conditions:
+    Conditions: []
+  OnGrab:
+    Actions: []
+  OnRelease:
+    Actions: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &3076304633072837045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: VHS
+  OtherReactionName: VCR
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629689
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629690
+  OnEnd:
+    Actions: []
+  StateConditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Free
+      StateHash: 0
+  OnReactBegin:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: InVCR
+      ReactionName: InVCR
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  OnReactEnd:
+    ReactionReferences: []
+  DebugLog: 0
+  DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629689
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Free
+    - rid: 5969430209723629690
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: InVCR
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+--- !u!114 &2258926773330156892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: VHS
+  OtherReactionName: Sleeve
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629687
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629688
+  OnEnd:
+    Actions: []
+  StateConditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Free
+      StateHash: 0
+  OnReactBegin:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: InSleeve
+      ReactionName: InSleeve
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  OnReactEnd:
+    ReactionReferences: []
+  DebugLog: 0
+  DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629687
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Free
+    - rid: 5969430209723629688
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: InSleeve
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+--- !u!114 &7555823976891500494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bb13b99776b1045a596dbc852cdb29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: Empty
+  Genre: 
+  Duration: 7200
+  HeadTime: 7200
+  Quality: 0
+  DebugTitle: {fileID: 6986391273493909962}
+  DebugTime: {fileID: 5790064643089599172}
+--- !u!1 &3198980077737404761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3198980077737404739}
+  - component: {fileID: 3198980077737404738}
+  - component: {fileID: 1471695615694543406}
+  - component: {fileID: 3198980077737404743}
+  - component: {fileID: 1392524698450636122}
+  - component: {fileID: 3198980077737404742}
+  - component: {fileID: 2258926774179583231}
+  m_Layer: 0
+  m_Name: VHSInSleeveBaseBackup2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3198980077737404739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.3000001, y: 1.3000001, z: 1.3000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6017063632437615217}
+  - {fileID: 6834136960910986939}
+  - {fileID: 3388720219272617258}
+  - {fileID: 3198980077842632214}
+  - {fileID: 3198980078213382304}
+  - {fileID: 2072559673777042672}
+  - {fileID: 368933577439458258}
+  - {fileID: 4512941124892150000}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &3198980077737404738
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!114 &1471695615694543406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: base
+    Notes: 
+    HasActiveState: 1
+    States:
+    - StateName:
+        Name: Open
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629661
+      OnUpdate: []
+      OnEndActions:
+      - rid: 5969430209723629662
+    - StateName:
+        Name: CloseWithVHS
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 3198980077737404761}
+        TriggerObject: {fileID: 2517568391512578975}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: -0.013650001, z: 0.042120002}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629663
+      - rid: 5969430209723629664
+      - rid: 5969430209723629665
+      - rid: 5969430209723629666
+      - rid: 5969430209723629668
+      OnUpdate: []
+      OnEndActions:
+      - rid: 5969430209723629669
+      - rid: 5969430209723629670
+  - GroupName:
+      Name: anim
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Opening
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629671
+      - rid: 5969430209723629672
+      - rid: 5969430209723629673
+      - rid: 5969430209723629674
+      - rid: 5969430209723629675
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Closing
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629657
+      - rid: 5969430209723629659
+      - rid: 5969430209723629660
+      - rid: 5969430209723629658
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Done
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: grab
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Grabbed
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Released
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: focus
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Unfocused
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Focused
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions:
+      - rid: 5969430209723629676
+      OnUpdate: []
+      OnEndActions: []
+  - GroupName:
+      Name: location
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: FreeLoc
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: ShelveLoc
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629657
+      type: {class: AttachTo, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Attach:
+          Type: 2
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        To:
+          Type: 0
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        MoveToParentOrigin: 1
+        DetachOnEnd: 0
+        AttachedObject: {fileID: 0}
+        m_PreviousParent: {fileID: 0}
+        m_SetNonKinematicOnEnd: 0
+    - rid: 5969430209723629658
+      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 0.5
+        Repeat: 0
+        Reaction:
+          ReactionReferences:
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: CloseWithVHS
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: Done
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+        CurrentlyRemaining: 0
+    - rid: 5969430209723629659
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 2
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: InSleeve
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629660
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 2054296224}
+              m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: Close
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 6126043262124255720}
+              m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: Close
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629661
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 3198980079346952826}
+              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+              m_MethodName: SetActive
+              m_Mode: 6
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 1
+              m_CallState: 2
+    - rid: 5969430209723629662
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 3198980079346952826}
+              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+              m_MethodName: SetActive
+              m_Mode: 6
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629663
+      type: {class: AttachTo, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Attach:
+          Type: 2
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        To:
+          Type: 0
+          ThisGameObject: {fileID: 3198980077842632233}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        MoveToParentOrigin: 1
+        DetachOnEnd: 1
+        AttachedObject: {fileID: 2517568391512578975}
+        m_PreviousParent: {fileID: 0}
+        m_SetNonKinematicOnEnd: 1
+    - rid: 5969430209723629664
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 2
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: InSleeve
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629665
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 9007890594717423262}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 1
+    - rid: 5969430209723629666
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 7270005980412717561}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 0
+        RevertAtEnd: 1
+    - rid: 5969430209723629668
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 135756824232870967}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 0
+        RevertAtEnd: 1
+    - rid: 5969430209723629669
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 3
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Free
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629670
+      type: {class: ApplyForce, ns: Nie.Actions, asm: Re0.51}
+      data:
+        On:
+          Type: 3
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        At:
+          Type: 4
+          AtPosition: {x: 0, y: 0, z: 0}
+          AtTransform:
+            Type: 0
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+        Direction:
+          Type: 0
+          PositionFrom:
+            Type: 0
+            AtPosition: {x: 0, y: 0, z: 0}
+            AtTransform:
+              Type: 0
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+          PositionTo:
+            Type: 0
+            AtPosition: {x: 0, y: 0, z: 0}
+            AtTransform:
+              Type: 0
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+          Object:
+            Type: 0
+            ThisGameObject: {fileID: 3656067788061966464}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          Axis: 2
+        Force: 100
+        Opposit:
+          Type: 0
+          ThisGameObject: {fileID: 3198980077737404761}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+    - rid: 5969430209723629671
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 2054296224}
+              m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: Open
+                m_BoolArgument: 1
+              m_CallState: 2
+            - m_Target: {fileID: 6126043262124255720}
+              m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: Open
+                m_BoolArgument: 1
+              m_CallState: 2
+    - rid: 5969430209723629672
+      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 1
+        Repeat: 0
+        Reaction:
+          ReactionReferences:
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: Open
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: Done
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+        CurrentlyRemaining: 0
+    - rid: 5969430209723629673
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 135756824232870967}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 0
+    - rid: 5969430209723629674
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 7270005980412717561}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 0
+    - rid: 5969430209723629675
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 9007890594717423262}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 0
+        RevertAtEnd: 0
+    - rid: 5969430209723629676
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 5962697671734972882}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 1
+--- !u!114 &3198980077737404743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd8295884aae8074287418bd28efe243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugLog: 0
+  DetachWhenGrabbed: 1
+  ReattachWhenRelease: 0
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629678
+  OnGrab:
+    Actions:
+    - rid: 5969430209723629679
+    - rid: 5969430209723629680
+  OnRelease:
+    Actions:
+    - rid: 5969430209723629681
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629678
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: FreeLoc
+    - rid: 5969430209723629679
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: FreeLoc
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629680
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Grabbed
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629681
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Released
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+--- !u!114 &1392524698450636122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: Sleeve
+  OtherReactionName: Shelve
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629684
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629685
+  OnEnd:
+    Actions: []
+  StateConditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: CloseWithVHS
+      StateHash: 0
+  OnReactBegin:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: ShelveLoc
+      ReactionName: ShelveLoc
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  OnReactEnd:
+    ReactionReferences: []
+  DebugLog: 0
+  DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629684
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: CloseWithVHS
+    - rid: 5969430209723629685
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: ShelveLoc
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+--- !u!114 &3198980077737404742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f020e0172beed86418e8820027245d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugLog: 0
+  ShowHand: 1
+  SendFocusToRigidBodyObject: 1
+  Conditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Released
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: CloseWithVHS
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: FreeLoc
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Done
+      StateHash: 0
+  OnFocusReaction:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Focused
+      ReactionName: Focused
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  OnUnfocusReaction:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Unfocused
+      ReactionName: Unfocused
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  FocusedByTriggerObject: {fileID: 0}
+--- !u!114 &2258926774179583231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077737404761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0579ab49382e10548b004ef0a700beef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeyCode: 101
+  TriggerFromMainCamera: 1
+  Conditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: CloseWithVHS
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: FreeLoc
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Focused
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Done
+      StateHash: 0
+    - Type: 0
+      ObjectTargetType: 0
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 0}
+      State: Released
+      StateHash: 0
+  OnKeyDown:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 1
+        ThisGameObject: {fileID: 0}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Opening
+      ReactionName: Opening
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  WhenKeyPressed:
+    ReactionReferences: []
+  OnKeyUp:
+    ReactionReferences: []
+  DebugLog: 0
+--- !u!1 &3198980077842632233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3198980077842632214}
+  - component: {fileID: 7249886004988465343}
+  - component: {fileID: 3821998839488644016}
+  - component: {fileID: 6126043262124255720}
+  m_Layer: 0
+  m_Name: VHSSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3198980077842632214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077842632233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0096, z: 0.0324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5333820298039891808}
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7249886004988465343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077842632233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9494402a6cf835642a69f2f66639ad5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!320 &3821998839488644016
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077842632233}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: bdab1d219c1829d4d92d511b4ad365a8, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -3035975471153268788, guid: bdab1d219c1829d4d92d511b4ad365a8, type: 2}
+    value: {fileID: 6126043262124255720}
+  - key: {fileID: -105724001973569921, guid: bdab1d219c1829d4d92d511b4ad365a8, type: 2}
+    value: {fileID: 6126043262124255720}
+  - key: {fileID: 7104355181717069364, guid: bdab1d219c1829d4d92d511b4ad365a8, type: 2}
+    value: {fileID: 6126043262124255720}
+  - key: {fileID: 334343861723416557, guid: bdab1d219c1829d4d92d511b4ad365a8, type: 2}
+    value: {fileID: 6126043262124255720}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &6126043262124255720
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980077842632233}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb15a3824a9142342a3e6924a68de7dc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &3198980078213382307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3198980078213382304}
+  m_Layer: 0
+  m_Name: Open
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3198980078213382304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980078213382307}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.0218, z: 0.0487}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3069235678205387562}
+  - {fileID: 3198980079346952827}
+  - {fileID: 1978374565}
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3198980079346952826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3198980079346952827}
+  - component: {fileID: 3198980079346952825}
+  - component: {fileID: 3198980079346952824}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3198980079346952827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980079346952826}
+  m_LocalRotation: {x: 0.3826832, y: -0, z: -0, w: 0.9238797}
+  m_LocalPosition: {x: 0, y: 0.0378, z: -0.0279}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980078213382304}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!65 &3198980079346952825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980079346952826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12, y: 0.04, z: 0.06}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3198980079346952824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198980079346952826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a25e19b34a0634ebd1f291f3aaaad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisReactionName: Sleeve
+  OtherReactionName: VHS
+  ReactionDelay: 0
+  MustTouchDuringDelay: 0
+  ReactionCooldown: 0
+  SingleAtOnce: 0
+  ObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ReactToCollision: 0
+  ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629691
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629692
+  OnEnd:
+    Actions: []
+  StateConditions:
+    States:
+    - Type: 0
+      ObjectTargetType: 1
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 3198980077737404761}
+      State: Open
+      StateHash: 0
+  OnReactBegin:
+    ReactionReferences:
+    - ReactionType: 0
+      TargetObjectReference:
+        Type: 0
+        ThisGameObject: {fileID: 3198980077737404761}
+        ObjectType:
+          TypeName: 
+          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        String: Closing
+      ReactionName: Closing
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
+      EventTrigger:
+        m_PersistentCalls:
+          m_Calls: []
+  OnReactEnd:
+    ReactionReferences: []
+  DebugLog: 0
+  DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629691
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 3198980077737404761}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Open
+    - rid: 5969430209723629692
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 3198980077737404761}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Closing
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+--- !u!1 &3532530999746354972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 368933577439458258}
+  m_Layer: 0
+  m_Name: DebugDrawFocus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &368933577439458258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3532530999746354972}
+  m_LocalRotation: {x: 0.49999854, y: -0.4999999, z: 0.5000001, w: 0.50000155}
+  m_LocalPosition: {x: -0.0095, y: -0.0098, z: -0.0173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!1 &3656067788061966464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6834136960910986939}
+  m_Layer: 0
+  m_Name: VHSEject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6834136960910986939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656067788061966464}
+  m_LocalRotation: {x: -0.5700141, y: -0, z: -0, w: 0.82163495}
+  m_LocalPosition: {x: 0, y: 0.0108, z: 0.0436}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -69.502, y: 0, z: 0}
+--- !u!1 &3913682487691129857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4512941124892150000}
+  m_Layer: 0
+  m_Name: DebugDrawLoc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4512941124892150000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3913682487691129857}
+  m_LocalRotation: {x: 0.49999854, y: -0.4999999, z: 0.5000001, w: 0.50000155}
+  m_LocalPosition: {x: 0.0714, y: -0.0098, z: -0.0173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4155538546678039574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9102454852538488327}
+  - component: {fileID: 8271451528807944248}
+  m_Layer: 0
+  m_Name: Collision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9102454852538488327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4155538546678039574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5333820298039891808}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8271451528807944248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4155538546678039574}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &5418588336124138392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072559673777042672}
+  m_Layer: 0
+  m_Name: DebugDrawState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072559673777042672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418588336124138392}
+  m_LocalRotation: {x: 0.49999854, y: -0.4999999, z: 0.5000001, w: 0.50000155}
+  m_LocalPosition: {x: -0.0939, y: -0.009799994, z: -0.0173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!1 &5962697671734972882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3388720219272617258}
+  - component: {fileID: 2410557036721703316}
+  - component: {fileID: 2860145037294768675}
+  m_Layer: 0
+  m_Name: E
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3388720219272617258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962697671734972882}
+  m_LocalRotation: {x: 0.49999854, y: -0.4999999, z: 0.5000001, w: 0.50000155}
+  m_LocalPosition: {x: -0.0294, y: -0.009800013, z: 0.0064400006}
+  m_LocalScale: {x: 0.022000002, y: 0.022000002, z: 0.022000004}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2410557036721703316
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962697671734972882}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!102 &2860145037294768675
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962697671734972882}
+  m_Text: E
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 32
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!1 &6146875944431551383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6986391273493909962}
+  m_Layer: 0
+  m_Name: DebugTitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6986391273493909962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146875944431551383}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0.471, y: 0, z: -0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5333820298039891808}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!1 &7270005980412717561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8980401258895115742}
+  - component: {fileID: 1806048278532020020}
+  m_Layer: 0
+  m_Name: BottomCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8980401258895115742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270005980412717561}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3069235678205387562}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1806048278532020020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270005980412717561}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0099999, y: 1.0153279, z: 1.01}
+  m_Center: {x: 0, y: -0.042336017, z: 0}
+--- !u!1 &9007890594717423262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6017063632437615217}
+  - component: {fileID: 5771564909815646034}
+  m_Layer: 0
+  m_Name: CloseCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6017063632437615217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007890594717423262}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.00959999, z: 0.033800006}
+  m_LocalScale: {x: 0.20000003, y: 0.014999998, z: 0.11}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3198980077737404739}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5771564909815646034
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007890594717423262}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.01, y: 2.2, z: 1.01}
+  m_Center: {x: 0, y: 0, z: 0}

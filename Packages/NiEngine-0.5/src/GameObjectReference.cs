@@ -17,6 +17,8 @@ namespace Nie
             Self,
             TriggerObject,
             PreviousTriggerObject,
+            ObjectFrom,
+            ObjectFromOnBegin,
             FirstOfType,
             FirstWithTag,
             FirstWithName,
@@ -37,6 +39,12 @@ namespace Nie
                 {
                     case GameObjectReference.TypeEnum.Self:
                         Debug.LogWarning($"[{Time.frameCount}] GameObjectReference unable to find Self");
+                        break;
+                    case GameObjectReference.TypeEnum.ObjectFrom:
+                        Debug.LogWarning($"[{Time.frameCount}] GameObjectReference unable to find From object");
+                        break;
+                    case GameObjectReference.TypeEnum.ObjectFromOnBegin:
+                        Debug.LogWarning($"[{Time.frameCount}] GameObjectReference unable to find From object OnBegin");
                         break;
                     case GameObjectReference.TypeEnum.Object:
                         Debug.LogWarning($"[{Time.frameCount}] GameObjectReference on '{eventParams.Self.name}' unable to find Object", eventParams.Self);
@@ -67,14 +75,20 @@ namespace Nie
                 case GameObjectReference.TypeEnum.Self:
                     go = eventParams.Self;
                     return go != null;
+                case GameObjectReference.TypeEnum.ObjectFrom:
+                    go = eventParams.Current.From;
+                    return go != null;
+                case GameObjectReference.TypeEnum.ObjectFromOnBegin:
+                    go = eventParams.OnBegin.From;
+                    return go != null;
                 case GameObjectReference.TypeEnum.Object:
                     go = ThisGameObject;
                     return go != null;
                 case GameObjectReference.TypeEnum.TriggerObject:
-                    go = eventParams.TriggerObject;
+                    go = eventParams.Current.TriggerObject;
                     return go != null;
                 case GameObjectReference.TypeEnum.PreviousTriggerObject:
-                    go = eventParams.PreviousTriggerObject;
+                    go = eventParams.OnBegin.TriggerObject;
                     return go != null;
                 case GameObjectReference.TypeEnum.FirstOfType:
                     var obj = GameObject.FindObjectOfType(ObjectType);

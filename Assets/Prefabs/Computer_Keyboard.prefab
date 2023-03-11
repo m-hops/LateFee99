@@ -70,11 +70,16 @@ MonoBehaviour:
       Other: {fileID: 6776732071264763087}
       State: Focused
       StateHash: 0
+    - Type: 0
+      ObjectTargetType: 1
+      Animator: {fileID: 0}
+      ReactionState: {fileID: 0}
+      Other: {fileID: 6776732071264763087}
+      State: Idle
+      StateHash: 0
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 6776732071264763087}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 6776732071264763087}
@@ -115,8 +120,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 6776732071264763087}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 6776732071264763087}
@@ -135,8 +138,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 6776732071264763087}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 6776732071264763087}
@@ -650,6 +651,7 @@ GameObject:
   - component: {fileID: 7466157899042776908}
   - component: {fileID: 7548396983016520472}
   - component: {fileID: 2489910751989870898}
+  - component: {fileID: 8541842963568562121}
   m_Layer: 0
   m_Name: Computer_Keyboard
   m_TagString: Untagged
@@ -666,7 +668,7 @@ Transform:
   m_GameObject: {fileID: 6776732071264763087}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.11811733, y: -0.13601959, z: 0.057519436}
-  m_LocalScale: {x: 1.5000001, y: 1.5, z: 1.5000001}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6776732071264788717}
@@ -703,7 +705,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6776732071264763087}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -746,7 +748,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6776732071264763087}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -770,8 +772,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 2
         ThisGameObject: {fileID: 0}
@@ -814,8 +814,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 3
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 3
         ThisGameObject: {fileID: 0}
@@ -940,8 +938,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -972,8 +968,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1028,18 +1022,169 @@ MonoBehaviour:
   DetachWhenGrabbed: 0
   ReattachWhenRelease: 0
   Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Idle
-      StateHash: 0
+    Conditions:
+    - rid: 5969430209723629683
   OnGrab:
-    ReactionReferences: []
+    Actions: []
   OnRelease:
-    ReactionReferences: []
+    Actions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629683
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Idle
+--- !u!114 &8541842963568562121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776732071264763087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: 
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Idle
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        FromOnBegin: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions: []
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: InUse
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        FromOnBegin: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 5969430209723629722
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: Cooldown
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        FromOnBegin: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 5969430209723629718
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629718
+      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 1
+        Repeat: 0
+        Reaction:
+          ReactionReferences:
+          - ReactionType: 0
+            TargetObjectReference:
+              Type: 1
+              ThisGameObject: {fileID: 0}
+              ObjectType:
+                TypeName: 
+                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                  Culture=neutral, PublicKeyToken=null
+              String: 
+            ReactionName: Idle
+            Event:
+              m_PersistentCalls:
+                m_Calls: []
+            EventTrigger:
+              m_PersistentCalls:
+                m_Calls: []
+        CurrentlyRemaining: 0
+    - rid: 5969430209723629722
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 2
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: UsingComputer
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!1 &7084445273340445065
 GameObject:
   m_ObjectHideFlags: 0

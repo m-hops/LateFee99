@@ -36,7 +36,7 @@ namespace Nie
         public int StateHash;
         public bool CanReact(EventParameters parameters)
         {
-            return CanReact(parameters.Self, parameters.TriggerObject, parameters.TriggerPosition, parameters.PreviousTriggerObject);
+            return CanReact(parameters.Self, parameters.Current.TriggerObject, parameters.Current.TriggerPosition, parameters.OnBegin.TriggerObject);
         }
         public bool CanReact(GameObject from, GameObject triggerObject, Vector3 position, GameObject previousTriggerObjectIfExist)
         {

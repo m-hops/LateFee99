@@ -15,9 +15,10 @@ namespace Nie.Actions
         public GameObjectReference To;
         public bool MoveToParentOrigin = true;
         public bool DetachOnEnd;
-
+        [Header("Internals")]
         public GameObject AttachedObject;
         public Transform m_PreviousParent;
+        public bool m_SetNonKinematicOnEnd;
         public override void OnBegin(Owner owner, EventParameters parameters)
         {
             m_PreviousParent = null;
@@ -30,19 +31,24 @@ namespace Nie.Actions
                 {
                     AttachedObject = a;
                     m_PreviousParent = a.transform.parent;
-#if UNITY_EDITOR
-
-                    if (UnityEditor.SceneManagement.EditorSceneManager.IsPreviewScene(AttachedObject.scene))
+                    if(a.TryGetComponent<Rigidbody>(out var rigidBody))
                     {
-                        Debug.LogWarning($"Could not attach object '{AttachedObject.name}' to '{t.name}' in prefab mode. You must do it manualy.", AttachedObject);
-                        if (MoveToParentOrigin)
-                        {
-                            a.transform.position = t.transform.position;
-                            a.transform.rotation = t.transform.rotation;
-                        }
+                        m_SetNonKinematicOnEnd = !rigidBody.isKinematic;
+                        rigidBody.isKinematic = true;
                     }
-                    else
-#endif
+//#if UNITY_EDITOR
+
+//                    if (UnityEditor.SceneManagement.EditorSceneManager.IsPreviewScene(AttachedObject.scene))
+//                    {
+//                        Debug.LogWarning($"Could not attach object '{AttachedObject.name}' to '{t.name}' in prefab mode. You must do it manualy.", AttachedObject);
+//                        if (MoveToParentOrigin)
+//                        {
+//                            a.transform.position = t.transform.position;
+//                            a.transform.rotation = t.transform.rotation;
+//                        }
+//                    }
+//                    else
+//#endif
                     {
                         a.transform.parent = t.transform;
                         if (MoveToParentOrigin)
@@ -56,9 +62,16 @@ namespace Nie.Actions
         }
         public override void OnEnd(Owner owner, EventParameters parameters)
         {
-            if (DetachOnEnd && AttachedObject != null)
+            if (AttachedObject != null)
             {
-                AttachedObject.transform.parent = m_PreviousParent;
+                if (DetachOnEnd)
+                {
+                    AttachedObject.transform.parent = m_PreviousParent;
+                }
+                if (m_SetNonKinematicOnEnd && AttachedObject.TryGetComponent<Rigidbody>(out var rigidBody))
+                {
+                    rigidBody.isKinematic = false;
+                }
             }
         }
     }

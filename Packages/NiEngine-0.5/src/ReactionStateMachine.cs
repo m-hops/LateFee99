@@ -82,48 +82,154 @@ namespace Nie
     [Serializable]
     public struct EventParameters
     {
+        [Serializable]
+        public struct ParameterSet
+        {
+            /// <summary>
+            /// Object sending the event
+            /// </summary>
+            public GameObject From;
+            /// <summary>
+            /// Object that triggered the event.
+            /// may be different if an event is passed around between objects
+            /// </summary>
+            public GameObject TriggerObject;
+            public Vector3 TriggerPosition;
+
+            public override string ToString()
+            {
+                return $"(From: '{From.GetNameOrNull()}', TriggerObject: '{TriggerObject.GetNameOrNull()}', TriggerPosition: {TriggerPosition}";
+            }
+            public static ParameterSet Default => new ParameterSet
+            {
+                From = null,
+                TriggerObject = null,
+                TriggerPosition = Vector3.zero,
+            };
+            public static ParameterSet Trigger(GameObject from, GameObject triggerObject, Vector3 position) => new ParameterSet
+            {
+                From = from,
+                TriggerObject = triggerObject,
+                TriggerPosition = position,
+            };
+            public static ParameterSet WithoutTrigger(GameObject from) => new ParameterSet
+            {
+                From = from,
+                TriggerObject = null,
+                TriggerPosition = Vector3.zero,
+            };
+        }
+        /// <summary>
+        /// The object on which the event happens
+        /// </summary>
         public GameObject Self;
-        public GameObject TriggerObject;
-        public GameObject PreviousTriggerObject;
-        public Vector3 TriggerPosition;
-        public Vector3 PreviousTriggerPosition;
+
+
+        public ParameterSet Current;
+        public ParameterSet OnBegin;
+
+        ///// <summary>
+        ///// Object sending the event
+        ///// </summary>
+        //public GameObject From => Current.From;
+
+        ///// <summary>
+        ///// Object that triggered the event.
+        ///// may be different if an event is passed around between objects
+        ///// </summary>
+        //public GameObject TriggerObject => Current.TriggerObject;
+        ///// <summary>
+        ///// Previous trigger object, useful in StateAction.OnEnd for getting the object that triggered its StateAction.OnBegin
+        ///// </summary>
+        //public Vector3 TriggerPosition => Current.TriggerPosition;
+
+
+        //public GameObject FromOnBegin;
+        //public Vector3 PreviousTriggerPosition;
+        //public GameObject PreviousTriggerObject;
+
+        public System.Text.StringBuilder DebugTrace;
+
+
+        public EventParameters WithDebugTrace(System.Text.StringBuilder stringBuilder)
+        {
+            var copy = this;
+            copy.DebugTrace = stringBuilder;
+            return copy;
+        }
+        public EventParameters WithSelf(GameObject self)
+        {
+            var copy = this;
+            copy.Current.From = Self;
+            copy.Self = self;
+            return copy;
+        }
+        public EventParameters WithBegin(EventParameters begin)
+        {
+            var copy = this;
+            copy.OnBegin.From = begin.Current.From;
+            copy.OnBegin.TriggerObject = begin.Current.TriggerObject;
+            copy.OnBegin.TriggerPosition = begin.Current.TriggerPosition;
+            return copy;
+        }
+        public EventParameters WithOnBeginTrigger()
+        {
+            var copy = this;
+            copy.Current.From = OnBegin.From;
+            copy.Current.TriggerPosition = OnBegin.TriggerPosition;
+            copy.Current.TriggerObject = OnBegin.TriggerObject;
+            return copy;
+        }
+        public override string ToString()
+        {
+            return $"(Self: '{Self.GetNameOrNull()}', Current:{Current}, OnBegin:{OnBegin}";
+        }
         public static EventParameters Default => new EventParameters
         {
             Self = null,
-            TriggerObject = null,
-            PreviousTriggerObject = null,
-            TriggerPosition = Vector3.zero,
-            PreviousTriggerPosition = Vector3.zero,
+            Current = ParameterSet.Default,
+            OnBegin = ParameterSet.Default,
         };
-        public static EventParameters Trigger(GameObject self, GameObject triggerObject) => new EventParameters
+        public static EventParameters Trigger(GameObject self, GameObject from, GameObject triggerObject) => new EventParameters
         {
             Self = self,
-            TriggerObject = triggerObject,
-            PreviousTriggerObject = null,
-            TriggerPosition = triggerObject.transform.position,
-            PreviousTriggerPosition = Vector3.zero,
+            Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
+            OnBegin = ParameterSet.Default,
+        };
+        public static EventParameters Trigger(GameObject self, GameObject from, GameObject triggerObject, Vector3 position) => new EventParameters
+        {
+            Self = self,
+            Current = ParameterSet.Trigger(from, triggerObject, Vector3.zero),
+            OnBegin = ParameterSet.Default,
         };
         public static EventParameters WithoutTrigger(GameObject self) => new EventParameters
         {
             Self = self,
-            TriggerObject = null,
-            PreviousTriggerObject = null,
-            TriggerPosition = Vector3.zero,
-            PreviousTriggerPosition = Vector3.zero,
+            Current = ParameterSet.Default,
+            OnBegin = ParameterSet.Default,
         };
     }
     public struct Owner
     {
+        public Owner(MonoBehaviour monoBehaviour)
+        {
+            MonoBehaviour = monoBehaviour;
+            StateMachine = null;
+            State = null;
+        }
         public Owner(ReactionStateMachine sm)
         {
+            MonoBehaviour = null;
             StateMachine = sm;
             State = null;
         }
         public Owner(ReactionStateMachine.State state)
         {
+            MonoBehaviour = null;
             StateMachine = state.StateMachine;
             State = state;
         }
+        public MonoBehaviour MonoBehaviour;
         public ReactionStateMachine StateMachine;
         public ReactionStateMachine.State State;
     }
@@ -137,6 +243,10 @@ namespace Nie
         public StateName(string name)
         {
             Name = name;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
         public static bool operator ==(StateName a, StateName b)
         {
@@ -176,7 +286,7 @@ namespace Nie
     }
     public interface IUpdate
     {
-        void Update(Owner owner);
+        void Update(Owner owner, EventParameters parameters);
     }
     public interface IInitialize
     {
@@ -184,26 +294,110 @@ namespace Nie
     }
 
     [Serializable]
-    public abstract class Action : StateAction
+    public abstract class Action : StateAction, IAction
     {
         public abstract void Act(Owner owner, EventParameters parameters);
         public override void OnBegin(Owner owner, EventParameters parameters) => Act(owner, parameters);
         public override void OnEnd(Owner owner, EventParameters parameters) { }
     }
     [Serializable]
-    public abstract class StateAction 
+    public abstract class StateAction  : IStateAction
     {
         public abstract void OnBegin(Owner owner, EventParameters parameters);
         public abstract void OnEnd(Owner owner, EventParameters parameters);
     }
 
+
     [Serializable]
-    public abstract class Condition
+    public abstract class Condition : ICondition
     {
         public abstract bool Pass(Owner owner, EventParameters parameters);
     }
 
+    public interface IAction : IStateAction
+    {
+        void Act(Owner owner, EventParameters parameters);
+    }
+    public interface IStateAction
+    {
+        void OnBegin(Owner owner, EventParameters parameters);
+        void OnEnd(Owner owner, EventParameters parameters);
+    }
+    public interface ICondition
+    {
+        bool Pass(Owner owner, EventParameters parameters);
+    }
 
+    [Serializable]
+    public class ConditionSet : ICondition
+    {
+        [SerializeReference, DerivedClassPicker(typeof(ICondition), showPrefixLabel: false)]
+        public List<ICondition> Conditions;
+        public bool Pass(Owner owner, EventParameters parameters)
+        {
+
+            if (parameters.DebugTrace != null)
+            {
+                foreach (var c in Conditions)
+                {
+                    var result = c.Pass(owner, parameters);
+                    parameters.DebugTrace.AppendLine($"Condition:{result} => {c.GetType().Name}.Pass{parameters}");
+                    if (!result) return false;
+                }
+            }
+            else
+            {
+                foreach (var c in Conditions)
+                    if (!c.Pass(owner, parameters)) return false;
+            }
+            return true;
+        }
+    }
+    [Serializable]
+    public struct ActionSet : IAction
+    {
+        [SerializeReference, DerivedClassPicker(typeof(IAction), showPrefixLabel: false)]
+        public List<IAction> Actions;
+        public void Act(Owner owner, EventParameters parameters)
+        {
+            foreach (var a in Actions)
+            {
+                if (parameters.DebugTrace != null)
+                    parameters.DebugTrace.AppendLine($"{a.GetType().Name}.Act{parameters}");
+                a.Act(owner, parameters);
+            }
+        }
+        public void OnBegin(Owner owner, EventParameters parameters)
+            => Act(owner, parameters);
+        public void OnEnd(Owner owner, EventParameters parameters)
+        {
+        }
+    }
+    [Serializable]
+    public struct StateActionSet : IStateAction
+    {
+        [SerializeReference, DerivedClassPicker(typeof(IStateAction), showPrefixLabel: false)]
+        public List<IStateAction> Actions;
+
+        public void OnBegin(Owner owner, EventParameters parameters)
+        {
+            foreach (var a in Actions)
+            {
+                if (parameters.DebugTrace != null)
+                    parameters.DebugTrace.AppendLine($"{a.GetType().Name}.OnBegin{parameters}");
+                a.OnBegin(owner, parameters);
+            }
+        }
+        public void OnEnd(Owner owner, EventParameters parameters)
+        {
+            foreach (var a in Actions)
+            {
+                if (parameters.DebugTrace != null)
+                    parameters.DebugTrace.AppendLine($"{a.GetType().Name}.OnEnd{parameters}");
+                a.OnEnd(owner, parameters);
+            }
+        }
+    }
 
     [Serializable]
     public class ReactionStateMachine : MonoBehaviour
@@ -213,6 +407,7 @@ namespace Nie
         {
             public StateName StateName;
             public bool IsActiveState;
+            public bool DebugLog;
             public string Notes;
             public EventParameters LastBeginEvent;
             //public EventParameters LastEndEvent;
@@ -227,6 +422,11 @@ namespace Nie
 
             //[SerializeReference, DerivedClassPicker]
             //public Action TestAction;
+
+            public ConditionSet NewConditions = new();
+            public StateActionSet NewOnBegin = new();
+            public ActionSet NewOnUpdate = new();
+            public ActionSet NewOnEnd = new();
 
             [SerializeReference, DerivedClassPicker(typeof(Condition), showPrefixLabel: false)]
             public List<Condition> Conditions;// = new();
@@ -249,8 +449,9 @@ namespace Nie
             public bool CanReact(EventParameters parameters)
             {
                 var owner = new Owner(this);
-                foreach (var condition in Conditions)
-                    if (!condition.Pass(owner, parameters)) return false;
+                if(!NewConditions.Pass(owner, parameters)) return false;
+                //foreach (var condition in Conditions)
+                //    if (!condition.Pass(owner, parameters)) return false;
                 return true;
             }
 
@@ -258,11 +459,17 @@ namespace Nie
             {
                 StateMachine = owner;
                 StateGroup = group;
-                foreach (var action in Conditions)
+                //foreach (var action in Conditions)
+                //    Handshake(action);
+                //foreach (var action in OnBeginActions)
+                //    Handshake(action);
+                //foreach (var action in OnEndActions)
+                //    Handshake(action);
+                foreach (var action in NewConditions.Conditions)
                     Handshake(action);
-                foreach (var action in OnBeginActions)
+                foreach (var action in NewOnBegin.Actions)
                     Handshake(action);
-                foreach (var action in OnEndActions)
+                foreach (var action in NewOnEnd.Actions)
                     Handshake(action);
                 if (IsActiveState)
                 {
@@ -284,49 +491,78 @@ namespace Nie
 
             public void Update()
             {
+                var parameters = LastBeginEvent;
+                if (DebugLog)
+                {
+                    parameters = parameters.WithDebugTrace(new());
+                }
+
                 var owner = new Owner(this);
 
                 foreach (var o in Updates)
-                    o.Update(owner);
+                    o.Update(owner, parameters);
 
-                foreach (var action in OnUpdate)
-                    action.Act(owner, LastBeginEvent);
+                NewOnUpdate.Act(owner, parameters);
+                //foreach (var action in OnUpdate)
+                //    action.Act(owner, parameters);
+
+                if (DebugLog)
+                {
+                    if(parameters.DebugTrace.Length > 0)
+                    {
+                        Debug.Log($"[{Time.frameCount}] ReactionStateMachine.OnUpdate [\"{StateMachine.name}\".{StateGroup.GroupName}.{StateName}] {parameters}\r\n{parameters.DebugTrace}", StateMachine.gameObject);
+                    }
+                }
             }
 
             public void OnBegin(EventParameters parameters)
             {
+                parameters.WithBegin(parameters);
+                var parametersCopy = parameters;
+                if (DebugLog)
+                {
+                    parameters = parameters.WithDebugTrace(new());
+                    parameters.DebugTrace.AppendLine($"[{Time.frameCount}]ReactionStateMachine.OnBegin [\"{StateMachine.name}\".{StateGroup.GroupName}.{StateName}] {parameters}");
+                    //Debug.Log($"[{Time.frameCount}] ReactionStateMachine '{StateMachine.name}'.'{StateGroup.GroupName}'.'{StateName}' On Begin {parameters}");
+                }
+
+
                 IsActiveState = true;
                 var owner = new Owner(this);
 
                 foreach (var observer in StateObservers)
                     observer.OnBegin(owner, parameters);
 
-                foreach (var action in OnBeginActions)
-                    action.OnBegin(owner, parameters);
 
+                NewOnBegin.OnBegin(owner, parameters);
+                //foreach (var action in OnBeginActions)
+                //    action.OnBegin(owner, parameters);
 
-                LastBeginEvent = parameters;
+                if (DebugLog)
+                {
+                    Debug.Log(parameters.DebugTrace.ToString(), StateMachine.gameObject);
+                }
+                LastBeginEvent = parametersCopy;
             }
 
             public void OnEnd(EventParameters parameters)
             {
+                if (DebugLog)
+                {
+                    parameters = parameters.WithDebugTrace(new());
+                    parameters.DebugTrace.AppendLine($"[{Time.frameCount}] ReactionStateMachine.OnEnd [\"{StateMachine.name}\".{StateGroup.GroupName}.{StateName}] {parameters}");
+                }
+                parameters = parameters.WithBegin(LastBeginEvent);
+
                 var owner = new Owner(this);
-                foreach (var action in OnBeginActions)
-                    action.OnEnd(owner, parameters);
-
-
-                parameters.PreviousTriggerObject = LastBeginEvent.TriggerObject;
-                parameters.PreviousTriggerPosition = LastBeginEvent.TriggerPosition;
-
+                NewOnBegin.OnEnd(owner, parameters);
 
                 foreach (var observer in StateObservers)
                     observer.OnEnd(owner, parameters);
 
-                foreach (var action in OnEndActions)
-                    action.Act(owner, parameters);
-
-
-                //LastEndEvent = parameters;
+                NewOnEnd.Act(owner, parameters);
+                if (DebugLog)
+                    Debug.Log(parameters.DebugTrace.ToString(), StateMachine.gameObject);
                 IsActiveState = false;
             }
         }
@@ -334,6 +570,8 @@ namespace Nie
         [Serializable]
         public class StateGroup
         {
+            [NonSerialized]
+            public ReactionStateMachine StateMachine;
             public StateName GroupName;
             public string Notes;
             public bool HasActiveState;
@@ -363,6 +601,7 @@ namespace Nie
 
             public void DeactivateAllState(EventParameters parameters)
             {
+                Debug.Assert(parameters.Self == StateMachine.gameObject);
                 foreach (var s in States)
                 {
                     if (s.IsActiveState)
@@ -375,6 +614,7 @@ namespace Nie
             }
             public void SetActiveState(ReactionStateMachine component, State state, EventParameters parameters)
             {
+                Debug.Assert(parameters.Self == StateMachine.gameObject);
 #if UNITY_EDITOR
                 if (state.StateGroup != this || state.StateMachine != component)
                     Debug.LogError($"ReactionStateMachine '{component.name}' switches to an unknown state '{state.StateName.Name}'", component);
@@ -393,7 +633,8 @@ namespace Nie
             }
             public void Handshake(ReactionStateMachine owner)
             {
-                foreach(var state in States)
+                StateMachine = owner;
+                foreach (var state in States)
                     state.Handshake(owner, this);
             }
             public void Update()
@@ -436,6 +677,8 @@ namespace Nie
 
         public bool CanReact(string reactionOrStateName, EventParameters parameters)
         {
+            Debug.Assert(parameters.Self == gameObject);
+            parameters = parameters.WithSelf(gameObject);
             foreach (var group in Groups)
                 if (group.TryGetState(new StateName(reactionOrStateName), out var state))
                     if (state.CanReact(parameters))
@@ -443,20 +686,28 @@ namespace Nie
             return false;
         }
 
-        public void React(string reactionOrStateName, EventParameters parameters)
+        public void ForceActivateState(string stateName)
         {
-            foreach(var group in Groups)
+            ReactionReference.React(stateName, EventParameters.Default.WithSelf(gameObject));
+        }
+        public bool React(string reactionOrStateName, EventParameters parameters)
+        {
+            Debug.Assert(parameters.Self == gameObject);
+            foreach (var group in Groups)
             {
                 if (group.TryGetState(new StateName(reactionOrStateName), out var state))
                 {
                     group.SetActiveState(this, state, parameters);
+                    return true;
                 }
 
             }
+            return false;
         }
 
         public void DeactivateAllStateOfGroup(string groupName, EventParameters parameters)
         {
+            Debug.Assert(parameters.Self == gameObject);
             foreach (var group in Groups)
                 if (group.GroupName == new StateName(groupName))
                     group.DeactivateAllState(parameters);

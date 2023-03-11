@@ -5,12 +5,101 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
-using System;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 namespace Nie.Editor
 {
+    [CustomPropertyDrawer(typeof(ConditionSet))]
+    public class ConditionSetDrawer : PropertyDrawer
+    {
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            ListView2 listView = new ListView2();
+            listView.SetText(property.displayName);
+            listView.SetIcon(Assets.IconCondition);
+            listView.SetColor(new Color(0.75f, 0.75f, 0));
+            listView.style.marginBottom = 2;
+            listView.BindProperty(property.FindPropertyRelative("Conditions"));
+            return listView;
+        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Conditions"));
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("Conditions"), new GUIContent(property.name, Assets.IconCondition), true);
+        }
+    }
+
+    [CustomPropertyDrawer(typeof(ActionSet))]
+    public class ActionSetDrawer : PropertyDrawer
+    {
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            ListView2 listView = new ListView2();
+            listView.SetText(property.displayName);
+            listView.style.marginBottom = 2;
+            listView.SetIcon(Assets.IconAction);
+            if (property.name.Contains("OnBegin"))
+            {
+                listView.SetColor(new Color(0.0f, 0.75f, 0.75f));
+            }
+            else if (property.name.Contains("OnUpdate"))
+            {
+                listView.SetColor(new Color(0.2f, 0.2f, 0.75f));
+            }
+            else if (property.name.Contains("OnEnd"))
+            {
+                listView.SetColor(new Color(0.75f, 0, 0.75f));
+            }
+            listView.BindProperty(property.FindPropertyRelative("Actions"));
+            return listView;
+        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Actions"));
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("Actions"), new GUIContent(property.displayName, Assets.IconAction), true);
+        }
+    }
+
+    [CustomPropertyDrawer(typeof(StateActionSet))]
+    public class StateActionSetDrawer : PropertyDrawer
+    {
+        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        {
+            ListView2 listView = new ListView2();
+            listView.SetText(property.displayName);
+            listView.style.marginBottom = 2;
+            listView.SetIcon(Assets.IconAction);
+            if (property.name.Contains("OnBegin"))
+            {
+                listView.SetColor(new Color(0.0f, 0.75f, 0.75f));
+            }
+            else if (property.name.Contains("OnUpdate"))
+            {
+                listView.SetColor(new Color(0.2f, 0.2f, 0.75f));
+            }
+            else if (property.name.Contains("OnEnd"))
+            {
+                listView.SetColor(new Color(0.75f, 0, 0.75f));
+            }
+            listView.BindProperty(property.FindPropertyRelative("Actions"));
+            return listView;
+        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("Actions"));
+        }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("Actions"), new GUIContent(property.displayName, Assets.IconAction), true);
+        }
+    }
     public class ReactionStateMachineVE : VisualElement
     {
         //public Nie.ReactionStateMachine StateMachine;
@@ -189,6 +278,7 @@ namespace Nie.Editor
         //public SerializedObject SerializedObject;
         SerializedProperty Property;
         SerializedProperty PropName;
+        SerializedProperty PropDebug;
         SerializedProperty PropNotes;
         SerializedProperty PropIsActiveState;
 
@@ -197,8 +287,14 @@ namespace Nie.Editor
         SerializedProperty PropOnUpdate;
         SerializedProperty PropOnEnd;
 
+        SerializedProperty PropNewConditions;
+        SerializedProperty PropNewOnBegin;
+        SerializedProperty PropNewOnUpdate;
+        SerializedProperty PropNewOnEnd;
+
         Foldout Foldout;
         TextField Name;
+        Toggle TgDebug;
         PropertyField PfLastBeginEvent;
         VisualElement VeContent;
         List<VisualElement> VeIsActive;
@@ -208,6 +304,15 @@ namespace Nie.Editor
         ListView2 Lv2OnBegin;
         ListView2 Lv2OnUpdate;
         ListView2 Lv2OnEnd;
+
+        //ListView2 Lv2NewConditions;
+        //ListView2 Lv2NewOnBegin;
+        //ListView2 Lv2NewOnUpdate;
+        //ListView2 Lv2NewOnEnd;
+        PropertyField PfNewConditions;
+        PropertyField PfNewOnBegin;
+        PropertyField PfNewOnUpdate;
+        PropertyField PfNewOnEnd;
         public int Index;
         public StateVE()
         {
@@ -351,7 +456,7 @@ namespace Nie.Editor
                                 group.Handshake(rsm);
                                 state.Handshake(rsm, group);
                             }
-                            var parameters = EventParameters.Trigger(rsm.gameObject, triggerObject);
+                            var parameters = EventParameters.Trigger(rsm.gameObject, rsm.gameObject, triggerObject);
                             if (state.IsActiveState)
                             {
                                 Debug.Log($"Deactivating State '{state.StateName.Name}' on gameObject '{rsm.gameObject.name}' with trigger object '{triggerObject.name}'.");
@@ -383,7 +488,21 @@ namespace Nie.Editor
             ReactionStateMachineEditor.StateAsset.CloneTree(veStateRoot);
 
             Name = veStateRoot.Query<TextField>("tfName").First();
+            Name.RegisterCallback<ChangeEvent<string>>(x =>
+            {
+                Foldout.text = x.newValue; // GroupName.value;
+                PropName.stringValue = x.newValue;
+                PropName.serializedObject.ApplyModifiedProperties();
 
+            });
+
+            TgDebug = veStateRoot.Query<Toggle>("tgDebug").First();
+            TgDebug.RegisterCallback<ChangeEvent<bool>>(x =>
+            {
+                PropDebug.boolValue = x.newValue;
+                PropDebug.serializedObject.ApplyModifiedProperties();
+
+            });
             //FoInternal = veStateRoot.Query<Foldout>("foInternal").First();
             //var veInternalContent = FoInternal.contentContainer;
             //PfLastBeginEvent = new PropertyField();
@@ -391,6 +510,43 @@ namespace Nie.Editor
 
             var veStateContent = veStateRoot.Query<VisualElement>("veStateContent").First();
             VeContent.Add(veStateRoot);
+
+            PfNewConditions = new PropertyField();
+            PfNewOnBegin    = new PropertyField();
+            PfNewOnUpdate   = new PropertyField();
+            PfNewOnEnd = new PropertyField();
+
+            veStateContent.Add(PfNewConditions);
+            veStateContent.Add(PfNewOnBegin);
+            veStateContent.Add(PfNewOnUpdate);
+            veStateContent.Add(PfNewOnEnd);
+
+            //Lv2NewConditions = new ListView2();
+            //veStateContent.Add(Lv2NewConditions);
+            //Lv2NewConditions.SetText("New Conditions:");
+            //Lv2NewConditions.SetIcon(Assets.IconCondition);
+            //Lv2NewConditions.SetColor(new Color(0.75f, 0.75f, 0));
+            //Lv2NewConditions.style.marginBottom = 2;
+            //Lv2NewOnBegin = new ListView2();
+            //veStateContent.Add(Lv2NewOnBegin);
+            //Lv2NewOnBegin.SetText("New On Begin:");
+            //Lv2NewOnBegin.SetIcon(Assets.IconAction);
+            //Lv2NewOnBegin.SetColor(new Color(0.0f, 0.75f, 0.75f));
+            //Lv2NewOnBegin.style.marginBottom = 2;
+            //Lv2NewOnUpdate = new ListView2();
+            //veStateContent.Add(Lv2NewOnUpdate);
+            //Lv2NewOnUpdate.SetText("New On Update:");
+            //Lv2NewOnUpdate.SetIcon(Assets.IconAction);
+            //Lv2NewOnUpdate.SetColor(new Color(0.2f, 0.2f, 0.75f));
+            //Lv2NewOnUpdate.style.marginBottom = 2;
+            //Lv2NewOnEnd = new ListView2();
+            //veStateContent.Add(Lv2NewOnEnd);
+            //Lv2NewOnEnd.SetText("New On End:");
+            //Lv2NewOnEnd.SetIcon(Assets.IconAction);
+            ////Lv2OnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+            //Lv2NewOnEnd.SetColor(new Color(0.75f, 0, 0.75f));
+            //Lv2NewOnEnd.style.marginBottom = 2;
+
 
             Lv2Conditions = new ListView2();
             veStateContent.Add(Lv2Conditions);
@@ -439,6 +595,13 @@ namespace Nie.Editor
             PropOnUpdate = property.FindPropertyRelative("OnUpdate");
             PropOnEnd = property.FindPropertyRelative("OnEndActions");
 
+            PropNewConditions = property.FindPropertyRelative("NewConditions");
+            PropNewOnBegin = property.FindPropertyRelative("NewOnBegin");
+            PropNewOnUpdate = property.FindPropertyRelative("NewOnUpdate");
+            PropNewOnEnd = property.FindPropertyRelative("NewOnEnd");
+
+            PropDebug = property.FindPropertyRelative("DebugLog");
+            TgDebug.value = PropDebug.boolValue;
 
             VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
             PfLastBeginEvent.BindProperty(property.FindPropertyRelative("LastBeginEvent"));
@@ -446,6 +609,10 @@ namespace Nie.Editor
             Lv2OnBegin.BindProperty(PropOnBegin);
             Lv2OnUpdate.BindProperty(PropOnUpdate);
             Lv2OnEnd.BindProperty(PropOnEnd);
+            PfNewConditions.BindProperty(PropNewConditions);
+            PfNewOnBegin.BindProperty(PropNewOnBegin);
+            PfNewOnUpdate.BindProperty(PropNewOnUpdate);
+            PfNewOnEnd.BindProperty(PropNewOnEnd);
 
 
             if (VeIsActive != null && VeIsActive.Count > 0)
@@ -460,14 +627,6 @@ namespace Nie.Editor
             }
 
             //VeIsActive.Bind(PropIsActiveState);
-
-            Name.RegisterCallback<ChangeEvent<string>>(x =>
-            {
-                Foldout.text = x.newValue; // GroupName.value;
-                PropName.stringValue = x.newValue;
-                PropName.serializedObject.ApplyModifiedProperties();
-
-            });
             Refresh();
         }
         public void Refresh()
@@ -483,14 +642,21 @@ namespace Nie.Editor
     [CustomEditor(typeof(ReactionStateMachine))]
     public class ReactionStateMachineEditor : UnityEditor.Editor
     {
-        public static VisualTreeAsset StateMachineAsset;
-        public static VisualTreeAsset GroupAsset;
-        public static VisualTreeAsset StateAsset;
-        public static VisualTreeAsset StateFoldoutAsset;
-        public static VisualTreeAsset ListAsset;
-        public static VisualTreeAsset ListItemAsset;
-        public static VisualTreeAsset ClassPickerAsset;
+        public static VisualTreeAsset _StateMachineAsset;
+        public static VisualTreeAsset _GroupAsset;
+        public static VisualTreeAsset _StateAsset;
+        public static VisualTreeAsset _StateFoldoutAsset;
+        public static VisualTreeAsset _ListAsset;
+        public static VisualTreeAsset _ListItemAsset;
+        public static VisualTreeAsset _ClassPickerAsset;
 
+        public static VisualTreeAsset StateMachineAsset => _StateMachineAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateMachine.uxml");
+        public static VisualTreeAsset GroupAsset => _GroupAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateGroup.uxml");
+        public static VisualTreeAsset StateAsset => _StateAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/State.uxml");
+        public static VisualTreeAsset StateFoldoutAsset => _StateFoldoutAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateFoldout.uxml");
+        public static VisualTreeAsset ListAsset => _ListAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/List.uxml");
+        public static VisualTreeAsset ListItemAsset => _ClassPickerAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ListItem.uxml");
+        public static VisualTreeAsset ClassPickerAsset => _ListItemAsset ??= AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ClassPicker.uxml");
         Nie.ReactionStateMachine StateMachine;
         ReactionStateMachineVE Root;
 
@@ -498,13 +664,13 @@ namespace Nie.Editor
         {
             Undo.undoRedoPerformed += OnUndo;
             StateMachine = (Nie.ReactionStateMachine)target;
-            StateMachineAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateMachine.uxml");
-            GroupAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateGroup.uxml");
-            StateAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/State.uxml");
-            StateFoldoutAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateFoldout.uxml");
-            ListAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/List.uxml");
-            ClassPickerAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ClassPicker.uxml");
-            ListItemAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ListItem.uxml");
+            //StateMachineAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateMachine.uxml");
+            //GroupAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateGroup.uxml");
+            //StateAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/State.uxml");
+            //StateFoldoutAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/StateFoldout.uxml");
+            //ListAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/List.uxml");
+            //ClassPickerAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ClassPicker.uxml");
+            //ListItemAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/NiEngine/src/Editor/Assets/ListItem.uxml");
             //StyleSheet stylesheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Editor/Star System Editor/StarSystemEditor.uss");
             //rootElement.styleSheets.Add(stylesheet);
         }

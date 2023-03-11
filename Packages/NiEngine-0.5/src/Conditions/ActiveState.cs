@@ -17,7 +17,13 @@ namespace Nie.Conditions
         public string State;
         public override bool Pass(Owner owner, EventParameters parameters)
         {
-            return true;
+            var obj = Target.GetTargetGameObject(parameters);
+            if(obj != null)
+            {
+                parameters = parameters.WithSelf(obj);
+                return ReactionReference.IsActiveState(parameters, State);
+            }
+            return false;
         }
     }
 }

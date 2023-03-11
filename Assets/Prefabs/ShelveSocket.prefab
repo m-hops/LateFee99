@@ -69,6 +69,15 @@ MonoBehaviour:
     m_Bits: 4294967295
   ReactToCollision: 0
   ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629695
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629696
+    - rid: 5969430209723629717
+  OnEnd:
+    Actions: []
   StateConditions:
     States:
     - Type: 0
@@ -81,8 +90,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 9094870918709348285}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 9094870918709348285}
@@ -99,8 +106,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 1
-      ObjectTargetType: 1
-      TargetObject: {fileID: 9094870918709348285}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -132,6 +137,65 @@ MonoBehaviour:
     ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629695
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 9094870918709348285}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Empty
+    - rid: 5969430209723629696
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 9094870918709348285}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Filled
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 5969430209723629717
+      type: {class: AttachTo, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Attach:
+          Type: 2
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        To:
+          Type: 0
+          ThisGameObject: {fileID: 9094870918814714023}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        MoveToParentOrigin: 1
+        DetachOnEnd: 1
+        AttachedObject: {fileID: 0}
+        m_PreviousParent: {fileID: 0}
+        m_SetNonKinematicOnEnd: 0
 --- !u!1 &9094870918276926304
 GameObject:
   m_ObjectHideFlags: 0

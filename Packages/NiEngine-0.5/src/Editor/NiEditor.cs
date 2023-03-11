@@ -64,6 +64,28 @@ namespace Nie.Editor
         public static Texture2D IconAction = (Texture2D)AssetDatabase.LoadAssetAtPath("Packages/NiEngine/src/Editor/Assets/IconReactionReference.png", typeof(Texture2D));
     }
 
+    // TODO: need to update when undo/redo/past
+    public class EditorBase : UnityEditor.Editor
+    {
+        public override VisualElement CreateInspectorGUI()
+        {
+            var veRoot = new VisualElement();
+            var itor = serializedObject.GetIterator();
+            bool first = true;
+            while (itor.NextVisible(first))
+            {
+                first = false;
+                var field = new PropertyField(itor.Copy(), itor.displayName);
+                field.BindProperty(itor.Copy());
+                veRoot.Add(field);
+            }
+            return veRoot;
+        }
+    }
+
+    [CustomEditor(typeof(Grabbable))] public class GrabbableEditor : EditorBase { }
+    [CustomEditor(typeof(ReactOnCollisionPair))] public class ReactOnCollisionPairEditor : EditorBase { }
+
     [CustomPropertyDrawer(typeof(DerivedClassPicker))]
     public class DerivedClassPickerDrawer : PropertyDrawer
     {
@@ -72,7 +94,7 @@ namespace Nie.Editor
             Toggle Toggle;
             DropdownField DropdownField;
             VisualElement VeContent;
-            PropertyField PropertyField;
+            //PropertyField PropertyField;
 
 
             var veRoot = new VisualElement();

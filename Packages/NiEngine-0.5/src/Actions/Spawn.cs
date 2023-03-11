@@ -19,7 +19,7 @@ namespace Nie.Actions
             if (obj)
             {
                 var spawned = GameObject.Instantiate(obj);
-                spawned.transform.position = parameters.TriggerPosition;
+                spawned.transform.position = parameters.Current.TriggerPosition;
             }
         }
     }

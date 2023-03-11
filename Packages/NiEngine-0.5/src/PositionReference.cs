@@ -66,10 +66,10 @@ namespace Nie
                     }
                     return false;
                 case PositionReference.TypeEnum.AtTriggerPosition:
-                    position = eventParams.TriggerPosition;
+                    position = eventParams.Current.TriggerPosition;
                     break;
                 case PositionReference.TypeEnum.AtPreviousTriggerPosition:
-                    position = eventParams.PreviousTriggerPosition;
+                    position = eventParams.OnBegin.TriggerPosition;
                     break;
             }
             position = default;

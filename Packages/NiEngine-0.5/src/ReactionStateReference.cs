@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 namespace Nie
 {
+
     [System.Serializable]
     public struct ReactionStateReference
     {

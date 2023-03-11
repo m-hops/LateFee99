@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 998417996}
   - component: {fileID: 998417995}
   - component: {fileID: 8119537611180789197}
+  - component: {fileID: 8822779217028701212}
   m_Layer: 7
   m_Name: Main Camera And Controllers
   m_TagString: MainCamera
@@ -676,7 +677,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854664017968609162}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -747,7 +748,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854664017968609162}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -858,7 +859,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854664017968609162}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
   m_Name: 
@@ -965,14 +966,14 @@ MonoBehaviour:
           m_Calls: []
     - ReactionType: 0
       TargetObjectReference:
-        Type: 0
+        Type: 3
         ThisGameObject: {fileID: 0}
         ObjectType:
           TypeName: 
           baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         String: 
-      ReactionName: Idle
+      ReactionName: Cooldown
       Event:
         m_PersistentCalls:
           m_Calls:
@@ -1014,6 +1015,251 @@ MonoBehaviour:
   CurrentReactionCooldown: 0
   CurrentIdleTime: 0
   PreviousKinematic: 0
+--- !u!114 &8822779217028701212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854664017968609162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: 
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: InControl
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 5969430209723629723
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: CustomerDialog0
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 5969430209723629724
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions:
+        - rid: 5969430209723629725
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+    - StateName:
+        Name: UsingComputer
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        From: {fileID: 0}
+        TriggerObject: {fileID: 0}
+        PreviousTriggerObject: {fileID: 0}
+        TriggerPosition: {x: 0, y: 0, z: 0}
+        PreviousTriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 5969430209723629726
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions:
+        - rid: 5969430209723629727
+        - rid: 5969430209723629728
+      Conditions: []
+      OnBeginActions: []
+      OnUpdate: []
+      OnEndActions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629723
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 854664016743299620}
+              m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+              m_MethodName: LockControls
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629724
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1200299317206816640}
+              m_TargetAssemblyTypeName: Yarn.Unity.DialogueRunner, YarnSpinner.Unity
+              m_MethodName: StartDialogue
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: CustomerDialog0
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 854664016743299620}
+              m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+              m_MethodName: UnlockControls
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629725
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 854664016743299620}
+              m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+              m_MethodName: LockControls
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629726
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 854664016743299620}
+              m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+              m_MethodName: UnlockControls
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 721653109356985074}
+              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+              m_MethodName: SetActive
+              m_Mode: 6
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 1
+              m_CallState: 2
+    - rid: 5969430209723629727
+      type: {class: Event, ns: Nie.Actions, asm: Re0.51}
+      data:
+        UnityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 854664016743299620}
+              m_TargetAssemblyTypeName: Nie.StarterAssetsInputs, Re0.51
+              m_MethodName: LockControls
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+            - m_Target: {fileID: 721653109356985074}
+              m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+              m_MethodName: SetActive
+              m_Mode: 6
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - rid: 5969430209723629728
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 4
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Cooldown
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!1001 &2379524148208643602
 PrefabInstance:
   m_ObjectHideFlags: 0

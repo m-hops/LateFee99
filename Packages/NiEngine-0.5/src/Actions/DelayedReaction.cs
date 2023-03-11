@@ -19,16 +19,14 @@ namespace Nie.Actions
         [Tooltip("Will be set to Seconds when the state begin")]
         public float CurrentlyRemaining;
 
-        [NonSerialized]
-        EventParameters Parameters;
-        public void Update(Owner owner)
+        public void Update(Owner owner, EventParameters parameters)
         {
             var nextTime = CurrentlyRemaining - Time.deltaTime;
 
             if (CurrentlyRemaining >= 0 && nextTime < 0)
             {
-                Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name}");
-                Reaction.React(Parameters);
+                Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name} {parameters}");
+                Reaction.React(parameters);
                 if (Repeat)
                     CurrentlyRemaining = Seconds;
                 else
@@ -36,13 +34,11 @@ namespace Nie.Actions
             }
             else
             {
-                Debug.Log($"time left nextTime");
                 CurrentlyRemaining = nextTime;
             }
         }
         public override void OnBegin(Owner owner, EventParameters parameters)
         {
-            Parameters = parameters;
             CurrentlyRemaining = Seconds;
         }
         public override void OnEnd(Owner owner, EventParameters parameters)

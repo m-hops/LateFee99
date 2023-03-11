@@ -18,7 +18,7 @@ namespace Nie.Conditions
         {
             return TimeLeft <= 0;
         }
-        void IUpdate.Update(Owner owner)
+        void IUpdate.Update(Owner owner, EventParameters parameters)
         {
             TimeLeft -= Time.deltaTime;
         }

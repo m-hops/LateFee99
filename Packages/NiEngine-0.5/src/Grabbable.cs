@@ -14,19 +14,29 @@ namespace Nie
 
         [Tooltip("If true, will remove the grabbed object from its parent GameObject.")]
         public bool DetachWhenGrabbed = false;
+
         [Tooltip("If true, will remove the grabbed object from its parent GameObject.")]
         public bool ReattachWhenRelease = false;
 
-        [Tooltip("Conditions to be able to grab this object")]
-        public ReactionConditions Conditions;
+        [UnityEngine.Serialization.FormerlySerializedAs("NewConditions")]
+        public ConditionSet Conditions;
 
-        [SerializeField]
-        [Tooltip("Reaction executed when this grabbable is grabbed by a GrabberController")]
-        ReactionList OnGrab;
+        [UnityEngine.Serialization.FormerlySerializedAs("NewOnGrab")]
+        public StateActionSet OnGrab;
 
-        [SerializeField]
-        [Tooltip("Reaction executed when this grabbable is release by a GrabberController")]
-        ReactionList OnRelease;
+        [UnityEngine.Serialization.FormerlySerializedAs("NewOnRelease")]
+        public ActionSet OnRelease;
+
+        //[Tooltip("Conditions to be able to grab this object")]
+        //public ReactionConditions Conditions;
+
+        //[SerializeField]
+        //[Tooltip("Reaction executed when this grabbable is grabbed by a GrabberController")]
+        //ReactionList OnGrab;
+
+        //[SerializeField]
+        //[Tooltip("Reaction executed when this grabbable is release by a GrabberController")]
+        //ReactionList OnRelease;
 
         public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
 
@@ -42,9 +52,18 @@ namespace Nie
         public bool CanGrab(GrabberController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!OnGrab.CanReact(TargetObject, by.gameObject, position)) return false;
-            return true;
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, position);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.CanGrab '{name}' {parameters}");
+                parameters = parameters.WithDebugTrace(new());
+            }
+            bool pass = Conditions.Pass(new Owner(this), parameters);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.CanGrab '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+            }
+            return pass;
         }
         /// <summary>
         /// Call when a GrabberController grabs this grabbable
@@ -52,6 +71,12 @@ namespace Nie
         /// <param name="by"></param>
         public void GrabBy(GrabberController by, Vector3 grabPosition)
         {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, grabPosition);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters}");
+                parameters = parameters.WithDebugTrace(new());
+            }
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Grab By '{by.name}'");
             GrabbedBy = by;
@@ -59,7 +84,11 @@ namespace Nie
                 m_PreviousParent = transform.parent;
             if (DetachWhenGrabbed)
                 transform.parent = null;
-            OnGrab.React(TargetObject, by.gameObject, grabPosition);
+            OnGrab.OnBegin(new Owner(this), parameters);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+            }
         }
 
         /// <summary>
@@ -68,12 +97,24 @@ namespace Nie
         /// <param name="by"></param>
         public void ReleaseBy(GrabberController by)
         {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject);
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters}");
+                parameters = parameters.WithDebugTrace(new());
+            }
             if (ReattachWhenRelease)
                 transform.parent = m_PreviousParent;
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable '{name}' Release By '{by.name}'");
-            OnRelease.React(TargetObject, by.gameObject, transform.position, by.gameObject);
+
+            OnGrab.OnEnd(new Owner(this), parameters);
+            OnRelease.Act(new Owner(this), parameters);
             GrabbedBy = null;
+            if (DebugLog)
+            {
+                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+            }
         }
 
     }

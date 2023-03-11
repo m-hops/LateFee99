@@ -1331,8 +1331,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1351,8 +1349,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1395,8 +1391,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 7437896383131339956}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 7437896383131339956}
@@ -1491,8 +1485,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1523,8 +1515,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1641,8 +1631,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1661,8 +1649,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -1705,8 +1691,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 7437896383131339956}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 7437896383131339956}
@@ -1801,8 +1785,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -1833,8 +1815,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -2645,39 +2625,14 @@ MonoBehaviour:
   DetachWhenGrabbed: 0
   ReattachWhenRelease: 0
   Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 1
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 8141645044368362172}
-      State: Unfocused
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 1
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 5604266364239664298}
-      State: Unfocused
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 1
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 9026650710326955647}
-      State: Unfocused
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 1
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 5754047007268746131}
-      State: Unfocused
-      StateHash: 0
+    Conditions: []
   OnGrab:
-    ReactionReferences: []
+    Actions: []
   OnRelease:
-    ReactionReferences: []
+    Actions: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3811487065871448641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2731,8 +2686,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -2804,8 +2757,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -2877,8 +2828,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -2936,8 +2885,6 @@ MonoBehaviour:
   OnPlayOver:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -2956,8 +2903,6 @@ MonoBehaviour:
   OnRewindOver:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3134,8 +3079,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3154,8 +3097,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3198,8 +3139,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 7437896383131339956}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 7437896383131339956}
@@ -3294,8 +3233,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -3326,8 +3263,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -3532,8 +3467,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 2
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 2
         ThisGameObject: {fileID: 0}
@@ -3552,8 +3485,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 3
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 3
         ThisGameObject: {fileID: 0}
@@ -3603,6 +3534,14 @@ MonoBehaviour:
     m_Bits: 256
   ReactToCollision: 0
   ReactToTrigger: 1
+  Conditions:
+    Conditions:
+    - rid: 5969430209723629693
+  OnBegin:
+    Actions:
+    - rid: 5969430209723629694
+  OnEnd:
+    Actions: []
   StateConditions:
     States:
     - Type: 0
@@ -3615,8 +3554,6 @@ MonoBehaviour:
   OnReactBegin:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 9026650709244245400}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3636,6 +3573,41 @@ MonoBehaviour:
     ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430209723629693
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Empty
+    - rid: 5969430209723629694
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Inserted
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!1 &9026650709399673909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3759,8 +3731,6 @@ MonoBehaviour:
   OnFocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3779,8 +3749,6 @@ MonoBehaviour:
   OnUnfocusReaction:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 1
         ThisGameObject: {fileID: 0}
@@ -3823,8 +3791,6 @@ MonoBehaviour:
   OnKeyDown:
     ReactionReferences:
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 9026650709244245400}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 9026650709244245400}
@@ -3841,8 +3807,6 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - ReactionType: 0
-      ObjectTargetType: 1
-      TargetObject: {fileID: 7437896383131339956}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 7437896383131339956}
@@ -3937,8 +3901,6 @@ MonoBehaviour:
   TriggerOnBegin:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
@@ -3969,8 +3931,6 @@ MonoBehaviour:
   TriggerOnEnd:
     ReactionReferences:
     - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
       TargetObjectReference:
         Type: 0
         ThisGameObject: {fileID: 0}
