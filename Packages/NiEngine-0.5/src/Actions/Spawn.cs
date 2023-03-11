@@ -16,10 +16,11 @@ namespace Nie.Actions
         public override void Act(Owner owner, EventParameters parameters)
         {
             var obj = ObjectToSpawn.GetTargetGameObject(parameters);
+            var pos = SpawnPosition.GetPosition(parameters);
             if (obj)
             {
                 var spawned = GameObject.Instantiate(obj);
-                spawned.transform.position = parameters.Current.TriggerPosition;
+                spawned.transform.position = pos;
             }
         }
     }

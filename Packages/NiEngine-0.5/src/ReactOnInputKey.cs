@@ -34,64 +34,56 @@ namespace Nie
         {
             if(!enabled) return false;
 
-            var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
-            if (DebugLog)
-            {
-                Debug.Log($"[{Time.frameCount}] ReactOnInputKey.CanReact '{name}' {parameters}");
-                parameters = parameters.WithDebugTrace(new());
-            }
-            bool pass = NewConditions.Pass(new Owner(this), parameters);
-            if (DebugLog)
+            var parameters = MakeEvent();
+            bool pass = CanReact(parameters);
+            if (parameters.HasTraces)
                 Debug.Log($"[{Time.frameCount}] ReactOnInputKey.CanReact '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
 
             return pass;
+        }
+        public bool CanReact(EventParameters parameters)
+        {
+            if (!enabled) return false;
+            bool pass = NewConditions.Pass(new Owner(this), parameters);
+            return pass;
+        }
+        EventParameters MakeEvent()
+        {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
+            if (DebugLog)
+                parameters = parameters.WithDebugTrace(new());
+            return parameters;
         }
         void Update()
         {
             if (Input.GetKeyDown(KeyCode))
             {
-
-                if (CanReact())
+                var parameters = MakeEvent();
+                if (CanReact(parameters))
                 {
-                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
-                    if (DebugLog)
-                    {
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyDown '{name}' {parameters}");
-                        parameters = parameters.WithDebugTrace(new());
-                    }
                     NewOnKeyDown.OnBegin(new Owner(this), parameters);
-                    if (DebugLog)
+                    if (parameters.HasTraces)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyDown '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }
             if (Input.GetKeyUp(KeyCode))
             {
-                if (CanReact())
+                var parameters = MakeEvent();
+                if (CanReact(parameters))
                 {
-                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
-                    if (DebugLog)
-                    {
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyUp '{name}' {parameters}");
-                        parameters = parameters.WithDebugTrace(new());
-                    }
                     NewOnKeyDown.OnEnd(new Owner(this), parameters);
                     NewOnKeyUp.Act(new Owner(this), parameters);
-                    if (DebugLog)
+                    if (parameters.HasTraces)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyUp '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }
             if (Input.GetKey(KeyCode))
             {
-                if (CanReact())
+                var parameters = MakeEvent();
+                if (CanReact(parameters))
                 {
-                    var parameters = EventParameters.Trigger(gameObject, gameObject, TriggerObject, transform.position);
-                    if (DebugLog)
-                    {
-                        Debug.Log($"[{Time.frameCount}] ReactOnInputKey.WhenKeyPressed '{name}' {parameters}");
-                        parameters = parameters.WithDebugTrace(new());
-                    }
                     NewWhenKeyPressed.Act(new Owner(this), parameters);
-                    if (DebugLog)
+                    if (parameters.HasTraces)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey.WhenKeyPressed '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
                 }
             }

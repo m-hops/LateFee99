@@ -58,7 +58,7 @@ namespace Nie
         public ParameterSet OnBegin;
 
         public System.Text.StringBuilder DebugTrace;
-
+        public bool HasTraces => DebugTrace != null && DebugTrace.Length > 0;
 
         public EventParameters WithDebugTrace(System.Text.StringBuilder stringBuilder)
         {

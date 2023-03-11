@@ -293,7 +293,7 @@ MonoBehaviour:
     ReactionReferences:
     - ReactionType: 0
       TargetObjectReference:
-        Type: 0
+        Type: 1
         ThisGameObject: {fileID: 0}
         ObjectType:
           TypeName: 
@@ -311,7 +311,7 @@ MonoBehaviour:
     ReactionReferences:
     - ReactionType: 0
       TargetObjectReference:
-        Type: 0
+        Type: 1
         ThisGameObject: {fileID: 0}
         ObjectType:
           TypeName: 
@@ -350,37 +350,6 @@ MonoBehaviour:
     Actions: []
   NewOnKeyUp:
     Actions: []
-  Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Focused
-      StateHash: 0
-  OnKeyDown:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 0
-        ThisGameObject: {fileID: 2058588465420848895}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Spawn
-      ReactionName: Spawn
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  WhenKeyPressed:
-    ReactionReferences: []
-  OnKeyUp:
-    ReactionReferences: []
   DebugLog: 0
   references:
     version: 2
