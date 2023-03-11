@@ -83,6 +83,12 @@ namespace Nie
             copy.OnBegin.TriggerPosition = begin.Current.TriggerPosition;
             return copy;
         }
+        public EventParameters WithBegin(EventParameters.ParameterSet begin)
+        {
+            var copy = this;
+            copy.OnBegin = begin;
+            return copy;
+        }
         public EventParameters WithOnBeginTrigger()
         {
             var copy = this;

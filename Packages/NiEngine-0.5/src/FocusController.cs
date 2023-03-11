@@ -460,7 +460,7 @@ namespace Nie
             sendToRigidBody = false;
             foreach (var f in gameObject.GetComponents<ReactOnFocus>())
             {
-                if (f.CanFocus(this, FocusPosition))
+                if (f.CanReact(this, FocusPosition))
                 {
                     canFocus = true;
                 }

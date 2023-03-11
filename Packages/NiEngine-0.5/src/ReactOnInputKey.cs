@@ -27,7 +27,7 @@ namespace Nie
         public ActionSet NewOnKeyUp;
 
         public bool DebugLog;
-
+        bool m_ReactedOnDown;
         public GameObject TargetObject => gameObject;
         public GameObject TriggerObject => TriggerFromMainCamera ? Camera.main.gameObject : gameObject;
         public bool CanReact()
@@ -61,6 +61,7 @@ namespace Nie
                 var parameters = MakeEvent();
                 if (CanReact(parameters))
                 {
+                    m_ReactedOnDown = true;
                     NewOnKeyDown.OnBegin(new Owner(this), parameters);
                     if (parameters.HasTraces)
                         Debug.Log($"[{Time.frameCount}] ReactOnInputKey.OnKeyDown '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
@@ -69,8 +70,9 @@ namespace Nie
             if (Input.GetKeyUp(KeyCode))
             {
                 var parameters = MakeEvent();
-                if (CanReact(parameters))
+                if (m_ReactedOnDown || CanReact(parameters))
                 {
+                    m_ReactedOnDown = false;
                     NewOnKeyDown.OnEnd(new Owner(this), parameters);
                     NewOnKeyUp.Act(new Owner(this), parameters);
                     if (parameters.HasTraces)

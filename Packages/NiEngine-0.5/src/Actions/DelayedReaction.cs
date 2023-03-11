@@ -14,6 +14,7 @@ namespace Nie.Actions
         public float Seconds;
         public bool Repeat;
 
+        // TODO change to ActionSet
         public ReactionList Reaction;
 
         [Tooltip("Will be set to Seconds when the state begin")]
@@ -25,7 +26,7 @@ namespace Nie.Actions
 
             if (CurrentlyRemaining >= 0 && nextTime < 0)
             {
-                Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name} {parameters}");
+                //Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name} {parameters}");
                 Reaction.React(parameters);
                 if (Repeat)
                     CurrentlyRemaining = Seconds;

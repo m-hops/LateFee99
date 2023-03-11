@@ -18,7 +18,7 @@ namespace Nie.Actions
         }
         public void OnEnd(Owner owner, EventParameters parameters)
         {
-            Reaction.ReactOnEnd(parameters.WithOnBeginTrigger());
+            Reaction.ReactOnEnd(parameters);
         }
     }
 }

@@ -13,41 +13,56 @@ namespace Nie
         public bool ShowHand = true;
         //public bool ReactOnColliderObject = true;
         public bool SendFocusToRigidBodyObject = true;
-        [Header("Conditions:")]
 
-        [Tooltip("Conditions to execute the focus reaction")]
-        public ReactionConditions Conditions;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewConditions")]
+        public ConditionSet NewConditions;
 
-        [Tooltip("Reaction executed when a FocusController looks at this GameObject.")]
-        public ReactionList OnFocusReaction;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewOnFocus")]
+        public StateActionSet NewOnFocus;
 
-        [Tooltip("Reaction executed when a FocusController stops looking at this focused GameObject.")]
-        public ReactionList OnUnfocusReaction;
+        //[UnityEngine.Serialization.FormerlySerializedAs("NewOnUnfocus")]
+        public ActionSet NewOnUnfocus;
 
-        [Header("Run-Time state:")]
-        [Tooltip("Object that triggered the focus. Used as 'previous trigger object'")]
-        public GameObject FocusedByTriggerObject;
-        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
-        public bool CanFocus(FocusController by, Vector3 position)
+        EventParameters MakeEvent(GameObject trigger, Vector3 position)
+        {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, trigger, position);
+            if (DebugLog)
+                parameters = parameters.WithDebugTrace(new());
+            return parameters;
+        }
+
+        public bool CanReact(FocusController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist:null)) return false;
-            if (!OnFocusReaction.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
-            return true;
+            var parameters = MakeEvent(by.gameObject, position);
+            bool pass = CanReact(parameters);
+            if (parameters.HasTraces)
+                Debug.Log($"[{Time.frameCount}] ReactOnFocus.CanReact '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+            return pass;
         }
+
+        public bool CanReact(EventParameters parameters)
+        {
+            if (!enabled) return false;
+            bool pass = NewConditions.Pass(new Owner(this), parameters);
+            return pass;
+        }
+
         public void Focus(FocusController by, Vector3 position)
         {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Focused By '{by.name}'", this);
-            if(OnFocusReaction.TryReact(gameObject, TargetObject, by.gameObject, position))
-                FocusedByTriggerObject = by.gameObject;
+            var parameters = MakeEvent(by.gameObject, position);
+            NewOnFocus.OnBegin(new Owner(this), parameters);
+            if (parameters.HasTraces)
+                Debug.Log($"[{Time.frameCount}] ReactOnFocus.OnFocus '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
         }
+
         public void Unfocus(FocusController by, Vector3 position)
         {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Unfocused By '{by.name}'", this);
-            OnUnfocusReaction.TryReact(gameObject, TargetObject, by.gameObject, position, previousTriggerObject: FocusedByTriggerObject);
-            FocusedByTriggerObject = null;
+            var parameters = MakeEvent(by.gameObject, position);
+            NewOnFocus.OnEnd(new Owner(this), parameters);
+            NewOnUnfocus.Act(new Owner(this), parameters);
+            if (parameters.HasTraces)
+                Debug.Log($"[{Time.frameCount}] ReactOnFocus.OnUnfocus '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
         }
     }
 }

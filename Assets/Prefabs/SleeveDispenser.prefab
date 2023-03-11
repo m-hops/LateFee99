@@ -285,47 +285,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
+  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
+  NewConditions:
+    Conditions: []
+  NewOnFocus:
+    Actions:
+    - rid: 5969430306130755621
+  NewOnUnfocus:
+    Actions: []
   Conditions:
     States: []
   OnFocusReaction:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: 
-      ReactionName: Focused
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
+    ReactionReferences: []
   OnUnfocusReaction:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: 
-      ReactionName: Unfocused
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  FocusedByTriggerObject: {fileID: 0}
+    ReactionReferences: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755621
+      type: {class: ReactionState, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reaction:
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          OnBegin: Focused
+          OnEnd: Unfocused
 --- !u!114 &2058588465564964656
 MonoBehaviour:
   m_ObjectHideFlags: 0

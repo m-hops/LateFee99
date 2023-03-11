@@ -1970,8 +1970,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
+  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
+  NewConditions:
+    Conditions:
+    - rid: 5969430306130755616
+    - rid: 5969430306130755619
+    - rid: 5969430306130755618
+    - rid: 5969430306130755617
+  NewOnFocus:
+    Actions:
+    - rid: 5969430306130755620
+  NewOnUnfocus:
+    Actions:
+    - rid: 5969430306130755622
   Conditions:
     States:
     - Type: 0
@@ -2038,7 +2051,91 @@ MonoBehaviour:
       EventTrigger:
         m_PersistentCalls:
           m_Calls: []
-  FocusedByTriggerObject: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5969430306130755616
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Released
+    - rid: 5969430306130755617
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: Done
+    - rid: 5969430306130755618
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: FreeLoc
+    - rid: 5969430306130755619
+      type: {class: ConditionActiveState, ns: Nie.Conditions, asm: Re0.51}
+      data:
+        Target:
+          Type: 1
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        State: CloseWithVHS
+    - rid: 5969430306130755620
+      type: {class: ReactionState, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reaction:
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          OnBegin: Focused
+          OnEnd: Unfocused
+    - rid: 5969430306130755622
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Unfocused
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!114 &2258926774179583231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2067,65 +2164,6 @@ MonoBehaviour:
     Actions: []
   NewOnKeyUp:
     Actions: []
-  Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: CloseWithVHS
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: FreeLoc
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Focused
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Done
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Released
-      StateHash: 0
-  OnKeyDown:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Opening
-      ReactionName: Opening
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  WhenKeyPressed:
-    ReactionReferences: []
-  OnKeyUp:
-    ReactionReferences: []
   DebugLog: 0
   references:
     version: 2

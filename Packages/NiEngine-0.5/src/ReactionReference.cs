@@ -1,3 +1,4 @@
+//#define NIE_DEBUG_REACTIONS
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,9 @@ namespace Nie
                 case Type.Reaction:
                     var obj = TargetObjectReference.GetTargetGameObject(parameters);
                     parameters = parameters.WithSelf(obj);
+#if NIE_DEBUG_REACTIONS
                     Debug.Log($"Trigger Reaction {ReactionName}{parameters}.");
+#endif
                     if (obj != null)
                         return React(ReactionName, parameters);
                     return false;
@@ -197,7 +200,9 @@ namespace Nie
                     Debug.Assert(parameters.Self != null);
                     var obj = TargetObjectReference.GetTargetGameObject(parameters);
                     parameters = parameters.WithSelf(obj);
+#if NIE_DEBUG_REACTIONS
                     Debug.Log($"Trigger Reaction (old) {ReactionName}{parameters}.");
+#endif
                     if (obj != null)
                         return React(from, obj, ReactionName, triggerObject, position);
 
@@ -332,7 +337,9 @@ namespace Nie
             Debug.Assert(parameters.Self != null);
             var obj = TargetObjectReference.GetTargetGameObject(parameters);
             parameters = parameters.WithSelf(obj);
+#if NIE_DEBUG_REACTIONS
             Debug.Log($"Trigger Reaction OnBegin {OnBegin}{parameters}.");
+#endif
             if (obj != null)
                 return ReactionReference.React(OnBegin, parameters);
             return false;
@@ -342,7 +349,9 @@ namespace Nie
             Debug.Assert(parameters.Self != null);
             var obj = TargetObjectReference.GetTargetGameObject(parameters);
             parameters = parameters.WithSelf(obj);
+#if NIE_DEBUG_REACTIONS
             Debug.Log($"Trigger Reaction OnEnd {OnEnd}{parameters}.");
+#endif
             if (obj != null)
                 return ReactionReference.React(OnEnd, parameters);
             return false;
