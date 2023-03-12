@@ -1,244 +1,258 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using System.Linq;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.Events;
+//using System.Linq;
 
-namespace Nie
-{
-    [AddComponentMenu("Nie/Object/ReactOnCollision")]
-    [System.Obsolete]
-    public class ReactOnCollision : MonoBehaviour
-    {
-        #region Data
-        [Header("Condition:")]
+//namespace Nie
+//{
+//    [AddComponentMenu("Nie/Object/ReactOnCollision")]
+//    [System.Obsolete]
+//    public class ReactOnCollision : MonoBehaviour
+//    {
+//        #region Data
+//        [Header("Condition:")]
 
-        [Tooltip("Time in second to delay the reaction.")]
-        public float ReactionDelay = 0;
+//        [Tooltip("Time in second to delay the reaction.")]
+//        public float ReactionDelay = 0;
 
-        [Tooltip("If check and reaction is delayed, the 2 objects must be touching for the full duration of the delay.")]
-        public bool MustTouchDuringDelay;
+//        [Tooltip("If check and reaction is delayed, the 2 objects must be touching for the full duration of the delay.")]
+//        public bool MustTouchDuringDelay;
 
-        [Tooltip("Once Triggered, cannot triggered again within the cooldown period, in seconds.")]
-        public float ReactionCooldown = 0;
+//        [Tooltip("Once Triggered, cannot triggered again within the cooldown period, in seconds.")]
+//        public float ReactionCooldown = 0;
 
-        [Tooltip("If reaction is delayed, do not trigger new reactions during the delay.")]
-        public bool SingleAtOnce = false;
+//        [Tooltip("If reaction is delayed, do not trigger new reactions during the delay.")]
+//        public bool SingleAtOnce = false;
 
-        [Tooltip("Only react to collision with objects of these layers")]
-        public LayerMask ObjectLayerMask = -1;
+//        [Tooltip("Only react to collision with objects of these layers")]
+//        public LayerMask ObjectLayerMask = -1;
 
-        public bool ReactToCollision = true;
-        public bool ReactToTrigger = true;
-
-
-        [Tooltip("Conditions to touch this touchable")]
-        public ReactionConditions Conditions;
-
-        [Tooltip("Reaction executed when this object starts colliding with another object.")]
-        public ReactionList ReactionOnCollisionEnter;
-
-        [Tooltip("Reaction executed when this object ends colliding with another object.")]
-        public ReactionList ReactionOnCollisionExit;
-
-        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
-        public bool CanReact(ReactOnCollision by, Vector3 position)
-        {
-            if (!enabled) return false;
-            //if (!NewConditions.Pass(new Owner(this), EventParameters.Trigger(gameObject, by.gameObject, position))) return false;
-            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!ReactionOnCollisionEnter.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
-            return true;
-        }
-
-        public void Touch(TouchController by, Vector3 position)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Touched By '{by.name}'");
-            ReactionOnCollisionEnter.TryReact(gameObject, TargetObject, by.gameObject, position);
-        }
-
-        public void Release(TouchController by, Vector3 position)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Released By '{by.name}'");
-            ReactionOnCollisionExit.TryReact(gameObject, TargetObject, by.gameObject, position);
-        }
+//        public bool ReactToCollision = true;
+//        public bool ReactToTrigger = true;
 
 
+//        public ConditionSet Conditions;
 
-        [Tooltip("Print to console events caused by this ReactOnCollision")]
-        public bool DebugLog = false;
+//        public StateActionSet OnCollisionBegin;
 
-        // Keep track of what ReactiveObject are currently touching
-        List<GameObject> m_TouchingWith = new();
+//        public ActionSet OnCollisionEnd;
 
+//        //[Tooltip("Conditions to touch this touchable")]
+//        //public ReactionConditions Conditions;
 
-        float m_CooldownTimer;
+//        //[Tooltip("Reaction executed when this object starts colliding with another object.")]
+//        //public ReactionList ReactionOnCollisionEnter;
 
-        /// <summary>
-        /// set only if SingleAtOnce is true
-        /// </summary>
-        GameObject m_CurrentSingleReaction;
+//        //[Tooltip("Reaction executed when this object ends colliding with another object.")]
+//        //public ReactionList ReactionOnCollisionExit;
 
-        [System.Serializable]
-        public class DelayedReaction
-        {
-            public GameObject Other;
-            public Vector3 Position;
-            public float TimerCountdown;
-            public DelayedReaction(GameObject other, Vector3 position, float delay)
-            {
-                Other = other;
-                Position = position;
-                TimerCountdown = delay;
-            }
-            public bool Tick()
-            {
-                if (TimerCountdown >= 0)
-                {
-                    TimerCountdown -= Time.deltaTime;
-                    return TimerCountdown < 0;
-                }
-                return false;
-            }
-        }
+//        public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
+//        public bool CanReact(ReactOnCollision by, Vector3 position)
+//        {
+//            if (!enabled) return false;
 
-        // Keep track of all reactions currently on a delay
-        List<DelayedReaction> m_DelayedReactions = new();
-#endregion
+//            if (!Conditions.Pass(new Owner(this), EventParameters.Trigger(gameObject, gameObject, other.gameObject, position))) return false;
 
-        public void React(DelayedReaction delayedReaction)
-        {
+//            return true;
+//        }
 
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'", this);
+//        public void Touch(TouchController by, Vector3 position)
+//        {
+//            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, position);
+//            if (DebugLog)
+//                parameters = parameters.WithDebugTrace(new());
+//            OnCollisionBegin.OnBegin(new Owner(this), parameters);
+//            if (DebugLog)
+//                Debug.Log($"[{Time.frameCount}] ReactOnCollision.TouchBegin '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
 
-            ReactionOnCollisionEnter.React(gameObject, TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
+//        }
 
-            if (ReactionCooldown > 0)
-                m_CooldownTimer = ReactionCooldown;
-        }
-
-        public bool RequestReaction(GameObject other, Vector3 position)
-        {
-            if (!enabled) return false;
-            if (m_CooldownTimer > 0) return false;
-            if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
-            if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
-            if (!Conditions.CanReactAll(gameObject, other, position, previousTriggerObjectIfExist: null)) return false;
-            if (!ReactionOnCollisionEnter.CanReact(gameObject, TargetObject, other, position)) return false;
-            if (SingleAtOnce) m_CurrentSingleReaction = other;
-            return true;
-        }
-
-
-        private void Update()
-        {
-            // Update all reaction on delay.
-            m_DelayedReactions.RemoveAll(reaction =>
-            {
-                // abort the reaction if the other object was deleted
-                if (reaction.Other == null)
-                    return true;
-
-                if (reaction.Tick())
-                {
-                    React(reaction);
-                    return true;
-                }
-                return false;
-            });
+//        public void Release(TouchController by, Vector3 position)
+//        {
+//            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject);
+//            if (DebugLog)
+//                parameters = parameters.WithDebugTrace(new());
+//            OnCollisionBegin.OnEnd(new Owner(this), parameters);
+//            OnCollisionEnd.Act(new Owner(this), parameters);
+//            if (DebugLog)
+//                Debug.Log($"[{Time.frameCount}] ReactOnCollision.TouchEnd '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+//        }
 
 
 
-            if (m_CurrentSingleReaction != null && m_DelayedReactions.Count == 0)
-                m_CurrentSingleReaction = null;
-        }
+//        [Tooltip("Print to console events caused by this ReactOnCollision")]
+//        public bool DebugLog = false;
 
-        void LateUpdate()
-        {
-            // all GameObject in TouchingWith are still touching this frame
-            foreach (var other in m_TouchingWith)
-                Touching(other);
-        }
+//        // Keep track of what ReactiveObject are currently touching
+//        List<GameObject> m_TouchingWith = new();
 
-        void OnDestroy()
-        {
-            foreach (var other in m_TouchingWith)
-                EndTouch(other);
-        }
 
-#region Touching state
-        void BeginTouch(GameObject other, Vector3 position)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' begins touching '{other.name}'", this);
+//        float m_CooldownTimer;
 
-            m_TouchingWith.Add(other);
+//        /// <summary>
+//        /// set only if SingleAtOnce is true
+//        /// </summary>
+//        GameObject m_CurrentSingleReaction;
 
-            var reaction = new DelayedReaction(other, position, ReactionDelay);
-            if (ReactionDelay == 0)
-                React(reaction);
-            else
-                m_DelayedReactions.Add(reaction);
+//        [System.Serializable]
+//        public class DelayedReaction
+//        {
+//            public GameObject Other;
+//            public Vector3 Position;
+//            public float TimerCountdown;
+//            public DelayedReaction(GameObject other, Vector3 position, float delay)
+//            {
+//                Other = other;
+//                Position = position;
+//                TimerCountdown = delay;
+//            }
+//            public bool Tick()
+//            {
+//                if (TimerCountdown >= 0)
+//                {
+//                    TimerCountdown -= Time.deltaTime;
+//                    return TimerCountdown < 0;
+//                }
+//                return false;
+//            }
+//        }
 
-        }
+//        // Keep track of all reactions currently on a delay
+//        List<DelayedReaction> m_DelayedReactions = new();
+//#endregion
 
-        void Touching(GameObject other)
-        {
-        }
+//        public void React(DelayedReaction delayedReaction)
+//        {
 
-        void EndTouch(GameObject other)
-        {
-            if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' stopped touching '{other.name}'", this);
+//            if (DebugLog)
+//                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' reacts to '{delayedReaction.Other.name}'", this);
 
-        }
+//            ReactionOnCollisionEnter.React(gameObject, TargetObject, delayedReaction.Other.gameObject, delayedReaction.Position);
 
-        bool EndTouchIfTouching(GameObject other)
-        {
-            // if reactions require the objects to always touch during the delay, remove all current reaction with the other object.
-            if (MustTouchDuringDelay)
-                m_DelayedReactions.RemoveAll(reaction => reaction.Other == other);
+//            if (ReactionCooldown > 0)
+//                m_CooldownTimer = ReactionCooldown;
+//        }
 
-            if (m_TouchingWith.Remove(other))
-            {
-                EndTouch(other);
-                return true;
-            }
-            return false;
-        }
-#endregion
+//        public bool RequestReaction(GameObject other, Vector3 position)
+//        {
+//            if (!enabled) return false;
+//            if (m_CooldownTimer > 0) return false;
+//            if (SingleAtOnce && m_CurrentSingleReaction != null) return false;
+//            if ((ObjectLayerMask.value & (1 << other.layer)) == 0) return false;
+//            if (!Conditions.CanReactAll(gameObject, other, position, previousTriggerObjectIfExist: null)) return false;
+//            if (!ReactionOnCollisionEnter.CanReact(gameObject, TargetObject, other, position)) return false;
+//            if (SingleAtOnce) m_CurrentSingleReaction = other;
+//            return true;
+//        }
 
-#region Collision Callbacks
-        public void OnCollisionEnter(Collision collision)
-        {
-            if (!enabled) return;
-            if (!ReactToCollision) return;
-            var position = collision.GetContact(0).point;
-            if (RequestReaction(collision.gameObject, position))
-                BeginTouch(collision.gameObject, position);
-        }
 
-        public void OnCollisionExit(Collision collision)
-        {
-            if (!ReactToCollision) return;
-            EndTouchIfTouching(collision.gameObject);
-        }
+//        private void Update()
+//        {
+//            // Update all reaction on delay.
+//            m_DelayedReactions.RemoveAll(reaction =>
+//            {
+//                // abort the reaction if the other object was deleted
+//                if (reaction.Other == null)
+//                    return true;
 
-        private void OnTriggerEnter(Collider otherCollider)
-        {
-            if (!ReactToTrigger) return;
-            if (RequestReaction(otherCollider.gameObject, transform.position))
-                BeginTouch(otherCollider.gameObject, transform.position);
-        }
-        private void OnTriggerEnterExit(Collider otherCollider)
-        {
-            if (!ReactToTrigger) return;
-            EndTouchIfTouching(otherCollider.gameObject);
-        }
-#endregion
-    }
+//                if (reaction.Tick())
+//                {
+//                    React(reaction);
+//                    return true;
+//                }
+//                return false;
+//            });
 
-}
+
+
+//            if (m_CurrentSingleReaction != null && m_DelayedReactions.Count == 0)
+//                m_CurrentSingleReaction = null;
+//        }
+
+//        void LateUpdate()
+//        {
+//            // all GameObject in TouchingWith are still touching this frame
+//            foreach (var other in m_TouchingWith)
+//                Touching(other);
+//        }
+
+//        void OnDestroy()
+//        {
+//            foreach (var other in m_TouchingWith)
+//                EndTouch(other);
+//        }
+
+//#region Touching state
+//        void BeginTouch(GameObject other, Vector3 position)
+//        {
+//            if (DebugLog)
+//                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' begins touching '{other.name}'", this);
+
+//            m_TouchingWith.Add(other);
+
+//            var reaction = new DelayedReaction(other, position, ReactionDelay);
+//            if (ReactionDelay == 0)
+//                React(reaction);
+//            else
+//                m_DelayedReactions.Add(reaction);
+
+//        }
+
+//        void Touching(GameObject other)
+//        {
+//        }
+
+//        void EndTouch(GameObject other)
+//        {
+//            if (DebugLog)
+//                Debug.Log($"[{Time.frameCount}] ReactOnCollision '{name}' stopped touching '{other.name}'", this);
+
+//        }
+
+//        bool EndTouchIfTouching(GameObject other)
+//        {
+//            // if reactions require the objects to always touch during the delay, remove all current reaction with the other object.
+//            if (MustTouchDuringDelay)
+//                m_DelayedReactions.RemoveAll(reaction => reaction.Other == other);
+
+//            if (m_TouchingWith.Remove(other))
+//            {
+//                EndTouch(other);
+//                return true;
+//            }
+//            return false;
+//        }
+//#endregion
+
+//#region Collision Callbacks
+//        public void OnCollisionEnter(Collision collision)
+//        {
+//            if (!enabled) return;
+//            if (!ReactToCollision) return;
+//            var position = collision.GetContact(0).point;
+//            if (RequestReaction(collision.gameObject, position))
+//                BeginTouch(collision.gameObject, position);
+//        }
+
+//        public void OnCollisionExit(Collision collision)
+//        {
+//            if (!ReactToCollision) return;
+//            EndTouchIfTouching(collision.gameObject);
+//        }
+
+//        private void OnTriggerEnter(Collider otherCollider)
+//        {
+//            if (!ReactToTrigger) return;
+//            if (RequestReaction(otherCollider.gameObject, transform.position))
+//                BeginTouch(otherCollider.gameObject, transform.position);
+//        }
+//        private void OnTriggerEnterExit(Collider otherCollider)
+//        {
+//            if (!ReactToTrigger) return;
+//            EndTouchIfTouching(otherCollider.gameObject);
+//        }
+//#endregion
+//    }
+
+//}

@@ -53,18 +53,6 @@ namespace Nie
         public ActionSet OnEnd;
 
 
-
-        [Tooltip("Conditions to execute this reaction")]
-        [FormerlySerializedAs("Conditions")]
-        public ReactionConditions StateConditions;
-
-        [Tooltip("Reaction executed when a valid pair of ReactOnConllisionPair begins to collide.")]
-        [FormerlySerializedAs("OnReact")]
-        public ReactionList OnReactBegin;
-        [Tooltip("Reaction executed when a valid pair of ReactOnConllisionPair stop colliding.")]
-        public ReactionList OnReactEnd;
-
-
         [Header("Debug:")]
         [Tooltip("Print to console events caused by this ReactOnCollisionPair")]
         public bool DebugLog = false;
@@ -109,7 +97,7 @@ namespace Nie
                     Debug.Log($"[{Time.frameCount}] ReactOnCollisionPair '{Self.name}.{Self.ThisReactionName}' collision begin with '{Other.name}.{Other.ThisReactionName}'.", Self);
 
                 Self.OnBegin.OnBegin(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
-                //from.OnReactBegin.React(from.TargetObject, Other.gameObject, Position);
+
 
                 if (Self.ReactionCooldown > 0)
                 {
@@ -125,7 +113,6 @@ namespace Nie
 
                 Self.OnBegin.OnEnd(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
                 Self.OnEnd.Act(new Owner(Self), EventParameters.Trigger(Self.gameObject, Self.gameObject, Other.gameObject, Position));
-                //from.OnReactEnd.React(from.TargetObject, Other.gameObject, Position, Other.gameObject);
             }
         }
         // Keep track of all Reaction currently on a delay
@@ -141,8 +128,6 @@ namespace Nie
 
             if (!Conditions.Pass(new Owner(this), EventParameters.Trigger(gameObject, gameObject, other.gameObject, position))) return false;
 
-            //if (!StateConditions.CanReactAll(gameObject, other.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            //if (!OnReactBegin.CanReact(TargetObject, other.gameObject, position)) return false;
             return true;
         }
         public bool RequestReaction(ReactOnCollisionPair other, Vector3 position)

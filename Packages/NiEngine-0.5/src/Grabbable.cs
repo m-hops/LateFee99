@@ -43,10 +43,7 @@ namespace Nie
             if (!enabled) return false;
             var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, position);
             if (DebugLog)
-            {
-                Debug.Log($"[{Time.frameCount}] Grabbable.CanGrab '{name}' {parameters}");
                 parameters = parameters.WithDebugTrace(new());
-            }
             bool pass = Conditions.Pass(new Owner(this), parameters);
             if (DebugLog)
                 Debug.Log($"[{Time.frameCount}] Grabbable.CanGrab '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
@@ -60,10 +57,7 @@ namespace Nie
         {
             var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, grabPosition);
             if (DebugLog)
-            {
-                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters}");
                 parameters = parameters.WithDebugTrace(new());
-            }
             GrabbedBy = by;
             if(ReattachWhenRelease)
                 m_PreviousParent = transform.parent;
@@ -82,10 +76,7 @@ namespace Nie
         {
             var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject);
             if (DebugLog)
-            {
-                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters}");
                 parameters = parameters.WithDebugTrace(new());
-            }
             if (ReattachWhenRelease)
                 transform.parent = m_PreviousParent;
 

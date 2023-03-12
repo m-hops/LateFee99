@@ -11,36 +11,49 @@ namespace Nie
     {
         public bool DebugLog;
 
-        [Tooltip("Conditions to touch this touchable")]
-        public ReactionConditions Conditions;
+        public ConditionSet Conditions;
 
-        [Tooltip("Reaction executed when a TouchController starts touching this object.")]
-        public ReactionList OnTouch;
+        public StateActionSet OnTouch;
 
-        [Tooltip("Reaction executed when a TouchController stops touching this object.")]
-        public ReactionList OnRelease;
+        public ActionSet OnRelease;
+
+
 
         public GameObject TargetObject => gameObject;// ThisObject != null ? TargetObject : gameObject;
         public bool CanTouch(TouchController by, Vector3 position)
         {
             if (!enabled) return false;
-            if (!Conditions.CanReactAll(gameObject, by.gameObject, position, previousTriggerObjectIfExist: null)) return false;
-            if (!OnTouch.CanReact(gameObject, TargetObject, by.gameObject, position)) return false;
+
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, position);
+            if (DebugLog)
+                parameters = parameters.WithDebugTrace(new());
+            bool pass = Conditions.Pass(new Owner(this), parameters);
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] ReactOnTouch.CanTouch '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+
             return true;
         }
 
         public void Touch(TouchController by, Vector3 position)
         {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject, position);
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Touched By '{by.name}'");
-            OnTouch.TryReact(gameObject, TargetObject, by.gameObject, position);
+                parameters = parameters.WithDebugTrace(new());
+            OnTouch.OnBegin(new Owner(this), parameters);
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] ReactOnTouch.Touch '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
+
         }
 
         public void Release(TouchController by, Vector3 position)
         {
+            var parameters = EventParameters.Trigger(gameObject, gameObject, by.gameObject);
             if (DebugLog)
-                Debug.Log($"[{Time.frameCount}] Touchable '{name}' Released By '{by.name}'");
-            OnRelease.TryReact(gameObject, TargetObject, by.gameObject, position);
+                parameters = parameters.WithDebugTrace(new());
+            OnTouch.OnEnd(new Owner(this), parameters);
+            OnRelease.Act(new Owner(this), parameters);
+            if (DebugLog)
+                Debug.Log($"[{Time.frameCount}] Grabbable.GrabBy '{name}' {parameters} trace:\r\n{parameters.DebugTrace}");
         }
 
     }
