@@ -10,20 +10,23 @@ using UnityEngine.UIElements;
 
 namespace Nie
 {
-#if UNITY_EDITOR
     [UnityEditor.InitializeOnLoad]
     public static class EditorMenu
     {
 
-        private const string DrawStatesGizmosName = "Tools/NiEngine/Draw States/Gizmos";
-        private const string DrawStatesLabelName = "Tools/NiEngine/Draw States/Label";
         public static bool DrawStatesGizmos;
         public static bool DrawStatesLabel;
+        public static bool LogAllEvents;
 
+#if UNITY_EDITOR
+        private const string DrawStatesGizmosName = "Tools/NiEngine/Debug/Gizmos";
+        private const string DrawStatesLabelName = "Tools/NiEngine/Debug/Label";
+        private const string LogAllEventsName = "Tools/NiEngine/Debug/Log All Events";
         static EditorMenu()
         {
             DrawStatesGizmos = UnityEditor.EditorPrefs.GetBool(DrawStatesGizmosName, true);
             DrawStatesLabel = UnityEditor.EditorPrefs.GetBool(DrawStatesLabelName, false);
+            LogAllEvents = UnityEditor.EditorPrefs.GetBool(LogAllEventsName, false);
             UnityEditor.EditorApplication.delayCall += () => SetDrawStates(DrawStatesGizmos, DrawStatesLabel);
         }
 
@@ -48,10 +51,19 @@ namespace Nie
 
         }
 
+        [UnityEditor.MenuItem(LogAllEventsName)]
+        private static void SetLogAllEvents()
+        {
+            LogAllEvents = !LogAllEvents;
+            UnityEditor.Menu.SetChecked(LogAllEventsName, LogAllEvents);
+            UnityEditor.EditorPrefs.SetBool(LogAllEventsName, LogAllEvents);
+        }
+
         public static GameObject DebugLabelAsset = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Packages/NiEngine/src/Editor/Assets/label.prefab", typeof(GameObject));
-    }
 
 #endif
+    }
+
 }
 
 namespace Nie.Editor
@@ -175,7 +187,7 @@ namespace Nie.Editor
             DropdownField.RegisterValueChangedCallback(x =>
             {
                 int index = choices.FindIndex(y => y == x.newValue);
-                Debug.Log(index);
+                //Debug.Log(index);
                 var t = choicesType[index];
                 property.isExpanded = true;
                 
@@ -209,41 +221,41 @@ namespace Nie.Editor
             return veRoot;
         }
 
-        //// TODO can this be removed?
-        //public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        //{
-        //    float h = 0;
+        // TODO can this be removed?
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            float h = 0;
 
-        //    h += EditorGUIUtility.singleLineHeight;
-        //    if (property.managedReferenceValue != null && property.isExpanded)
-        //        h += EditorGUI.GetPropertyHeight(property);
-        //    return h;
-        //}
+            h += EditorGUIUtility.singleLineHeight;
+            if (property.managedReferenceValue != null && property.isExpanded)
+                h += EditorGUI.GetPropertyHeight(property);
+            return h;
+        }
 
-        //public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        //{
-        //    bool showPrefixLabel=true;
-        //    Type baseType = fieldInfo.FieldType;
-        //    if (attribute is DerivedClassPicker derivedClassPicker)
-        //    {
-        //        baseType = derivedClassPicker.BaseType;
-        //        showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
-        //    }
-            
-        //    Rect dropdownRect = position;
-        //    if (showPrefixLabel)
-        //    {
-        //        EditorGUI.PrefixLabel(position, new GUIContent(property.displayName));
-        //        dropdownRect.x += EditorGUIUtility.labelWidth + 2;
-        //        dropdownRect.width -= EditorGUIUtility.labelWidth + 2;
-        //    }
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            bool showPrefixLabel = true;
+            Type baseType = fieldInfo.FieldType;
+            if (attribute is DerivedClassPicker derivedClassPicker)
+            {
+                baseType = derivedClassPicker.BaseType;
+                showPrefixLabel = derivedClassPicker.ShowPrefixLabel;
+            }
 
-        //    dropdownRect.height = EditorGUIUtility.singleLineHeight;
-        //    RectLayout.DerivedClassPicker(dropdownRect, baseType, property);
-            
-        //    if (property.managedReferenceValue != null)
-        //        EditorGUI.PropertyField(position, property, GUIContent.none, true);
-        //}
+            Rect dropdownRect = position;
+            if (showPrefixLabel)
+            {
+                EditorGUI.PrefixLabel(position, new GUIContent(property.displayName));
+                dropdownRect.x += EditorGUIUtility.labelWidth + 2;
+                dropdownRect.width -= EditorGUIUtility.labelWidth + 2;
+            }
+
+            dropdownRect.height = EditorGUIUtility.singleLineHeight;
+            DerivedClassPicker(dropdownRect, baseType, property);
+
+            if (property.managedReferenceValue != null)
+                EditorGUI.PropertyField(position, property, GUIContent.none, true);
+        }
 
 
         static Dictionary<Type, Dictionary<Type, string>> _DerivedClass;

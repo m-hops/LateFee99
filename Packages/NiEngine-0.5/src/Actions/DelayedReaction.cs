@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace Nie.Actions
 {
-
+    [Obsolete]
     [Serializable, ClassPickerName("Delayed Reaction")]
     public class DelayedReaction : StateAction, IUpdate
     {
@@ -27,7 +27,7 @@ namespace Nie.Actions
             if (CurrentlyRemaining >= 0 && nextTime < 0)
             {
                 //Debug.Log($"DelayedReaction on State '{owner.State?.StateName.Name}' {owner.StateMachine?.name} {parameters}");
-                Reaction.React(parameters);
+                //Reaction.React(parameters);
                 if (Repeat)
                     CurrentlyRemaining = Seconds;
                 else

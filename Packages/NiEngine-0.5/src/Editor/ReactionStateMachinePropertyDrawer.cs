@@ -199,6 +199,7 @@ namespace Nie.Editor
         }
         void Build()
         {
+            Debug.Log("StateGroupVE.Build");
             Foldout = new Foldout();
             Add(Foldout);
             Foldout.text = PropName.stringValue;
@@ -224,6 +225,7 @@ namespace Nie.Editor
 
             GroupName.RegisterCallback<ChangeEvent<string>>(x =>
             {
+                Debug.Log("StateGroupVE.GroupName.ChangeEvent");
                 Foldout.text = x.newValue; // GroupName.value;
 
                 PropName.stringValue = x.newValue;
@@ -244,6 +246,7 @@ namespace Nie.Editor
 
         public void RefreshAfter(int index)
         {
+            Debug.Log($"StateGroupVE.RefreshAfter({index})");
 
             int i = index;
             for (; i != States.childCount; ++i)
@@ -291,6 +294,7 @@ namespace Nie.Editor
         TextField Name;
         Toggle TgDebug;
         PropertyField PfLastBeginEvent;
+        VisualElement VeContentParent;
         VisualElement VeContent;
         List<VisualElement> VeIsActive;
         //Foldout FoInternal;
@@ -368,14 +372,18 @@ namespace Nie.Editor
         }
         void Build()
         {
+            Debug.Log("StateVE.Build");
             // create state foldout
             var foldoutRoot = new VisualElement();
             ReactionStateMachineEditor.StateFoldoutAsset.CloneTree(foldoutRoot);
             Foldout = foldoutRoot.Query<Foldout>("Foldout").First();
             VeContent = foldoutRoot.Query<VisualElement>("veContent").First();
+            VeContentParent = VeContent.parent;
+            m_ContentVisible = true;
+
             Foldout.RegisterCallback<ChangeEvent<bool>>(x =>
             {
-                VeContent.style.display = x.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+                SetContentVisible(x.newValue);
                 Property.isExpanded = x.newValue;
                 Property.serializedObject.ApplyModifiedProperties();
             });
@@ -419,7 +427,8 @@ namespace Nie.Editor
                     Debug.Log($"Set state to {PropIsActiveState.boolValue}");
                 }
             });
-            veIcon.RegisterCallback<DragUpdatedEvent>(x =>
+
+            veIcon.RegisterCallback<DragEnterEvent>(x =>
             {
                 if (DragAndDrop.objectReferences.Length > 0 && DragAndDrop.objectReferences[0] is GameObject triggerObject)
                     DragAndDrop.visualMode = DragAndDropVisualMode.Link;
@@ -427,6 +436,14 @@ namespace Nie.Editor
                     DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
 
             });
+            //veIcon.RegisterCallback<DragUpdatedEvent>(x =>
+            //{
+            //    if (DragAndDrop.objectReferences.Length > 0 && DragAndDrop.objectReferences[0] is GameObject triggerObject)
+            //        DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+            //    else
+            //        DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
+
+            //});
             veIcon.RegisterCallback<DragPerformEvent>(x =>
             {
                 if (DragAndDrop.objectReferences.Length > 0 && DragAndDrop.objectReferences[0] is GameObject triggerObject)
@@ -516,6 +533,8 @@ namespace Nie.Editor
         }
         public void BindProperty(StateGroupVE parent, SerializedProperty property, int index)
         {
+            if (property == Property) return;
+            Debug.Log($"StateVE.BindProperty({index})");
             Parent = parent;
             Index = index;
             Property = property;
@@ -531,7 +550,7 @@ namespace Nie.Editor
             PropDebug = property.FindPropertyRelative("DebugLog");
             TgDebug.value = PropDebug.boolValue;
 
-            VeContent.style.display = Property.isExpanded ? DisplayStyle.Flex : DisplayStyle.None;
+            SetContentVisible(Property.isExpanded);
             PfLastBeginEvent.BindProperty(property.FindPropertyRelative("LastBeginEvent"));
             PfNewConditions.BindProperty(PropNewConditions);
             PfNewOnBegin.BindProperty(PropNewOnBegin);
@@ -552,6 +571,15 @@ namespace Nie.Editor
 
             //VeIsActive.Bind(PropIsActiveState);
             Refresh();
+        }
+        bool m_ContentVisible;
+        void SetContentVisible(bool visible)
+        {
+            if (visible && !m_ContentVisible)
+                VeContentParent.Add(VeContent);
+            else if(!visible && m_ContentVisible)
+                VeContent.parent.Remove(VeContent);
+            m_ContentVisible = visible;
         }
         public void Refresh()
         {

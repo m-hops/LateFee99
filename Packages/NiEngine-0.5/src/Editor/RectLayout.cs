@@ -33,8 +33,8 @@ namespace Nie.Editor
         public RectLayout SubHorizontalLine(int lineCount) => new RectLayout(Acquire(FreeRect.width, EditorGUIUtility.singleLineHeight * lineCount), true);
         public RectLayout SubVertical() => new RectLayout(Acquire(FreeRect.width, FreeRect.height), false);
         //public Rect Acquire(float size) => IsHorizontal ? Acquire(size, OriginalRect.height) : Acquire(OriginalRect.width, size);
-        public static float WidthOf(string text) => GUI.skin.box.CalcSize(new GUIContent(text)).x;
-        public static float MinHeight => GUI.skin.box.CalcSize(new GUIContent("Fj")).y;
+        public static float WidthOf(string text) => text.Length * 8;//GUI.skin.box.CalcSize(new GUIContent(text)).x;
+        public static float MinHeight => EditorGUIUtility.singleLineHeight + 2;// GUI.skin.box.CalcSize(new GUIContent("Fj")).y;
         public float FreeWidth => FreeRect.width;
         public float FreeHeight => FreeRect.width;
         /// <summary>
@@ -116,18 +116,18 @@ namespace Nie.Editor
         }
         public bool Foldout(bool isExpanded, GUIContent content)
         {
-            var size = GUI.skin.box.CalcSize(new GUIContent(content.text));
+            var size = CalcSize(new GUIContent(content.text));
             return EditorGUI.Foldout(AcquireHeight(size.y), isExpanded, content, true);
         }
         public bool Foldout(float width, bool isExpanded, GUIContent content)
         {
-            var size = GUI.skin.box.CalcSize(content);
+            var size = CalcSize(content);
             return EditorGUI.Foldout(Acquire(width, size.y), isExpanded, content, true);
         }
         public void Label(string text) => Label(new GUIContent(text));
         public void Label(GUIContent content)
         {
-            var size = GUI.skin.box.CalcSize(content);
+            var size = CalcSize(content);
             EditorGUI.LabelField(AcquireWidth(size.x), content);//, new GUIContent(text));
         }
         public void Box(string text)
@@ -171,12 +171,23 @@ namespace Nie.Editor
         public bool Button(string caption)
         {
             var content = new GUIContent(caption);
-            var size = GUI.skin.box.CalcSize(content);
+            var size = CalcSize(content);
             return GUI.Button(Acquire(size.x + 4, math.min(size.y + 4, OriginalRect.height)), content);
+        }
+        Vector2 CalcSize(GUIContent content)
+        {
+            Vector2 size = new();
+
+            size.x = WidthOf(content.text);
+            if (content.image != null)
+                size.x += 24;
+            size.y = MinHeight;
+            //var size = GUI.skin.box.CalcSize(content);
+            return size;
         }
         public void PrefixLabel(GUIContent label)
         {
-            var size = GUI.skin.box.CalcSize(label);
+            var size = CalcSize(label);
             var r = EditorGUI.PrefixLabel(Acquire(size.x, size.y), label);
             FreeRect.xMin = r.xMin;
             OriginalRect = FreeRect;

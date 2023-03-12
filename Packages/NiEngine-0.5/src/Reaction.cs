@@ -76,7 +76,7 @@ namespace Nie
         public GameObject GetOverriddenTriggerObject(GameObject triggerObject) => TriggerObject != null ? TriggerObject : triggerObject;
         private void Start()
         {
-            if(RunOnStart)
+            if (RunOnStart)
                 React(gameObject, transform.position);
         }
         private void Update()
@@ -97,7 +97,7 @@ namespace Nie
         public bool TryReact(GameObject triggerObject, Vector3 position)
         {
             triggerObject = GetOverriddenTriggerObject(triggerObject);
-            if (!CanReact(triggerObject, position)) 
+            if (!CanReact(triggerObject, position))
                 return false;
             React(triggerObject, position);
             return true;

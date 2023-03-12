@@ -142,12 +142,6 @@ MonoBehaviour:
     - rid: 5969430306130755621
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -1138,7 +1132,35 @@ MonoBehaviour:
         Conditions: []
       NewOnBegin:
         Actions:
-        - rid: 5969430209723629718
+        - rid: -2
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+  - GroupName:
+      Name: Focus
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Focused
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions: []
       NewOnUpdate:
         Actions: []
       NewOnEnd:
@@ -1146,30 +1168,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5969430209723629718
-      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
-      data:
-        Seconds: 1
-        Repeat: 0
-        Reaction:
-          ReactionReferences:
-          - ReactionType: 0
-            TargetObjectReference:
-              Type: 1
-              ThisGameObject: {fileID: 0}
-              ObjectType:
-                TypeName: 
-                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              String: 
-            ReactionName: Idle
-            Event:
-              m_PersistentCalls:
-                m_Calls: []
-            EventTrigger:
-              m_PersistentCalls:
-                m_Calls: []
-        CurrentlyRemaining: 0
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 5969430209723629722
       type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
       data:

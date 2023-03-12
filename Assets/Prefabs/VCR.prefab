@@ -1317,7 +1317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -1328,12 +1327,6 @@ MonoBehaviour:
     - rid: 5969430306130755614
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -1629,7 +1622,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -1640,12 +1632,6 @@ MonoBehaviour:
     - rid: 5969430306130755614
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -2670,7 +2656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -2679,12 +2664,6 @@ MonoBehaviour:
     Actions: []
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds: []
@@ -2916,41 +2895,54 @@ MonoBehaviour:
   RewindDurationPerHour: 15
   State: 0
   OnPlayOver:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Idle
-      ReactionName: Idle
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
+    Actions:
+    - rid: 3795633166084997121
   OnRewindOver:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Idle
-      ReactionName: Idle
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
+    Actions:
+    - rid: 3795633166084997122
+  references:
+    version: 2
+    RefIds:
+    - rid: 3795633166084997121
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Idle
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 3795633166084997122
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Idle
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!1 &7437896383131339958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,7 +3292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -3311,12 +3302,6 @@ MonoBehaviour:
     - rid: 5969430306130755614
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -3587,35 +3572,6 @@ MonoBehaviour:
     - rid: 5969430209723629694
   OnEnd:
     Actions: []
-  StateConditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Empty
-      StateHash: 0
-  OnReactBegin:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Inserted
-      ReactionName: Inserted
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnReactEnd:
-    ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
   references:
@@ -3762,7 +3718,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -3773,12 +3728,6 @@ MonoBehaviour:
     - rid: 5969430306130755614
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:

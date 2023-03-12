@@ -36,8 +36,10 @@ public class VCRControls : MonoBehaviour
         Rewind,
     }
     public StateEnum State;
-    public Nie.ReactionList OnPlayOver;
-    public Nie.ReactionList OnRewindOver;
+
+
+    public Nie.ActionSet OnPlayOver;
+    public Nie.ActionSet OnRewindOver;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +60,7 @@ public class VCRControls : MonoBehaviour
                     {
                         m_CurrentVHS.HeadTime = m_CurrentVHS.Duration;
                         State = StateEnum.Idle;
-                        OnPlayOver.TryReact(gameObject, gameObject, m_CurrentVHS.gameObject, transform.position);
+                        OnPlayOver.Act(new(this), Nie.EventParameters.Trigger(gameObject, gameObject, m_CurrentVHS.gameObject));
                     }
                 }
                 break;
@@ -70,7 +72,7 @@ public class VCRControls : MonoBehaviour
                     {
                         m_CurrentVHS.HeadTime = 0;
                         State = StateEnum.Idle;
-                        OnRewindOver.TryReact(gameObject, gameObject, m_CurrentVHS.gameObject, transform.position);
+                        OnRewindOver.Act(new(this), Nie.EventParameters.Trigger(gameObject, gameObject, m_CurrentVHS.gameObject));
                     }
                 }
                 break;

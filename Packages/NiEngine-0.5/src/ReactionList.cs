@@ -11,6 +11,8 @@ namespace Nie
     {
         [SerializeField]
         public List<ReactionReference> ReactionReferences;
+
+
         //[SerializeField]
         //public UnityEvent Events;
         //[SerializeField]
@@ -48,7 +50,7 @@ namespace Nie
         {
             if (ReactionReferences != null)
                 foreach (var reaction in ReactionReferences)
-                    reaction.TryReact(from, triggerObject, position, previousTriggerObject);
+                    reaction.TryReact(EventParameters.Trigger(from, from, triggerObject, position).WithBegin(EventParameters.ParameterSet.Trigger(from, previousTriggerObject, position)));
 
             //if (!string.IsNullOrEmpty(ReactionOnTriggerObject))
             //    ReactionReference.TryReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject);
@@ -68,7 +70,10 @@ namespace Nie
             //if (!string.IsNullOrEmpty(ReactionOnTriggerObject) && !ReactionReference.CanReact(triggerObject, ReactionOnTriggerObject, targetObject, position, previousTriggerObject)) return false;
             return ReactionReferences == null 
                 || ReactionReferences.Count == 0
-                || ReactionReferences.Any(x => x.CanReact(targetObject, triggerObject, position, previousTriggerObject));
+                || ReactionReferences.Any(x => x.CanReact(
+                    EventParameters.Trigger(from, from, triggerObject, position)
+                    .WithBegin(EventParameters.ParameterSet.Trigger(from, previousTriggerObject, position))
+                    ));
         }
     }
 }
