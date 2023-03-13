@@ -515,7 +515,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2135
+  m_VersionIndex: 2366
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2132
+  m_VersionIndex: 2366
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2163,7 +2163,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2135
+  m_VersionIndex: 2366
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2520,6 +2520,7 @@ MonoBehaviour:
     Actions: []
   OnRelease:
     Actions: []
+  m_PreviousParent: {fileID: 0}
   references:
     version: 2
     RefIds: []
@@ -3307,6 +3308,7 @@ MonoBehaviour:
         Actions:
         - rid: 3795633178872905729
         - rid: 3795633178872905739
+        - rid: 3795633178872905743
       NewOnUpdate:
         Actions: []
       NewOnEnd:
@@ -3353,6 +3355,26 @@ MonoBehaviour:
           AttachedObject: {fileID: 0}
           PreviousParent: {fileID: 0}
           SetNonKinematicOnEnd: 0
+    - rid: 3795633178872905743
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 0
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Display
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
 --- !u!1 &9026650709399673909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,7 +4008,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2138
+  m_VersionIndex: 2369
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

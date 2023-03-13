@@ -112,7 +112,8 @@ namespace Nie
             // Release grabbed if got attached to something
             if(GrabbedGrabbable != null)
             {
-                if (GrabbedGrabbable.transform.parent != null)
+                if (GrabbedGrabbable.transform.parent != null 
+                    && GrabbedGrabbable.transform.parent != GrabbedGrabbable.m_PreviousParent)
                 {
                     ReleaseGrabbed();
                 }

@@ -34,6 +34,11 @@ namespace Nie
 
         [HideInInspector]
         public Transform m_PreviousParent;
+
+        private void Start()
+        {
+            m_PreviousParent = transform.parent;
+        }
         public void ReleaseIfGrabbed()
         {
             GrabbedBy?.ReleaseGrabbed();
