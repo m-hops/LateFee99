@@ -14,25 +14,30 @@ namespace Nie.Actions
         public GameObjectReference Target;
         public bool Enable;
         public bool RevertAtEnd;
+        [Serializable]
+        public struct InternalState
+        {
+            public GameObject TargetObject;
+            public bool WasActive;
 
-        GameObject TargetObject;
-        bool WasActive;
+        }
+        public InternalState Internals;
         public override void OnBegin(Owner owner, EventParameters parameters)
         {
             var target = Target.GetTargetGameObject(parameters);
             if (target != null)
             {
-                TargetObject = target;
+                Internals.TargetObject = target;
                 if (RevertAtEnd)
-                    WasActive = target.activeSelf;
+                    Internals.WasActive = target.activeSelf;
                 target.SetActive(Enable);
 
             }
         }
         public override void OnEnd(Owner owner, EventParameters parameters)
         {
-            if (RevertAtEnd && TargetObject != null)
-                TargetObject.SetActive(WasActive);
+            if (RevertAtEnd && Internals.TargetObject != null)
+                Internals.TargetObject.SetActive(Internals.WasActive);
         }
     }
 }

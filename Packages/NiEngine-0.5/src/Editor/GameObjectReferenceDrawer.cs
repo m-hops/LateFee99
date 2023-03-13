@@ -19,11 +19,17 @@ namespace Nie.Editor
 
             var veRoot = new VisualElement();
             veRoot.style.flexDirection = FlexDirection.Row;
-            
+
+            var lbType = new Label(property.displayName);
+            lbType.FixSizeByCharLines(property.displayName.Length, 1);
+            veRoot.Add(lbType);
+
             var propType = property.FindPropertyRelative("Type");
             var type = (GameObjectReference.TypeEnum)propType.enumValueIndex;
             var efType = new EnumField(property.name, type);
-            efType.AddToClassList(BaseField<string>.alignedFieldUssClassName);
+            efType.label = "";
+            efType.FixSizeByCharLines(16, 1);
+            //efType.AddToClassList(BaseField<string>.alignedFieldUssClassName);
             veRoot.Add(efType);
 
             var pfThisGameObject = new PropertyField();
@@ -32,6 +38,9 @@ namespace Nie.Editor
             pfThisGameObject.label = "";
             pfObjectType.label = "";
             pfString.label = "";
+            pfThisGameObject.FixSizeByCharLines(16, 1);
+            pfObjectType.FixSizeByCharLines(16, 1);
+            pfString.FixSizeByCharLines(16, 1);
 
             efType.RegisterCallback<ChangeEvent<Enum>>(x =>
             {

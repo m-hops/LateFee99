@@ -100,6 +100,7 @@ namespace Nie.Editor
             EditorGUI.PropertyField(position, property.FindPropertyRelative("Actions"), new GUIContent(property.displayName, Assets.IconAction), true);
         }
     }
+
     public class ReactionStateMachineVE : VisualElement
     {
         //public Nie.ReactionStateMachine StateMachine;
@@ -137,7 +138,6 @@ namespace Nie.Editor
             VisualElement btAddGroup = this.Query<VisualElement>("btAddGroup").First();
             btAddGroup.RegisterCallback<ClickEvent>(x =>
             {
-                Debug.Log("Add Group");
                 PropGroups.InsertArrayElementAtIndex(PropGroups.arraySize);
                 var newPropGroup = PropGroups.GetArrayElementAtIndex(PropGroups.arraySize - 1);
                 // add to ui
@@ -199,7 +199,6 @@ namespace Nie.Editor
         }
         void Build()
         {
-            Debug.Log("StateGroupVE.Build");
             Foldout = new Foldout();
             Add(Foldout);
             Foldout.text = PropName.stringValue;
@@ -225,7 +224,6 @@ namespace Nie.Editor
 
             GroupName.RegisterCallback<ChangeEvent<string>>(x =>
             {
-                Debug.Log("StateGroupVE.GroupName.ChangeEvent");
                 Foldout.text = x.newValue; // GroupName.value;
 
                 PropName.stringValue = x.newValue;
@@ -246,7 +244,6 @@ namespace Nie.Editor
 
         public void RefreshAfter(int index)
         {
-            Debug.Log($"StateGroupVE.RefreshAfter({index})");
 
             int i = index;
             for (; i != States.childCount; ++i)
@@ -372,7 +369,6 @@ namespace Nie.Editor
         }
         void Build()
         {
-            Debug.Log("StateVE.Build");
             // create state foldout
             var foldoutRoot = new VisualElement();
             ReactionStateMachineEditor.StateFoldoutAsset.CloneTree(foldoutRoot);
@@ -534,7 +530,6 @@ namespace Nie.Editor
         public void BindProperty(StateGroupVE parent, SerializedProperty property, int index)
         {
             if (property == Property) return;
-            Debug.Log($"StateVE.BindProperty({index})");
             Parent = parent;
             Index = index;
             Property = property;
@@ -591,6 +586,7 @@ namespace Nie.Editor
                 v.style.backgroundColor = PropIsActiveState.boolValue ? Color.green : Color.black;
         }
     }
+
     [CustomEditor(typeof(ReactionStateMachine))]
     public class ReactionStateMachineEditor : UnityEditor.Editor
     {

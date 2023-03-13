@@ -45,7 +45,7 @@ namespace Nie
         [Tooltip("Output debug log when objects are grabbed or released")]
         public bool DebugLog;
 
-        int m_PreviousGRabbedObjectLayer;
+        int m_PreviousGrabbedObjectLayer;
 
         // true if currently grabbing a grabbable
         bool m_IsGrabbing;
@@ -107,6 +107,15 @@ namespace Nie
                 m_IsGrabbing = false;
                 if(DebugLog)
                     Debug.Log($"[{Time.frameCount}] GrabberController '{name}' Release destroyed object");
+            }
+
+            // Release grabbed if got attached to something
+            if(GrabbedGrabbable != null)
+            {
+                if (GrabbedGrabbable.transform.parent != null)
+                {
+                    ReleaseGrabbed();
+                }
             }
         }
 
@@ -177,7 +186,7 @@ namespace Nie
             if (HoldAngularDrag >= 0) GrabbedRigidbody.angularDrag = HoldAngularDrag;
             if (ChangedGrabbedObjectLayer)
             {
-                m_PreviousGRabbedObjectLayer = grabbable.gameObject.layer;
+                m_PreviousGrabbedObjectLayer = grabbable.gameObject.layer;
 
                 SetGameObjectLayer(grabbable.gameObject, GrabbedObjectLayer.LayerIndex);
             }
@@ -202,7 +211,7 @@ namespace Nie
             if (HoldAngularDrag >= 0) GrabbedRigidbody.angularDrag = m_GrabbedOldAngularDrag;
 
             if (ChangedGrabbedObjectLayer)
-                SetGameObjectLayer(GrabbedGrabbable.gameObject, m_PreviousGRabbedObjectLayer);
+                SetGameObjectLayer(GrabbedGrabbable.gameObject, m_PreviousGrabbedObjectLayer);
 
             GrabbedGrabbable.ReleaseBy(this);
             GrabbedGrabbable = null;

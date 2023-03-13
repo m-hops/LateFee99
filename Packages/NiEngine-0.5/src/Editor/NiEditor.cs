@@ -14,9 +14,6 @@ namespace Nie
     public static class EditorMenu
     {
 
-        public static bool DrawStatesGizmos;
-        public static bool DrawStatesLabel;
-        public static bool LogAllEvents;
 
 #if UNITY_EDITOR
         private const string DrawStatesGizmosName = "Tools/NiEngine/Debug/Gizmos";
@@ -24,10 +21,10 @@ namespace Nie
         private const string LogAllEventsName = "Tools/NiEngine/Debug/Log All Events";
         static EditorMenu()
         {
-            DrawStatesGizmos = UnityEditor.EditorPrefs.GetBool(DrawStatesGizmosName, true);
-            DrawStatesLabel = UnityEditor.EditorPrefs.GetBool(DrawStatesLabelName, false);
-            LogAllEvents = UnityEditor.EditorPrefs.GetBool(LogAllEventsName, false);
-            UnityEditor.EditorApplication.delayCall += () => SetDrawStates(DrawStatesGizmos, DrawStatesLabel);
+            GlobalStates.DrawStatesGizmos = UnityEditor.EditorPrefs.GetBool(DrawStatesGizmosName, true);
+            GlobalStates.DrawStatesLabel = UnityEditor.EditorPrefs.GetBool(DrawStatesLabelName, false);
+            GlobalStates.LogAllEvents = UnityEditor.EditorPrefs.GetBool(LogAllEventsName, false);
+            UnityEditor.EditorApplication.delayCall += () => SetDrawStates(GlobalStates.DrawStatesGizmos, GlobalStates.DrawStatesLabel);
         }
 
 
@@ -35,18 +32,18 @@ namespace Nie
         private static void SetOff() => SetDrawStates(false, false);
 
         [UnityEditor.MenuItem(DrawStatesGizmosName)]
-        private static void SetGizmo() => SetDrawStates(!DrawStatesGizmos, DrawStatesLabel);
+        private static void SetGizmo() => SetDrawStates(!GlobalStates.DrawStatesGizmos, GlobalStates.DrawStatesLabel);
 
         [UnityEditor.MenuItem(DrawStatesLabelName)]
-        private static void SetLabel() => SetDrawStates(DrawStatesGizmos, !DrawStatesLabel);
+        private static void SetLabel() => SetDrawStates(GlobalStates.DrawStatesGizmos, !GlobalStates.DrawStatesLabel);
         public static void SetDrawStates(bool gizmos, bool label)
         {
-            DrawStatesGizmos = gizmos;
-            DrawStatesLabel = label;
-            UnityEditor.Menu.SetChecked(DrawStatesGizmosName, DrawStatesGizmos);
-            UnityEditor.Menu.SetChecked(DrawStatesLabelName, DrawStatesLabel);
-            UnityEditor.EditorPrefs.SetBool(DrawStatesGizmosName, DrawStatesGizmos);
-            UnityEditor.EditorPrefs.SetBool(DrawStatesLabelName, DrawStatesLabel);
+            GlobalStates.DrawStatesGizmos = gizmos;
+            GlobalStates.DrawStatesLabel = label;
+            UnityEditor.Menu.SetChecked(DrawStatesGizmosName, GlobalStates.DrawStatesGizmos);
+            UnityEditor.Menu.SetChecked(DrawStatesLabelName, GlobalStates.DrawStatesLabel);
+            UnityEditor.EditorPrefs.SetBool(DrawStatesGizmosName, GlobalStates.DrawStatesGizmos);
+            UnityEditor.EditorPrefs.SetBool(DrawStatesLabelName, GlobalStates.DrawStatesLabel);
 
 
         }
@@ -54,9 +51,9 @@ namespace Nie
         [UnityEditor.MenuItem(LogAllEventsName)]
         private static void SetLogAllEvents()
         {
-            LogAllEvents = !LogAllEvents;
-            UnityEditor.Menu.SetChecked(LogAllEventsName, LogAllEvents);
-            UnityEditor.EditorPrefs.SetBool(LogAllEventsName, LogAllEvents);
+            GlobalStates.LogAllEvents = !GlobalStates.LogAllEvents;
+            UnityEditor.Menu.SetChecked(LogAllEventsName, GlobalStates.LogAllEvents);
+            UnityEditor.EditorPrefs.SetBool(LogAllEventsName, GlobalStates.LogAllEvents);
         }
 
         public static GameObject DebugLabelAsset = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Packages/NiEngine/src/Editor/Assets/label.prefab", typeof(GameObject));

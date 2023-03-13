@@ -10,18 +10,20 @@ public class VCRControls : MonoBehaviour
     void FindVHS()
     {
         m_CurrentVHS = gameObject.GetComponentInChildren<VHS>();
-        if (m_CurrentVHS == null)
-            Debug.Log("VCRControls could not find VHS", gameObject);
     }
     public void Rewind()
     {
         FindVHS();
+        if (m_CurrentVHS == null)
+            Debug.LogError("VCRControls could not find VHS", gameObject);
         State = StateEnum.Rewind;
     }
     public void Play()
     {
         FindVHS();
 
+        if (m_CurrentVHS == null)
+            Debug.LogError("VCRControls could not find VHS", gameObject);
         State = StateEnum.Play;
     }
     public void Stop()

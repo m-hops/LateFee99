@@ -398,13 +398,11 @@ GameObject:
   - component: {fileID: 9005027989896447592}
   - component: {fileID: 1967933499827942909}
   - component: {fileID: 5670492231733668070}
-  - component: {fileID: 7814095136242897124}
-  - component: {fileID: 1877835865272150856}
-  - component: {fileID: 3834221951730463635}
   - component: {fileID: 4814475501266168715}
   - component: {fileID: 3076304633072837045}
   - component: {fileID: 2258926773330156892}
   - component: {fileID: 7555823976891500494}
+  - component: {fileID: 9048943461997511222}
   m_Layer: 0
   m_Name: VHS
   m_TagString: Untagged
@@ -497,219 +495,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &7814095136242897124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2517568391512578975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: Free
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 6058771865061325266}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 0
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 0
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
-  TriggerOnBegin:
-    ReactionReferences:
-    - ReactionType: 1
-      TargetObjectReference:
-        Type: 0
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: 
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4155538546678039574}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  DelayedReaction:
-    ReactionReferences: []
-  Delay: 0
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 0
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  CurrentIdleTime: 0
-  PreviousKinematic: 0
---- !u!114 &1877835865272150856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2517568391512578975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: InVCR
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 6058771865061325266}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 0
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 1
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
-  TriggerOnBegin:
-    ReactionReferences:
-    - ReactionType: 1
-      TargetObjectReference:
-        Type: 0
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: 
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4155538546678039574}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  DelayedReaction:
-    ReactionReferences: []
-  Delay: 0
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 0
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  CurrentIdleTime: 0
-  PreviousKinematic: 0
---- !u!114 &3834221951730463635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2517568391512578975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: InSleeve
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 6058771865061325266}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 0
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 1
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
-  TriggerOnBegin:
-    ReactionReferences:
-    - ReactionType: 1
-      TargetObjectReference:
-        Type: 0
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: 
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4155538546678039574}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  DelayedReaction:
-    ReactionReferences: []
-  Delay: 0
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 1
-  CurrentTriggerObject: {fileID: 3198980079346952826}
-  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  CurrentIdleTime: 0
-  PreviousKinematic: 0
 --- !u!114 &4814475501266168715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,35 +550,6 @@ MonoBehaviour:
     - rid: 5969430209723629690
   OnEnd:
     Actions: []
-  StateConditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Free
-      StateHash: 0
-  OnReactBegin:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: InVCR
-      ReactionName: InVCR
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnReactEnd:
-    ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
   references:
@@ -862,35 +618,6 @@ MonoBehaviour:
     - rid: 5969430209723629688
   OnEnd:
     Actions: []
-  StateConditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Free
-      StateHash: 0
-  OnReactBegin:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: InSleeve
-      ReactionName: InSleeve
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnReactEnd:
-    ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
   references:
@@ -947,6 +674,147 @@ MonoBehaviour:
   Quality: 0
   DebugTitle: {fileID: 6986391273493909962}
   DebugTime: {fileID: 5790064643089599172}
+--- !u!114 &9048943461997511222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2517568391512578975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: 
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Free
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 3795633178212040714
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+    - StateName:
+        Name: InSleeve
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 3795633178212040713
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+    - StateName:
+        Name: InVCR
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 3795633178212040712
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3795633178212040712
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 4155538546678039574}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 0
+        RevertAtEnd: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
+    - rid: 3795633178212040713
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 4155538546678039574}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 0
+        RevertAtEnd: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
+    - rid: 3795633178212040714
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 4155538546678039574}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
 --- !u!1 &3198980077737404761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,15 +931,15 @@ MonoBehaviour:
           TriggerObject: {fileID: 2517568391512578975}
           TriggerPosition: {x: 0, y: 0, z: 0}
         OnBegin:
-          From: {fileID: 0}
-          TriggerObject: {fileID: 0}
+          From: {fileID: 3198980079346952826}
+          TriggerObject: {fileID: 2517568391512578975}
           TriggerPosition: {x: 0, y: 0, z: 0}
       NewConditions:
         Conditions: []
       NewOnBegin:
         Actions:
         - rid: 5969430209723629701
-        - rid: 5969430209723629702
+        - rid: 3795633178872905738
         - rid: 5969430209723629703
         - rid: 5969430209723629704
         - rid: 5969430209723629705
@@ -1079,7 +947,6 @@ MonoBehaviour:
         Actions: []
       NewOnEnd:
         Actions:
-        - rid: 5969430209723629699
         - rid: 5969430209723629700
   - GroupName:
       Name: anim
@@ -1106,10 +973,10 @@ MonoBehaviour:
       NewOnBegin:
         Actions:
         - rid: 5969430209723629706
-        - rid: 5969430209723629707
         - rid: 5969430209723629708
         - rid: 5969430209723629710
         - rid: 5969430209723629711
+        - rid: 3795633178212040709
       NewOnUpdate:
         Actions: []
       NewOnEnd:
@@ -1136,7 +1003,7 @@ MonoBehaviour:
         - rid: 5969430209723629715
         - rid: 5969430209723629714
         - rid: 5969430209723629713
-        - rid: 5969430209723629712
+        - rid: 3795633178212040706
       NewOnUpdate:
         Actions: []
       NewOnEnd:
@@ -1321,6 +1188,120 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 3795633178212040706
+      type: {class: DelayedActions, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 0.5
+        Repeat: 0
+        Actions:
+          Actions:
+          - rid: 3795633178212040707
+          - rid: 3795633178212040708
+        CurrentlyRemaining: 0
+    - rid: 3795633178212040707
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: CloseWithVHS
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 3795633178212040708
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Done
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 3795633178212040709
+      type: {class: DelayedActions, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Seconds: 0.5
+        Repeat: 0
+        Actions:
+          Actions:
+          - rid: 3795633178212040710
+          - rid: 3795633178212040711
+        CurrentlyRemaining: 0
+    - rid: 3795633178212040710
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Open
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 3795633178212040711
+      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reference:
+          ReactionType: 0
+          TargetObjectReference:
+            Type: 1
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          ReactionName: Done
+          Event:
+            m_PersistentCalls:
+              m_Calls: []
+          EventTrigger:
+            m_PersistentCalls:
+              m_Calls: []
+    - rid: 3795633178872905738
+      type: {class: ReactionState, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Reaction:
+          TargetObjectReference:
+            Type: 2
+            ThisGameObject: {fileID: 0}
+            ObjectType:
+              TypeName: 
+              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+                Culture=neutral, PublicKeyToken=null
+            String: 
+          OnBegin: InSleeve
+          OnEnd: Free
     - rid: 5969430209723629697
       type: {class: Event, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1357,26 +1338,6 @@ MonoBehaviour:
                 m_StringArgument: 
                 m_BoolArgument: 0
               m_CallState: 2
-    - rid: 5969430209723629699
-      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
-      data:
-        Reference:
-          ReactionType: 0
-          TargetObjectReference:
-            Type: 3
-            ThisGameObject: {fileID: 0}
-            ObjectType:
-              TypeName: 
-              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            String: 
-          ReactionName: Free
-          Event:
-            m_PersistentCalls:
-              m_Calls: []
-          EventTrigger:
-            m_PersistentCalls:
-              m_Calls: []
     - rid: 5969430209723629700
       type: {class: ApplyForce, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1462,29 +1423,10 @@ MonoBehaviour:
           String: 
         MoveToParentOrigin: 1
         DetachOnEnd: 1
-        AttachedObject: {fileID: 2517568391512578975}
-        m_PreviousParent: {fileID: 0}
-        m_SetNonKinematicOnEnd: 1
-    - rid: 5969430209723629702
-      type: {class: Reaction, ns: Nie.Actions, asm: Re0.51}
-      data:
-        Reference:
-          ReactionType: 0
-          TargetObjectReference:
-            Type: 2
-            ThisGameObject: {fileID: 0}
-            ObjectType:
-              TypeName: 
-              baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                Culture=neutral, PublicKeyToken=null
-            String: 
-          ReactionName: InSleeve
-          Event:
-            m_PersistentCalls:
-              m_Calls: []
-          EventTrigger:
-            m_PersistentCalls:
-              m_Calls: []
+        Internals:
+          AttachedObject: {fileID: 2517568391512578975}
+          PreviousParent: {fileID: 0}
+          SetNonKinematicOnEnd: 1
     - rid: 5969430209723629703
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1498,6 +1440,9 @@ MonoBehaviour:
           String: 
         Enable: 1
         RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629704
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1511,6 +1456,9 @@ MonoBehaviour:
           String: 
         Enable: 0
         RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629705
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1524,6 +1472,9 @@ MonoBehaviour:
           String: 
         Enable: 0
         RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629706
       type: {class: Event, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1554,46 +1505,6 @@ MonoBehaviour:
                 m_StringArgument: Open
                 m_BoolArgument: 1
               m_CallState: 2
-    - rid: 5969430209723629707
-      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
-      data:
-        Seconds: 1
-        Repeat: 0
-        Reaction:
-          ReactionReferences:
-          - ReactionType: 0
-            TargetObjectReference:
-              Type: 1
-              ThisGameObject: {fileID: 0}
-              ObjectType:
-                TypeName: 
-                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              String: 
-            ReactionName: Open
-            Event:
-              m_PersistentCalls:
-                m_Calls: []
-            EventTrigger:
-              m_PersistentCalls:
-                m_Calls: []
-          - ReactionType: 0
-            TargetObjectReference:
-              Type: 1
-              ThisGameObject: {fileID: 0}
-              ObjectType:
-                TypeName: 
-                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              String: 
-            ReactionName: Done
-            Event:
-              m_PersistentCalls:
-                m_Calls: []
-            EventTrigger:
-              m_PersistentCalls:
-                m_Calls: []
-        CurrentlyRemaining: 0
     - rid: 5969430209723629708
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1607,6 +1518,9 @@ MonoBehaviour:
           String: 
         Enable: 1
         RevertAtEnd: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629710
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1620,6 +1534,9 @@ MonoBehaviour:
           String: 
         Enable: 1
         RevertAtEnd: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629711
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1633,46 +1550,9 @@ MonoBehaviour:
           String: 
         Enable: 0
         RevertAtEnd: 0
-    - rid: 5969430209723629712
-      type: {class: DelayedReaction, ns: Nie.Actions, asm: Re0.51}
-      data:
-        Seconds: 0.5
-        Repeat: 0
-        Reaction:
-          ReactionReferences:
-          - ReactionType: 0
-            TargetObjectReference:
-              Type: 1
-              ThisGameObject: {fileID: 0}
-              ObjectType:
-                TypeName: 
-                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              String: 
-            ReactionName: CloseWithVHS
-            Event:
-              m_PersistentCalls:
-                m_Calls: []
-            EventTrigger:
-              m_PersistentCalls:
-                m_Calls: []
-          - ReactionType: 0
-            TargetObjectReference:
-              Type: 1
-              ThisGameObject: {fileID: 0}
-              ObjectType:
-                TypeName: 
-                baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-                  Culture=neutral, PublicKeyToken=null
-              String: 
-            ReactionName: Done
-            Event:
-              m_PersistentCalls:
-                m_Calls: []
-            EventTrigger:
-              m_PersistentCalls:
-                m_Calls: []
-        CurrentlyRemaining: 0
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
     - rid: 5969430209723629713
       type: {class: Event, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1744,9 +1624,10 @@ MonoBehaviour:
           String: 
         MoveToParentOrigin: 1
         DetachOnEnd: 0
-        AttachedObject: {fileID: 0}
-        m_PreviousParent: {fileID: 0}
-        m_SetNonKinematicOnEnd: 0
+        Internals:
+          AttachedObject: {fileID: 0}
+          PreviousParent: {fileID: 0}
+          SetNonKinematicOnEnd: 0
     - rid: 5969430209723629716
       type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
       data:
@@ -1760,6 +1641,9 @@ MonoBehaviour:
           String: 
         Enable: 1
         RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
 --- !u!114 &3198980077737404743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1891,35 +1775,6 @@ MonoBehaviour:
     - rid: 5969430209723629685
   OnEnd:
     Actions: []
-  StateConditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: CloseWithVHS
-      StateHash: 0
-  OnReactBegin:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: ShelveLoc
-      ReactionName: ShelveLoc
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnReactEnd:
-    ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
   references:
@@ -1970,7 +1825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -1985,72 +1839,6 @@ MonoBehaviour:
   NewOnUnfocus:
     Actions:
     - rid: 5969430306130755622
-  Conditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Released
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: CloseWithVHS
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: FreeLoc
-      StateHash: 0
-    - Type: 0
-      ObjectTargetType: 0
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 0}
-      State: Done
-      StateHash: 0
-  OnFocusReaction:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Focused
-      ReactionName: Focused
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnUnfocusReaction:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 1
-        ThisGameObject: {fileID: 0}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Unfocused
-      ReactionName: Unfocused
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
   references:
     version: 2
     RefIds:
@@ -2451,35 +2239,6 @@ MonoBehaviour:
     - rid: 5969430209723629692
   OnEnd:
     Actions: []
-  StateConditions:
-    States:
-    - Type: 0
-      ObjectTargetType: 1
-      Animator: {fileID: 0}
-      ReactionState: {fileID: 0}
-      Other: {fileID: 3198980077737404761}
-      State: Open
-      StateHash: 0
-  OnReactBegin:
-    ReactionReferences:
-    - ReactionType: 0
-      TargetObjectReference:
-        Type: 0
-        ThisGameObject: {fileID: 3198980077737404761}
-        ObjectType:
-          TypeName: 
-          baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-        String: Closing
-      ReactionName: Closing
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OnReactEnd:
-    ReactionReferences: []
   DebugLog: 0
   DebugLogTouching: 0
   references:

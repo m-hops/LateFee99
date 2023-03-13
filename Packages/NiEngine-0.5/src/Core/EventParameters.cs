@@ -89,6 +89,11 @@ namespace Nie
             copy.OnBegin = begin;
             return copy;
         }
+
+        /// <summary>
+        /// Use the OnBegin trigger as the Current trigger
+        /// </summary>
+        /// <returns></returns>
         public EventParameters WithOnBeginTrigger()
         {
             var copy = this;

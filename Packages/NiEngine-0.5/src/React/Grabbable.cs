@@ -32,7 +32,8 @@ namespace Nie
         public bool IsGrabbed => GrabbedBy != null;
         public GrabberController GrabbedBy { get; private set; }
 
-        Transform m_PreviousParent;
+        [HideInInspector]
+        public Transform m_PreviousParent;
         public void ReleaseIfGrabbed()
         {
             GrabbedBy?.ReleaseGrabbed();

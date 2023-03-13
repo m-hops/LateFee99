@@ -61,9 +61,12 @@ namespace Nie.Editor
             var veNameRow = new VisualElement();
             veNameRow.style.flexDirection = FlexDirection.Row;
             var lbName = new Label("Name:");
+            lbName.FixSizeByCharLines(5, 1);
             var tfName = new TextField();
-            var lbFound = new Label("");
+            tfName.FixSizeByCharLines(24, 1);
             tfName.style.flexGrow = 1;
+            var lbFound = new Label("");
+            lbFound.FixSizeByCharLines(12, 1);
             tfName.value = propStateName.stringValue;
             veNameRow.Add(lbName);
             veNameRow.Add(tfName);
@@ -71,6 +74,7 @@ namespace Nie.Editor
 
 
             var pfTargetReference = new PropertyField();
+            pfTargetReference.FixHeight(1);
             pfTargetReference.BindProperty(propTargetReference);
             pfTargetReference.label = "";
             veVertical.Add(pfTargetReference);
@@ -95,6 +99,8 @@ namespace Nie.Editor
             Update(property, lbFound);
             return veVertical;
         }
+
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             float h = 8;

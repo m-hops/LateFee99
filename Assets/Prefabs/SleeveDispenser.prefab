@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2058588465420848894}
-  - component: {fileID: 2058588465420848893}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -32,40 +31,6 @@ Transform:
   m_Father: {fileID: 2058588465564964657}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -27.087}
---- !u!114 &2058588465420848893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058588465420848895}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a7f8dd5ac745c2489f7b000d0b444f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ReactionName: Spawn
-  DebugLog: 0
-  ReactionCooldown: 0
-  RunOnStart: 0
-  DestroyGameObject: 0
-  ReplaceWith: {fileID: 0}
-  Spawn: {fileID: 3691929698902290399, guid: 36ac2b30d11693a43831f527ebdf8a01, type: 3}
-  DefaultReactionPosition: {fileID: 2058588465420848894}
-  MoveTriggerObjectAt: {fileID: 0}
-  ReleaseGrabbed: 0
-  PlayAnimatorState:
-    Animator: {fileID: 0}
-    State: 
-    StateHash: 0
-  ThisObject: {fileID: 0}
-  TriggerObject: {fileID: 0}
-  OnReact:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCooldownOver:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2058588465564964658
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,10 +44,9 @@ GameObject:
   - component: {fileID: 2058588465564964650}
   - component: {fileID: 2058588465564964651}
   - component: {fileID: 2058588465564964652}
-  - component: {fileID: 2058588465564964653}
-  - component: {fileID: 2058588465564964654}
   - component: {fileID: 2058588465564964655}
   - component: {fileID: 2058588465564964656}
+  - component: {fileID: 1599502147}
   m_Layer: 0
   m_Name: SleeveDispenser
   m_TagString: Untagged
@@ -97,7 +61,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058588465564964658}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.562, y: 0.296, z: 1.68}
   m_LocalScale: {x: 0.61, y: 0.68, z: 0.59}
   m_ConstrainProportionsScale: 0
@@ -186,92 +150,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2058588465564964653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058588465564964658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: Unfocused
-  StateGroup: 
-  IsInitialState: 1
-  DebugLog: 0
-  DebugDrawState: {fileID: 3636008340861058192}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 1
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 0
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
-  TriggerOnBegin:
-    ReactionReferences: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  DelayedReaction:
-    ReactionReferences: []
-  Delay: 0
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 1
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  CurrentIdleTime: 0
-  PreviousKinematic: 0
---- !u!114 &2058588465564964654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2058588465564964658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: Focused
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 3636008340861058192}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 1
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 0
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  MoveToOnEnd: {fileID: 0}
-  TriggerOnBegin:
-    ReactionReferences: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  DelayedReaction:
-    ReactionReferences: []
-  Delay: 0
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 0
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggerPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  CurrentIdleTime: 0
-  PreviousKinematic: 0
 --- !u!114 &2058588465564964655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -295,12 +172,6 @@ MonoBehaviour:
     - rid: 5969430306130755621
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -381,6 +252,90 @@ MonoBehaviour:
               Culture=neutral, PublicKeyToken=null
           String: 
         State: Focused
+--- !u!114 &1599502147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058588465564964658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: Focus
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Unfocused
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions: []
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+    - StateName:
+        Name: Focused
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 3795633178212040705
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3795633178212040705
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 0}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
 --- !u!1 &4627428554015467571
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,9 +81,6 @@ namespace Nie
                 case Type.Reaction:
                     var obj = TargetObjectReference.GetTargetGameObject(parameters);
                     parameters = parameters.WithSelf(obj);
-#if NIE_DEBUG_REACTIONS
-                    Debug.Log($"Trigger Reaction {ReactionName}{parameters}.");
-#endif
                     if (obj != null)
                         return React(ReactionName, parameters);
                     return false;
@@ -98,6 +95,7 @@ namespace Nie
         {
             Debug.Assert(parameters.Self != null);
             Debug.Assert(parameters.Current.From != null);
+            GlobalStates.LogReaction(reactionOrStateName, parameters);
             foreach (var reaction in parameters.Self.GetComponents<Reaction>())
                 if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
                 {
@@ -337,9 +335,7 @@ namespace Nie
             Debug.Assert(parameters.Self != null);
             var obj = TargetObjectReference.GetTargetGameObject(parameters);
             parameters = parameters.WithSelf(obj);
-#if NIE_DEBUG_REACTIONS
-            Debug.Log($"Trigger Reaction OnBegin {OnBegin}{parameters}.");
-#endif
+            GlobalStates.LogReactionOnBegin(OnBegin, parameters);
             if (obj != null)
                 return ReactionReference.React(OnBegin, parameters);
             return false;
@@ -349,9 +345,7 @@ namespace Nie
             Debug.Assert(parameters.Self != null);
             var obj = TargetObjectReference.GetTargetGameObject(parameters);
             parameters = parameters.WithSelf(obj);
-#if NIE_DEBUG_REACTIONS
-            Debug.Log($"Trigger Reaction OnEnd {OnEnd}{parameters}.");
-#endif
+            GlobalStates.LogReactionOnBegin(OnEnd, parameters);
             if (obj != null)
                 return ReactionReference.React(OnEnd, parameters);
             return false;

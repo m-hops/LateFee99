@@ -95,9 +95,8 @@ GameObject:
   - component: {fileID: 8533402073390850659}
   - component: {fileID: 1344351436988114343}
   - component: {fileID: 6504607564282587826}
-  - component: {fileID: 2038949075}
-  - component: {fileID: 2038949074}
   - component: {fileID: 2038949079}
+  - component: {fileID: 7457460976313642025}
   m_Layer: 0
   m_Name: TV
   m_TagString: Untagged
@@ -157,11 +156,14 @@ MonoBehaviour:
   DetachWhenGrabbed: 0
   ReattachWhenRelease: 0
   Conditions:
-    States: []
+    Conditions: []
   OnGrab:
-    ReactionReferences: []
+    Actions: []
   OnRelease:
-    ReactionReferences: []
+    Actions: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6504607564282587826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,157 +179,15 @@ MonoBehaviour:
   DebugLog: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
-  FocusedByTriggerObject: {fileID: 0}
---- !u!114 &2038949075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842223051713564082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: Idle
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 0}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 1
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 0
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  TriggerOnBegin:
-    ReactionReferences:
-    - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4887518706947037794}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  TriggerOnEnd:
-    ReactionReferences: []
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 1
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
-  PreviousKinematic: 0
---- !u!114 &2038949074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842223051713564082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ff7254e5db4e345b18295ef6f8b5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StateName: Display
-  StateGroup: 
-  IsInitialState: 0
-  DebugLog: 0
-  DebugDrawState: {fileID: 0}
-  Cooldown: 0
-  ReactivateOnNewTrigger: 1
-  Spawn: {fileID: 0}
-  DefaultReactionPosition: {fileID: 0}
-  SetKinematic: 0
-  SetNonKinematic: 0
-  ReleaseGrabbed: 0
-  AttachTriggerObjectAt: {fileID: 0}
-  MoveToParentOrigin: 0
-  DetachOnEnd: 1
-  TriggerOnBegin:
-    ReactionReferences:
-    - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4887518706947037794}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  TriggerOnEnd:
-    ReactionReferences:
-    - ReactionType: 1
-      ObjectTargetType: 0
-      TargetObject: {fileID: 0}
-      ReactionName: 
-      Event:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 4887518706947037794}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      EventTrigger:
-        m_PersistentCalls:
-          m_Calls: []
-  OverrideThisObject: {fileID: 0}
-  OverrideTriggerObject: {fileID: 0}
-  IsActiveState: 0
-  CurrentTriggerObject: {fileID: 0}
-  CurrentTriggeredPosition: {x: 0, y: 0, z: 0}
-  CurrentReactionCooldown: 0
-  PreviousAttachedObject: {fileID: 0}
-  PreviousKinematic: 0
+  NewConditions:
+    Conditions: []
+  NewOnFocus:
+    Actions: []
+  NewOnUnfocus:
+    Actions: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2038949079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,8 +200,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce237b68b0ac0e4b846d473d3ae2399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Observe: {fileID: 2038949074}
+  Observe: {fileID: 0}
   Text: {fileID: 4776708341080901974}
+--- !u!114 &7457460976313642025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842223051713564082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups:
+  - GroupName:
+      Name: 
+    Notes: 
+    HasActiveState: 0
+    States:
+    - StateName:
+        Name: Idle
+      IsActiveState: 1
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions: []
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+    - StateName:
+        Name: Display
+      IsActiveState: 0
+      DebugLog: 0
+      Notes: 
+      LastBeginEvent:
+        Self: {fileID: 0}
+        Current:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+        OnBegin:
+          From: {fileID: 0}
+          TriggerObject: {fileID: 0}
+          TriggerPosition: {x: 0, y: 0, z: 0}
+      NewConditions:
+        Conditions: []
+      NewOnBegin:
+        Actions:
+        - rid: 3795633178872905735
+      NewOnUpdate:
+        Actions: []
+      NewOnEnd:
+        Actions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3795633178872905735
+      type: {class: EnableDisable, ns: Nie.Actions, asm: Re0.51}
+      data:
+        Target:
+          Type: 0
+          ThisGameObject: {fileID: 4887518706947037794}
+          ObjectType:
+            TypeName: 
+            baseTypeName: UnityEngine.Component, UnityEngine.CoreModule, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          String: 
+        Enable: 1
+        RevertAtEnd: 1
+        Internals:
+          TargetObject: {fileID: 0}
+          WasActive: 0
 --- !u!1 &842223051713564084
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,6 +98,7 @@ namespace Nie.Editor
             }
             public void BindProperty(SerializedProperty property, int index)
             {
+
                 Index = index;
                 var tfItemIndex = RootVisualElement.Query<TextField>("tfIndex").First();
                 tfItemIndex.value = index.ToString();

@@ -4,14 +4,15 @@
         <ui:VisualElement style="width: 8px; background-color: rgba(0, 0, 0, 0);" />
         <ui:VisualElement style="flex-direction: column; width: 100%;">
             <ui:VisualElement style="flex-direction: row; justify-content: flex-start; align-items: stretch;">
-                <ui:TextField picking-mode="Ignore" label="Group Name" value="filler text" text="filler text" name="Name" style="width: auto; max-width: none; min-width: auto; flex-direction: row; right: auto; left: auto; flex-grow: 1;" />
-                <ui:Button text="Delete" display-tooltip-when-elided="true" name="btDelete" style="right: auto; flex-direction: column; align-items: stretch; min-width: auto; max-width: none; justify-content: flex-start; width: auto;" />
+                <ui:Label text="Group Name:" display-tooltip-when-elided="true" style="height: 18px; max-height: 18px;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="Name" style="width: auto; max-width: none; min-width: auto; flex-direction: row; right: auto; left: auto; flex-grow: 1; height: 18px; max-height: 18px; min-height: 18px;" />
+                <ui:Button text="Delete" display-tooltip-when-elided="true" name="btDelete" style="right: auto; flex-direction: column; align-items: stretch; min-width: 48px; max-width: 48px; justify-content: flex-start; width: 48px; height: 18px; max-height: 18px; min-height: 18px;" />
             </ui:VisualElement>
             <ui:VisualElement name="States" style="height: auto;" />
             <ui:VisualElement style="flex-direction: row-reverse;">
-                <ui:Button text="Add State" display-tooltip-when-elided="true" name="btAddState" />
+                <ui:Button text="Add State" display-tooltip-when-elided="true" name="btAddState" style="width: 64px; height: 18px; max-height: 18px; min-height: 18px; max-width: 64px; min-width: 64px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="veHasActiveState" style="height: 2px; background-color: rgba(0, 0, 0, 0);" />
+    <ui:VisualElement name="veHasActiveState" style="height: 2px; background-color: rgba(0, 0, 0, 0); max-height: 2px;" />
 </ui:UXML>

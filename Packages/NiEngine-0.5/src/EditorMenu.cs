@@ -4,6 +4,37 @@ using UnityEngine;
 
 namespace Nie
 {
+
+    public static class GlobalStates
+    {
+
+        public static bool DrawStatesGizmos;
+        public static bool DrawStatesLabel;
+        public static bool LogAllEvents;
+
+        public static void LogReaction(string reactionName, EventParameters parameters)
+        {
+            if (LogAllEvents)
+            {
+                Debug.Log($"Reaction: \"{reactionName}\" : {parameters}");
+            }
+        }
+        public static void LogReactionOnBegin(string reactionName, EventParameters parameters)
+        {
+            if (LogAllEvents)
+            {
+                Debug.Log($"Reaction OnBegin: \"{reactionName}\" : {parameters}");
+            }
+        }
+        public static void LogReactionOnEnd(string reactionName, EventParameters parameters)
+        {
+            if (LogAllEvents)
+            {
+                Debug.Log($"Reaction OnEnd: \"{reactionName}\" : {parameters}");
+            }
+        }
+    }
+
     //[System.AttributeUsage(System.AttributeTargets.Field | System.AttributeTargets.Class)]
     public class DerivedClassPicker : PropertyAttribute
     {
@@ -23,20 +54,6 @@ namespace Nie
         public ClassPickerName(string name)
         {
             Name = name;
-        }
-    }
-    public class ReactOnDistance : MonoBehaviour
-    {
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }

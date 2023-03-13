@@ -488,6 +488,14 @@ namespace Nie
             group = default;
             return false;
         }
+        public bool TryGetState(StateName name, out State state)
+        {
+            foreach (var g in Groups)
+                if (g.TryGetState(name, out state))
+                    return true;
+            state = default;
+            return false;
+        }
         public bool HasState(StateName name)
         {
             foreach (var group in Groups)

@@ -123,22 +123,22 @@ namespace Nie
 
 
 
-        [SerializeField]
-        [Tooltip("Reaction executed when this ReactionState gets activated")]
-        ReactionList TriggerOnBegin;
+        //[SerializeField]
+        //[Tooltip("Reaction executed when this ReactionState gets activated")]
+        //ReactionList TriggerOnBegin;
 
-        [Header("On End Actions:")]
+        //[Header("On End Actions:")]
 
-        [SerializeField]
-        [Tooltip("Reaction executed when this ReactionState gets deactivated")]
-        ReactionList TriggerOnEnd;
+        //[SerializeField]
+        //[Tooltip("Reaction executed when this ReactionState gets deactivated")]
+        //ReactionList TriggerOnEnd;
 
-        //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
-        //public string OnBeginForceState;
-        //[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
-        //public string OnEndForceState;
+        ////[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is activated.")]
+        ////public string OnBeginForceState;
+        ////[Tooltip("If set, activate the first ReactionState found of the provided name from the GameObject that triggered this reaction when this state is deactivated.")]
+        ////public string OnEndForceState;
 
-        public ReactionList DelayedReaction;
+        //public ReactionList DelayedReaction;
         [Tooltip("In second.")]
         public float Delay;
 
@@ -240,8 +240,8 @@ namespace Nie
             {
                 var NextIdleTime = CurrentIdleTime + Time.deltaTime;
 
-                if (NextIdleTime >= Delay && CurrentIdleTime < Delay)
-                    DelayedReaction.React(gameObject, gameObject, CurrentTriggerObject, CurrentTriggerPosition, CurrentTriggerObject);
+                //if (NextIdleTime >= Delay && CurrentIdleTime < Delay)
+                //    DelayedReaction.React(gameObject, gameObject, CurrentTriggerObject, CurrentTriggerPosition, CurrentTriggerObject);
 
                 CurrentIdleTime = NextIdleTime;
             }
@@ -398,7 +398,7 @@ namespace Nie
             //    else
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnBeginForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnBegin.TryReact(gameObject, gameObject, triggerObject, position);
+            //TriggerOnBegin.TryReact(gameObject, gameObject, triggerObject, position);
 
             foreach (var obs in m_Observers)
                 obs.OnBegin(this, thisObject, triggerObject, position);
@@ -444,7 +444,7 @@ namespace Nie
             //    else //if(DebugLog)
             //        Debug.LogWarning($"[{Time.frameCount}] ReactionState '{name}'.'{StateName}' cannot find ReactionState '{OnEndForceState}' to force on trigger object '{(m_TriggerObject == null ? "<null>" : m_TriggerObject.name)}' at position: {m_TriggeredPosition}");
 
-            TriggerOnEnd.TryReact(gameObject, gameObject, triggerObject, position, CurrentTriggerObject);
+            //TriggerOnEnd.TryReact(gameObject, gameObject, triggerObject, position, CurrentTriggerObject);
 
             foreach (var obs in m_Observers)
                 obs.OnEnd(this, thisObject, triggerObject, CurrentTriggerObject, position);

@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 7510745480209233349}
   - component: {fileID: 8910823321465847909}
   - component: {fileID: 932781913}
+  - component: {fileID: 7061020430196433442}
   m_Layer: 0
   m_Name: CustomerPrefab
   m_TagString: Untagged
@@ -381,7 +382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugLog: 0
-  TriggerFromMainCamera: 0
   ShowHand: 1
   SendFocusToRigidBodyObject: 1
   NewConditions:
@@ -391,12 +391,6 @@ MonoBehaviour:
     - rid: 5969430306130755621
   NewOnUnfocus:
     Actions: []
-  Conditions:
-    States: []
-  OnFocusReaction:
-    ReactionReferences: []
-  OnUnfocusReaction:
-    ReactionReferences: []
   references:
     version: 2
     RefIds:
@@ -489,3 +483,19 @@ MonoBehaviour:
   AutoTargetMainCamera: 1
   Target: {fileID: 0}
   LockAxis: 2
+--- !u!114 &7061020430196433442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034142504081814697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c3440d953fce841ace87ce88053ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Groups: []
+  references:
+    version: 2
+    RefIds: []

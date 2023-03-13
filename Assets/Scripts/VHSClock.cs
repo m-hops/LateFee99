@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Nie;
 
-public class VHSClock : MonoBehaviour, ReactionState.IObserver
+public class VHSClock : MonoBehaviour, IStateObserver
 {
-    public ReactionState Observe;
+    public string StateToObserve;
+
     public TMPro.TextMeshPro Text;
     float m_LastTime = -1;
     VHS m_VHS;
 
-
-    void ReactionState.IObserver.OnBegin(ReactionState state, GameObject from, GameObject triggerObject, Vector3 position)
+    void IStateObserver.OnBegin(Owner owner, EventParameters parameters)
     {
 
-        if (triggerObject == null)
+        if (parameters.Current.TriggerObject == null)
             Debug.LogWarning($"VHS triggerObject is null");
-        else if (triggerObject.TryGetComponent<VHS>(out var vhs))
+        else if (parameters.Current.TriggerObject.TryGetComponent<VHS>(out var vhs))
         {
             m_VHS = vhs;
         }
         else
         {
-            Debug.LogWarning($"No Found VHS : {triggerObject.name}");
+            Debug.LogError($"No Found VHS : {parameters.Current.TriggerObject.name}");
         }
     }
-    void ReactionState.IObserver.OnEnd(ReactionState state, GameObject from, GameObject triggerObject, GameObject previousTriggerObject, Vector3 position)
+
+    void IStateObserver.OnEnd(Owner owner, EventParameters parameters)
     {
         m_VHS = null;
         m_LastTime = -1;
@@ -46,18 +47,22 @@ public class VHSClock : MonoBehaviour, ReactionState.IObserver
     // Start is called before the first frame update
     void Start()
     {
-        if(Observe!= null)
+        var rsm = GetComponent<ReactionStateMachine>();
+        if(rsm.TryGetState(StateToObserve, out var state))
         {
-            Observe.AddObserver(this);
+            state.StateObservers.Add(this);
         }
+        else
+            Debug.LogError($"No state '{state}' found");
     }
 
     void OnDestroy()
     {
 
-        if (Observe != null)
+        var rsm = GetComponent<ReactionStateMachine>();
+        if (rsm.TryGetState(StateToObserve, out var state))
         {
-            Observe.RemoveObserver(this);
+            state.StateObservers.Remove(this);
         }
     }
     // Update is called once per frame
