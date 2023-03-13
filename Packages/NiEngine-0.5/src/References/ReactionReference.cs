@@ -41,14 +41,6 @@ namespace Nie
             Debug.Assert(parameters.Self != null);
             Debug.Assert(parameters.Current.From != null);
             bool hasPotential = false;
-            foreach (var reactionState in parameters.Self.AllReactionState(stateName))
-            {
-                hasPotential = true;
-                if (reactionState.IsActiveState)
-                {
-                    return true;
-                }
-            }
             foreach (var sm in parameters.Self.AllReactionStateMachine())
             {
                 foreach (var g in sm.Groups)
@@ -68,7 +60,6 @@ namespace Nie
         public static bool HasReaction(GameObject obj, string reactionOrStateName)
         {
             return obj.GetComponents<Reaction>().Any(x => x.enabled && x.ReactionName == reactionOrStateName)
-                || obj.GetComponents<ReactionState>().Any(x => x.enabled && x.StateName == reactionOrStateName)
                 || obj.GetComponents<ReactionStateMachine>().Any(x => x.enabled && x.HasState(new StateName(reactionOrStateName)));
         }
 
@@ -98,12 +89,6 @@ namespace Nie
             GlobalStates.LogReaction(reactionOrStateName, parameters);
             foreach (var reaction in parameters.Self.GetComponents<Reaction>())
                 if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
-                {
-                    reaction.React(parameters.Current.TriggerObject, parameters.Current.TriggerPosition);
-                    return true;
-                }
-            foreach (var reaction in parameters.Self.GetComponents<ReactionState>())
-                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                 {
                     reaction.React(parameters.Current.TriggerObject, parameters.Current.TriggerPosition);
                     return true;
@@ -140,13 +125,6 @@ namespace Nie
             int potentialReactCount = 0;
             foreach (var reaction in parameters.Self.GetComponents<Reaction>())
                 if (reaction.enabled && (string.IsNullOrEmpty(reaction.ReactionName) || reaction.ReactionName == reactionOrStateName))
-                {
-                    ++potentialReactCount;
-                    if (reaction.CanReact(parameters.Current.TriggerObject, parameters.Current.TriggerPosition))
-                        return true;
-                }
-            foreach (var reaction in parameters.Self.GetComponents<ReactionState>())
-                if (reaction.enabled && reaction.StateName == reactionOrStateName)
                 {
                     ++potentialReactCount;
                     if (reaction.CanReact(parameters.Current.TriggerObject, parameters.Current.TriggerPosition))
@@ -326,7 +304,6 @@ namespace Nie
         public static bool HasReaction(GameObject obj, string reactionOrStateName)
         {
             return obj.GetComponents<Reaction>().Any(x => x.enabled && x.ReactionName == reactionOrStateName)
-                || obj.GetComponents<ReactionState>().Any(x => x.enabled && x.StateName == reactionOrStateName)
                 || obj.GetComponents<ReactionStateMachine>().Any(x => x.enabled && x.HasState(new StateName(reactionOrStateName)));
         }
 

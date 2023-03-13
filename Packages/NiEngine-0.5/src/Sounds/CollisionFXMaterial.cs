@@ -19,8 +19,7 @@ namespace Nie
         [Tooltip("Only react with objects of these layers")]
         public LayerMask ObjectLayerMask = -1;
 
-        public AnimatorStateReference MustBeInAnimatorState;
-        public ReactionStateReference MustBeInReactionState;
+        public ConditionSet Conditions;
 
         float m_CoolDownTimer = 0;
 
@@ -35,16 +34,19 @@ namespace Nie
             if (!enabled) return false;
             if (m_CoolDownTimer > 0) return false;
             if (!Registry.CanReactVelocity(relativeVelocity)) return false;
-            if (MustBeInAnimatorState.Animator != null)
-                if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
-                    return false;
-            if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
+            
+            //if (MustBeInAnimatorState.Animator != null)
+            //    if (MustBeInAnimatorState.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != MustBeInAnimatorState.StateHash)
+            //        return false;
+            //if (MustBeInReactionState.Object != null && !MustBeInReactionState.IsActiveState) return false;
             return true;
         }
         public bool CanReactWith(CollisionFXMaterial other, Vector3 position, float relativeVelocity)
         {
             if (!other.enabled) return false;
             if ((ObjectLayerMask.value & (1 << other.gameObject.layer)) == 0) return false;
+            if (!Conditions.Pass(new(this), EventParameters.Trigger(gameObject, gameObject, other.gameObject, position)))
+                return false;
             return true;
         }
         void Collide(CollisionFXMaterial other, Vector3 position, float relativeVelocity)
